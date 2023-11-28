@@ -17,18 +17,19 @@ public class CommandLineArgument {
     }
 
     public String[] sensorSelect(String sensorName) {
+        // 센서 종류를 저장하는 배열
         String[] selectedSenser = sensorName.split(",");
-        // 잘못된 요소가 들어가있는 경우의 처리
+        
+        for(int i = 0; i < selectedSenser.length; i++) {
+            if (selectedSenser[i] == null) {
+                throw new IllegalArgumentException();
+            }    
+        }
 
         for(int i = 0; i < selectedSenser.length; i++) {
-            // 더 많은 요소 추가?
-            if (selectedSenser[i] == "temperature" ||
-                selectedSenser[i] == "humidity"  ||
-                selectedSenser[i] == "co2") {
-            } else {
-                throw new IllegalArgumentException();
-            }
+            selectedSenser[i] = selectedSenser[i].trim();
         }
+
         return selectedSenser; // 배열은 받은 메소드가 해당 값을 처리하도록 해야함
     }
 
