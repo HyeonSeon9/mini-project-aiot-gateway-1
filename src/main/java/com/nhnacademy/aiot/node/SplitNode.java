@@ -62,6 +62,7 @@ public class SplitNode extends InputOutputNode {
                 payload.put("value",
                         jsonObject.getJSONObject("payload").getJSONObject("object").get(s));
                 newJson.put("payload", payload);
+
                 newJson.put("place", jsonObject.getJSONObject("payload").getJSONObject("deviceInfo")
                         .getJSONObject("tags").get("place"));
                 newJson.put("sensor", s);
@@ -69,9 +70,13 @@ public class SplitNode extends InputOutputNode {
                         .getJSONObject("deviceInfo").get("tenantName"));
                 newJson.put("deviceEui", jsonObject.getJSONObject("payload")
                         .getJSONObject("deviceInfo").getString("devEui"));
-                output(new JsonMessage(newJson));
+                sendNode(newJson);
             }
         }
+    }
+
+    void sendNode(JSONObject jsonObject) {
+        output(new JsonMessage(jsonObject));
     }
 
     @Override
