@@ -27,7 +27,7 @@ public class PlaceTranslatorNode extends InputOutputNode {
             Message message = getInputWire(0).get();
             JSONObject jsonObject = ((JsonMessage) message).getPayload();
             jsonObject.put("place", placeInfo.get(jsonObject.get("place")));
-            System.out.println(jsonObject);
+            output(new JsonMessage(jsonObject));
         }
     }
 }
