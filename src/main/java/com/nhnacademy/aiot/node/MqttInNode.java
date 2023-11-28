@@ -42,9 +42,25 @@ public class MqttInNode extends InputNode {
     @Override
     void process() {
         try {
-            server.subscribe("application/+/device/+/event/up", (topic, msg) -> {
-                JSONObject payload = new JSONObject(new String(msg.getPayload()));
-                output(new JsonMessage(payload.getJSONObject("deviceInfo").getJSONObject("tags")));
+            server.subscribe("#", (topic, msg) -> {
+
+                // newMsg.put("deviceId", payload.getJSONObject("deviceInfo").getString("devEui"));
+                // newMsg.put("time", payload.getString("time"));
+                // newMsg.put("tenant", payload.getJSONObject("deviceInfo").getJSONObject("tags")
+                // .getString("branch"));
+                // newMsg.put("plcae", payload.getJSONObject("deviceInfo").getJSONObject("tags")
+                // .getString("place"));
+                // newMsg.put("sensor", payload.getJSONObject("object").getInt("temperature"));
+
+                JSONObject jsonObject = new JSONObject(msg);
+                jsonObject.put("topic", topic);
+                if (topic.contains("application")) { // byte형식으로 넘어오는 애들 예외 처리
+                    JSONObject jsonPayLoad = new JSONObject(new String(msg.getPayload()));
+                    jsonObject.put("payload", jsonPayLoad);
+                    output(new JsonMessage(jsonObject));
+                } else {
+                    output(new JsonMessage(jsonObject));
+                }
                 // payload.getJSONObject("object").keySet().forEach(System.out::println);
             });
         } catch (MqttException e) {
