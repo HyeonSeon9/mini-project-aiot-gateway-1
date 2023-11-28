@@ -6,7 +6,7 @@ import com.nhnacademy.aiot.exception.AlreadyStartedException;
 
 
 public abstract class ActiveNode extends Node implements Runnable {
-    public static final long DEFAULT_INTERVAL = 1;
+    public static final long DEFAULT_INTERVAL = 10;
     Thread thread;
 
     long interval = DEFAULT_INTERVAL;
