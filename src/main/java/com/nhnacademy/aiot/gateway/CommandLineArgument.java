@@ -8,15 +8,15 @@ import org.apache.commons.cli.ParseException;
 
 public class CommandLineArgument {
 
-    public void hasAppName(String appName) { // applicationName: "NHNAcademyEMS"
+    public void hasAppName(String appName) { // payload.deviceInfo.applicationName: "NHNAcademyEMS"
         if (appName != null) {
-            // 해당 애플리케이션의 메세지만 수신
-            // application/#
+            // 프로그램 옵션으로 Application Name을 줄 수 있으며 
+            // application name이 주어질 경우 해당 메시지만 수신하도록 한다.
         }
 
     }
 
-    public String[] sensorSelect(String sensorName) {
+    public String[] sensorSelect(String sensorName) { // getJsonObject("object")
         // 센서 종류를 저장하는 배열
         String[] selectedSenser = sensorName.split(",");
         
@@ -27,10 +27,12 @@ public class CommandLineArgument {
         }
 
         for(int i = 0; i < selectedSenser.length; i++) {
-            selectedSenser[i] = selectedSenser[i].trim();
+            selectedSenser[i] = "object." + selectedSenser[i].trim(); // ex) object.temperature
         }
 
-        return selectedSenser; // 배열은 받은 메소드가 해당 값을 처리하도록 해야함
+        // 메인을 실행하기 전에 센서를 처리하거나 가지고 온 후 센서 처리
+
+        return selectedSenser;
     }
 
     public static void main(String[] args) {
@@ -45,8 +47,6 @@ public class CommandLineArgument {
             CommandLine commandLine = parser.parse(options, args);
             
             if (commandLine.hasOption("an")) { 
-                // 프로그램 옵션으로 Application Name을 줄 수 있으며
-                //, application name이 주어질 경우 해당 메시지만 수신하도록 한다.
                 commandLineArgument.hasAppName(commandLine.getOptionValue("an"));
                 System.out.println(commandLine.getOptionValue("an") + "이 추가되었습니다.");
             }
@@ -56,7 +56,7 @@ public class CommandLineArgument {
                 System.out.println(commandLine.getOptionValue("s") + "이 삭제되었습니다.");
             }
         } catch (ParseException ignore) {
-        
+            
         }
     }
 }
