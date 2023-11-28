@@ -42,11 +42,17 @@ public class MqttInNode extends InputNode {
     @Override
     void process() {
         try {
-            server.subscribe("application/+/device/+/event/up", (topic, msg) -> {
-                JSONObject payload = new JSONObject(new String(msg.getPayload()));
-                output(new JsonMessage(payload.getJSONObject("deviceInfo").getJSONObject("tags")));
-                // payload.getJSONObject("object").keySet().forEach(System.out::println);
-            });
+                server.subscribe("#", (topic, msg) -> {
+                    JSONObject object = new JSONObject(msg);
+                    object.put("topic", topic);
+                    if (topic.contains("application") && object 널 처리) {
+                        JSONObject payload = new JSONObject(new String(msg.getPayload()));
+                        object.put("payload", payload);
+                        output(new JsonMessage(object));
+                    }
+                    
+                    // payload.getJSONObject("object").keySet().forEach(System.out::println);
+                });
         } catch (MqttException e) {
 
         }
