@@ -5,6 +5,7 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONObject;
+import com.nhnacademy.aiot.message.JsonMessage;
 
 public class MqttInNode extends InputNode {
     private String[] args;
@@ -42,9 +43,9 @@ public class MqttInNode extends InputNode {
     void process() {
         try {
             server.subscribe("application/+/device/+/event/up", (topic, msg) -> {
-                // System.out.println("Message received : " + topic + msg);
                 JSONObject payload = new JSONObject(new String(msg.getPayload()));
-                payload.getJSONObject("object").keySet().forEach(System.out::println);
+                output(new JsonMessage(payload.getJSONObject("deviceInfo").getJSONObject("tags")));
+                // payload.getJSONObject("object").keySet().forEach(System.out::println);
             });
         } catch (MqttException e) {
 
