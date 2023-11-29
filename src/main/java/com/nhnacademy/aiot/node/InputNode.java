@@ -15,6 +15,10 @@ public abstract class InputNode extends ActiveNode {
 
     }
 
+    InputNode(String name) {
+        super(name);
+    }
+
     InputNode(String name, int count) {
         super(name);
 

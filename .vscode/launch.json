@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "JsonTest",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.gateway.JsonTest",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
       "name": "Current File",
       "request": "launch",
       "mainClass": "${file}"
@@ -23,7 +30,12 @@
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.Test",
       "projectName": "mini-project-aiot-gateway1",
-      "args": ["--an", "application/+/device/+/event/up", "-s", "temperature"]
+      "args": [
+        "--an",
+        "application/+/device/+/event/up",
+        "-s",
+        "temperature,humidity"
+      ]
     }
   ]
 }

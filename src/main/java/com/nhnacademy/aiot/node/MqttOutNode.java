@@ -18,11 +18,15 @@ public class MqttOutNode extends OutputNode {
         super(1);
     }
 
-    MqttOutNode(int count) {
+    public MqttOutNode(int count) {
         super(count);
     }
 
-    MqttOutNode(String name, int count) {
+    public MqttOutNode(String name) {
+        this(name, 1);
+    }
+
+    public MqttOutNode(String name, int count) {
         super(name, count);
     }
 

@@ -16,6 +16,10 @@ public class MqttInNode extends InputNode {
         this(1);
     }
 
+    public MqttInNode(String name) {
+        super(name);
+    }
+
     public MqttInNode(int count) {
         super(count);
     }

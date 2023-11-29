@@ -8,6 +8,10 @@ import com.nhnacademy.aiot.wire.Wire;
 public abstract class OutputNode extends ActiveNode {
     Wire[] inputWires;
 
+    OutputNode(String name) {
+        super(name);
+    }
+
     OutputNode(String name, int count) {
         super(name);
         if (count <= 0) {

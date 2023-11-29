@@ -10,6 +10,10 @@ public class PlaceTranslatorNode extends InputOutputNode {
     HashMap<String, String> placeInfo;
     private String place;
 
+    public PlaceTranslatorNode() {
+        super(1, 1);
+    }
+
     public PlaceTranslatorNode(String name) {
         super(name, 1, 1);
     }

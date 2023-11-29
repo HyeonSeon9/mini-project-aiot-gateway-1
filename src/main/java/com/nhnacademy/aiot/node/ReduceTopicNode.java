@@ -7,6 +7,10 @@ import com.nhnacademy.aiot.message.Message;
 public class ReduceTopicNode extends InputOutputNode {
     private String topic;
 
+    public ReduceTopicNode() {
+        super(1, 1);
+    }
+
     public ReduceTopicNode(String name) {
         super(name, 1, 1);
     }
