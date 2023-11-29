@@ -97,7 +97,6 @@ public class SplitNode extends InputOutputNode {
             Message message = getInputWire(0).get();
             JSONObject jsonObject = ((JsonMessage) message).getPayload();
             if (MqttTopic.isMatched(aplicationName, jsonObject.get("topic").toString())) {
-                System.out.println(jsonObject);
                 splitSensor(jsonObject);
             }
         }

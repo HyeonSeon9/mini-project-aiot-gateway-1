@@ -30,12 +30,7 @@
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.Test",
       "projectName": "mini-project-aiot-gateway1",
-      "args": [
-        "--an",
-        "application/+/device/+/event/up",
-        "-s",
-        "temperature,humidity"
-      ]
+      "args": ["--an", "application/+/device/+/event/up", "-s", "temperature"]
     }
   ]
 }

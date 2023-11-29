@@ -41,13 +41,7 @@ public class MqttInNode extends InputNode {
         }
     }
 
-    @Override
-    void preprocess() {
-        connectServer();
-    }
-
-    @Override
-    void process() {
+    public void serverSubscribe() {
         try {
             server.subscribe("#", (topic, msg) -> {
                 JSONObject jsonObject = new JSONObject(msg);
@@ -61,6 +55,19 @@ public class MqttInNode extends InputNode {
                 }
             });
         } catch (MqttException e) {
+        }
+    }
+
+    @Override
+    void preprocess() {
+        connectServer();
+        serverSubscribe();
+    }
+
+    @Override
+    void process() {
+        if (!server.isConnected()) {
+            serverSubscribe();
         }
     }
 

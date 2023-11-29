@@ -15,7 +15,9 @@ public class Test {
         ArrayList<ActiveNode> nodeList = new ArrayList<>();
 
         MqttInNode mqttIn = new MqttInNode();
+        mqttIn.setInterval(1);
         SplitNode split = new SplitNode("splitNode");
+        split.setInterval(1);
         PlaceTranslatorNode trans = new PlaceTranslatorNode("TransNode");
         ReduceTopicNode reduce = new ReduceTopicNode("reduceNode");
         MqttOutNode mqttOut = new MqttOutNode();
