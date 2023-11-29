@@ -56,26 +56,28 @@ public class SplitNode extends InputOutputNode {
     }
 
     void splitSensor(JSONObject jsonObject) {
-        Set<String> sensorSet =
-                jsonObject.getJSONObject("payload").getJSONObject("object").keySet();
-        for (String s : sensorSet) {
-            if (sensors.contains(s) && jsonObject.getJSONObject("payload")
-                    .getJSONObject("deviceInfo").getString("tenantName").equals("NHN Academy 경남")) {
-                JSONObject newJson = new JSONObject();
-                JSONObject payload = new JSONObject();
-                payload.put("time", new Date().getTime());
-                payload.put("value",
-                        jsonObject.getJSONObject("payload").getJSONObject("object").get(s));
-                newJson.put("payload", payload);
+        if (jsonObject.getJSONObject("payload").getJSONObject("deviceInfo").getString("tenantName")
+                .equals("NHN Academy 경남")) {
+            Set<String> sensorSet =
+                    jsonObject.getJSONObject("payload").getJSONObject("object").keySet();
+            for (String s : sensorSet) {
+                if (sensors.contains(s)) {
+                    JSONObject newJson = new JSONObject();
+                    JSONObject payload = new JSONObject();
+                    payload.put("time", new Date().getTime());
+                    payload.put("value",
+                            jsonObject.getJSONObject("payload").getJSONObject("object").get(s));
+                    newJson.put("payload", payload);
 
-                newJson.put("place", jsonObject.getJSONObject("payload").getJSONObject("deviceInfo")
-                        .getJSONObject("tags").get("place"));
-                newJson.put("sensor", s);
-                newJson.put("tenant", jsonObject.getJSONObject("payload")
-                        .getJSONObject("deviceInfo").get("tenantName"));
-                newJson.put("deviceEui", jsonObject.getJSONObject("payload")
-                        .getJSONObject("deviceInfo").getString("devEui"));
-                sendNode(newJson);
+                    newJson.put("place", jsonObject.getJSONObject("payload")
+                            .getJSONObject("deviceInfo").getJSONObject("tags").get("place"));
+                    newJson.put("sensor", s);
+                    newJson.put("tenant", jsonObject.getJSONObject("payload")
+                            .getJSONObject("deviceInfo").get("tenantName"));
+                    newJson.put("deviceEui", jsonObject.getJSONObject("payload")
+                            .getJSONObject("deviceInfo").getString("devEui"));
+                    sendNode(newJson);
+                }
             }
         }
     }
