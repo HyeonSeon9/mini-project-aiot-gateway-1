@@ -1,5 +1,7 @@
 package com.nhnacademy.aiot.gateway;
 
+import java.util.ArrayList;
+import com.nhnacademy.aiot.node.ActiveNode;
 import com.nhnacademy.aiot.node.MqttInNode;
 import com.nhnacademy.aiot.node.MqttOutNode;
 import com.nhnacademy.aiot.node.PlaceTranslatorNode;
@@ -10,11 +12,19 @@ import com.nhnacademy.aiot.wire.Wire;
 
 public class Test {
     public static void main(String[] args) {
+        ArrayList<ActiveNode> nodeList = new ArrayList<>();
+
         MqttInNode mqttIn = new MqttInNode();
         SplitNode split = new SplitNode("splitNode");
         PlaceTranslatorNode trans = new PlaceTranslatorNode("TransNode");
         ReduceTopicNode reduce = new ReduceTopicNode("reduceNode");
         MqttOutNode mqttOut = new MqttOutNode();
+        System.out.println(mqttIn.getId());
+        nodeList.add(mqttIn);
+        nodeList.add(split);
+        nodeList.add(trans);
+        nodeList.add(reduce);
+        nodeList.add(mqttOut);
 
         Wire wire = new BufferedWire();
         Wire wire1 = new BufferedWire();
@@ -35,10 +45,12 @@ public class Test {
         reduce.connectOutputWire(0, wire3);
         mqttOut.connectInputWire(0, wire3);
 
-        mqttIn.start();
-        split.start();
-        trans.start();
-        reduce.start();
-        mqttOut.start();
+
+        nodeList.stream().forEach(x -> x.start());
+        // mqttIn.start();
+        // split.start();
+        // trans.start();
+        // reduce.start();
+        // mqttOut.start();
     }
 }
