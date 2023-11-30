@@ -9,12 +9,13 @@ import org.json.JSONObject;
 
 import com.github.f4b6a3.uuid.UuidCreator;
 import com.nhnacademy.aiot.message.Message;
+import lombok.extern.slf4j.Slf4j;
 import com.nhnacademy.aiot.message.JsonMessage;
 
-
+@Slf4j
 public class MqttOutNode extends OutputNode {
     private IMqttClient local = null;
-    private MqttConnectOptions options;
+
 
     public MqttOutNode() {
         super(1);
@@ -33,6 +34,7 @@ public class MqttOutNode extends OutputNode {
     }
 
     public void connectLocalHost() {
+        MqttConnectOptions options;
         try {
             local = new MqttClient("tcp://localhost:1883", UuidCreator.getTimeBased().toString());
             options = new MqttConnectOptions();
@@ -43,6 +45,7 @@ public class MqttOutNode extends OutputNode {
             options.setWill("test/will", "Disconnected".getBytes(), 2, false);
             local.connect(options);
         } catch (MqttException e) {
+            log.error(e.toString());
 
         }
     }
@@ -67,11 +70,12 @@ public class MqttOutNode extends OutputNode {
 
                 MqttMessage mqttMessage = new MqttMessage();
                 mqttMessage.setPayload(payload.toString().getBytes());
-                System.out.println(topic);
-                System.out.println(jsonObject);
-                System.out.println(mqttMessage);
+                log.info(topic);
+                log.info(jsonObject.toString());
+                log.info(mqttMessage.toString());
                 local.publish(topic, mqttMessage);
             } catch (MqttException e) {
+                log.error(e.toString());
             }
         }
     }

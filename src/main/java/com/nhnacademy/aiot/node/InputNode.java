@@ -1,6 +1,5 @@
 package com.nhnacademy.aiot.node;
 
-import java.rmi.AlreadyBoundException;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.exception.AlreadyExistsException;
 import com.nhnacademy.aiot.exception.InvalidArgumentException;

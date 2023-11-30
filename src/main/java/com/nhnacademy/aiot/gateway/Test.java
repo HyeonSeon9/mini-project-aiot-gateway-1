@@ -1,41 +1,32 @@
 package com.nhnacademy.aiot.gateway;
 
-import com.nhnacademy.aiot.node.MqttInNode;
-import com.nhnacademy.aiot.node.MqttOutNode;
-import com.nhnacademy.aiot.node.SettingTopic;
-import com.nhnacademy.aiot.node.SplitNode;
-import com.nhnacademy.aiot.node.TransKorea;
-import com.nhnacademy.aiot.wire.BufferedWire;
-import com.nhnacademy.aiot.wire.Wire;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 public class Test {
     public static void main(String[] args) {
-        MqttInNode mqin = new MqttInNode();
-        SplitNode split = new SplitNode("splitNode");
-        SettingTopic topic = new SettingTopic("topic");
-        TransKorea korea = new TransKorea("korea");
-        MqttOutNode mqttOut = new MqttOutNode("mqttOut", 1);
-        Wire wire1 = new BufferedWire();
-        Wire wire2 = new BufferedWire();
-        Wire wire3 = new BufferedWire();
-        Wire wire4 = new BufferedWire();
 
-        split.setCommand(args);
+        try {
+            Reader reader = new FileReader(
+                    "/home/dongmin/Desktop/java/Week14/mini-project-aiot-gateway-1/.vscode/Transfrom.json");
+            JSONParser parser = new JSONParser();
+            JSONObject object;
+            object = (JSONObject) parser.parse(reader);
 
-        mqin.connectOutputWire(0, wire1);
-        split.connectInputWire(0, wire1);
-        split.connectOutputWire(0, wire2);
-        topic.connectInputWire(0, wire2);
-        topic.connectOutputWire(0, wire3);
-        korea.connectInputWire(0, wire3);
-        korea.connectOutputWire(0, wire4);
-        mqttOut.connectInputWire(0, wire4);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
-        mqin.start();
-        split.start();
-        topic.start();
-        korea.start();
-        mqttOut.start();
     }
+
 }

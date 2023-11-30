@@ -1,6 +1,5 @@
 package com.nhnacademy.aiot.node;
 
-import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.message.JsonMessage;

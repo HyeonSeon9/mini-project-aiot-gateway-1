@@ -4,13 +4,14 @@ import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttSecurityException;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.message.JsonMessage;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class MqttInNode extends InputNode {
     private IMqttClient server = null;
-    private MqttConnectOptions options;
+
 
 
     public MqttInNode() {
@@ -24,6 +25,7 @@ public class MqttInNode extends InputNode {
 
 
     public void connectServer() {
+        MqttConnectOptions options;
         try {
             server = new MqttClient("tcp://ems.nhnacademy.com", super.getId().toString());
             options = new MqttConnectOptions();
@@ -34,7 +36,7 @@ public class MqttInNode extends InputNode {
             options.setWill("test/will", "Disconnected".getBytes(), 2, false);
             server.connect(options);
         } catch (MqttException e) {
-
+            log.error(e.toString());
         }
     }
 
@@ -52,6 +54,7 @@ public class MqttInNode extends InputNode {
                 }
             });
         } catch (MqttException e) {
+            log.warn(e.toString());
         }
     }
 
