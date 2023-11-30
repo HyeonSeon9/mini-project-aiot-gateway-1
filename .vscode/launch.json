@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Config",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.aiot.gateway.Config",
+            "projectName": "mini-project-aiot-gateway1"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

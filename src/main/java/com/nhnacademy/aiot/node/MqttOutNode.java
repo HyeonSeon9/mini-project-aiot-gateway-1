@@ -15,6 +15,10 @@ public class MqttOutNode extends OutputNode {
 
     private IMqttClient toTelegraf;
 
+    public MqttOutNode() {
+        this("MqttOutNode");
+    }
+
     public MqttOutNode(String name) {
         super(name, 1);
     }

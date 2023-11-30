@@ -12,7 +12,6 @@ public class Test {
 
     public static void main(String[] args) {
         MqttInNode mqttIn = new MqttInNode();
-        //TerminalOutNode out = new TerminalOutNode();
         SetNode set = new SetNode("set", 1,1, args);
         TopicNode topic = new TopicNode("topic",1,1);
         ConcatNode concat = new ConcatNode("concat", 1, 1);
@@ -34,13 +33,11 @@ public class Test {
 
         concat.connectOutputWire(0, wire4);
         mqttOut.connectInputWire(0, wire4);
-        //out.connectInputWire(0, wire);
 
         mqttIn.start();
         set.start();
         topic.start();
         concat.start();
         mqttOut.start();
-        //out.start();
     }
 }

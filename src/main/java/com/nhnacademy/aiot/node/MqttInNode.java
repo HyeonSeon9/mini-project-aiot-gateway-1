@@ -13,11 +13,11 @@ public class MqttInNode extends InputNode {
     private IMqttClient server = null;
 
     public MqttInNode() {
-        this(1);
+        this("mqttInNode");
     }
 
-    public MqttInNode(int count) {
-        super(count);
+    public MqttInNode(String name) {
+        super(name, 1);
     }
 
     void connectServer() {

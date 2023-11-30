@@ -1,0 +1,54 @@
+{
+    "node" : [
+        {
+            "id" : "HdiJEPcNPu",
+            "type" : "java",
+            "name" : "MqttInNode",
+            "wires": [
+                [
+                    "coU4TbNQU0"
+                ]
+            ]
+        },
+        {
+            "id" : "coU4TbNQU0",
+            "type" : "java",
+            "name" : "SetNode",
+            "wires" : [
+                [
+                    "3D2z7CAzdK"
+                ]
+            ]
+        },
+        {
+            "id" : "3D2z7CAzdK",
+            "type" : "java",
+            "name" : "TopicNode",
+            "wires" : [
+                [
+                    "Y4XsOo4GZ2"
+                ]
+            ]
+        },
+        {
+            "id" : "Y4XsOo4GZ2",
+            "type" : "java",
+            "name" : "ConcatNode",
+            "wires" : [
+                [
+                    "k2AUFGvNVl"
+                ]
+            ]
+        },
+        {
+            "id" : "k2AUFGvNVl",
+            "type" : "java",
+            "name" : "MqttOutNode"
+        }
+    ],
+    "command" : {
+        "an" : "application/+/device/+/event/up",
+        "-s" : "temperature,humidity"
+    }
+
+}

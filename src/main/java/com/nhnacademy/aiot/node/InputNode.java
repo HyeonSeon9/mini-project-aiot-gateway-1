@@ -12,7 +12,7 @@ public abstract class InputNode extends ActiveNode {
 
     InputNode(JSONObject json) {
         super(json);
-
+        
     }
 
     InputNode(String name, int count) {

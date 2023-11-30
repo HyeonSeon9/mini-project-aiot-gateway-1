@@ -33,6 +33,6 @@ public class ConcatNode extends InputOutputNode {
             JSONObject object = ((JsonMessage) message).getPayload();
             
             concatAll(object);
-        }
+        }   
     }
 }
