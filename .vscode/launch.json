@@ -15,7 +15,8 @@
       "name": "Main",
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.Main",
-      "projectName": "mini-project-aiot-gateway1"
+      "projectName": "mini-project-aiot-gateway1",
+      "args": ["--an", "application/+/device/+/event/up", "-s", "temperature,humidity"]
     },
     {
       "type": "java",
@@ -23,7 +24,7 @@
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.Test",
       "projectName": "mini-project-aiot-gateway1",
-      "args": ["--an", "application/+/device/+/event/up", "-s", "temperature"]
+      "args": ["--an", "application/+/device/+/event/up", "-s", "temperature,humidity"]
     }
   ]
 }

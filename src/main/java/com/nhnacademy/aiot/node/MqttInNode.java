@@ -68,7 +68,6 @@ public class MqttInNode extends InputNode {
         }
     }
 
-    @Override
-    void postprocess() {}
+
 
 }

@@ -9,7 +9,7 @@ import com.nhnacademy.aiot.message.JsonMessage;
 
 public class SettingTopic extends InputOutputNode {
 
-    private String topic;
+
 
     public SettingTopic(String name) {
         super(name, 1, 1);
@@ -23,14 +23,11 @@ public class SettingTopic extends InputOutputNode {
         return "data/d/" + deviceId + "/p/" + place + "/e/" + sensor;
     }
 
-    @Override
-    void preprocess() {
-
-    }
 
 
     @Override
     void process() {
+        String topic;
         if (getInputWire(0) != null && getInputWire(0).hasMessage()) {
             Message message = getInputWire(0).get();
             JSONObject jsonObject = ((JsonMessage) message).getPayload();

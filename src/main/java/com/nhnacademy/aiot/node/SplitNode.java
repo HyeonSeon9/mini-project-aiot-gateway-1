@@ -14,13 +14,16 @@ import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 public class SplitNode extends InputOutputNode {
     private String aplicationName = "#";
-    private Options commandOptions;
+
     private ArrayList<String> sensors;
     private String[] args;
+    private static final String DEVICEINFO = "deviceInfo";
+    private static final String PAYLOAD = "payload";
 
     public SplitNode(String name) {
         super(name, 1, 1);
@@ -31,6 +34,7 @@ public class SplitNode extends InputOutputNode {
     }
 
     public void setOptions() {
+        Options commandOptions;
         commandOptions = new Options();
         commandOptions.addOption(null, "an", true, "application name이 주어질 경우 해당 메시지만 수신하도록 한다.");
         commandOptions.addOption("s", null, true, "Test");
@@ -53,12 +57,9 @@ public class SplitNode extends InputOutputNode {
     }
 
     void splitSensor(JSONObject jsonObject) {
-        Set<String> sensorSet =
-                jsonObject.getJSONObject("payload").getJSONObject("object").keySet();
-        // JSONObject tags = jsonObject.getJSONObject("payload").getJSONObject("object")
-        // .getJSONObject("deviceInfo").getJSONObject("tags");
-        // System.out.println("tags : " + tags);
-        if (jsonObject.getJSONObject("payload").getJSONObject("deviceInfo").get("tenantName")
+        Set<String> sensorSet = jsonObject.getJSONObject(PAYLOAD).getJSONObject("object").keySet();
+
+        if (jsonObject.getJSONObject(PAYLOAD).getJSONObject(DEVICEINFO).get("tenantName")
                 .equals("NHN Academy 경남")) {
 
             for (String s : sensorSet) {
@@ -67,17 +68,17 @@ public class SplitNode extends InputOutputNode {
                     JSONObject payload = new JSONObject();
                     payload.put("time", new Date().getTime());
                     payload.put("value",
-                            jsonObject.getJSONObject("payload").getJSONObject("object").get(s));
-                    newJson.put("payload", payload);
+                            jsonObject.getJSONObject(PAYLOAD).getJSONObject("object").get(s));
+                    newJson.put(PAYLOAD, payload);
 
-                    newJson.put("place", jsonObject.getJSONObject("payload")
-                            .getJSONObject("deviceInfo").getJSONObject("tags").get("place"));
+                    newJson.put("place", jsonObject.getJSONObject(PAYLOAD).getJSONObject(DEVICEINFO)
+                            .getJSONObject("tags").get("place"));
                     newJson.put("sensor", s);
-                    newJson.put("tenant", jsonObject.getJSONObject("payload")
-                            .getJSONObject("deviceInfo").get("tenantName"));
-                    newJson.put("deviceEui", jsonObject.getJSONObject("payload")
-                            .getJSONObject("deviceInfo").getString("devEui"));
-                    System.out.println(newJson);
+                    newJson.put("tenant", jsonObject.getJSONObject(PAYLOAD)
+                            .getJSONObject(DEVICEINFO).get("tenantName"));
+                    newJson.put("deviceEui", jsonObject.getJSONObject(PAYLOAD)
+                            .getJSONObject(DEVICEINFO).getString("devEui"));
+                    log.info(newJson.toString());
                     sendNode(newJson);
                 }
             }
