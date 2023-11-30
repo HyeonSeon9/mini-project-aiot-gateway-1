@@ -9,7 +9,7 @@ public abstract class OutputNode extends ActiveNode {
     Wire[] inputWires;
 
     OutputNode(String name) {
-        super(name);
+        this(name, 1);
     }
 
     OutputNode(String name, int count) {

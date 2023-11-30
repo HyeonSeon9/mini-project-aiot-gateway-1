@@ -3,7 +3,7 @@
     {
       "id": "22219ef19962ff50",
       "type": "MqttInNode",
-      "wire": [{ "0": "4d03156b6783f24e", "1": "test" }]
+      "wire": [{ "0": "4d03156b6783f24e" }]
     },
     {
       "id": "4d03156b6783f24e",
@@ -38,5 +38,10 @@
       "wire": []
     }
   ],
-  [{ "--an": "application/+/device/+/event/up", "-s": "temperature,humidity" }]
+  [
+    {
+      "--an": "application/+/device/+/event/up",
+      "-s": "temperature,humidity"
+    }
+  ]
 ]
