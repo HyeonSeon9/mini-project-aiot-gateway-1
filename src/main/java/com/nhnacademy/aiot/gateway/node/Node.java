@@ -53,7 +53,6 @@ public abstract class Node {
 
     public JSONObject getJson() {
         JSONObject object = new JSONObject();
-
         object.put("id", id);
         object.put("name", name);
 
