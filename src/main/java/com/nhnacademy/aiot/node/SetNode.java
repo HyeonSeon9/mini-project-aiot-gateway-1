@@ -59,12 +59,14 @@ public class SetNode extends InputOutputNode {
         for (String key : sensorKeySet) {
             if (sensors.contains(key)) {
                 JSONObject newMsg = new JSONObject();       //for문 바깥에 하면 왜 안됨? 덮어씌우기가 안되나?
-
-                newMsg.put("time", new Date().getTime());
+                JSONObject newPayload = new JSONObject();
+                newPayload.put("time", new Date().getTime());
+                newPayload.put("value",payload.getJSONObject("object").get(key));
+                newMsg.put("payload", newPayload);
+                payload.getJSONObject("deviceInfo").getJSONObject("tags").getString("branch");
                 newMsg.put("branch",payload.getJSONObject("deviceInfo").getJSONObject("tags").getString("branch"));
                 newMsg.put("place",payload.getJSONObject("deviceInfo").getJSONObject("tags").getString("place"));
                 newMsg.put("deviceId", payload.getJSONObject("deviceInfo").getString("devEui"));
-                newMsg.put("value",payload.getJSONObject("object").get(key));
                 newMsg.put("sensor",key);
                 output(new JsonMessage(newMsg));
             }

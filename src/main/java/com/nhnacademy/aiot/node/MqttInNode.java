@@ -43,14 +43,14 @@ public class MqttInNode extends InputNode {
     void process() {
         try {
                 server.subscribe("application/#", (topic, msg) -> {         // msg : 24e124fffef79304
-                    JSONObject object = new JSONObject(msg);   //바로 msg sout하면 안나옴  // object : {"retained":true,"qos":0,"payload":[26,16,50,52,101,49,50,52,102,102,102,101,102,55,57,51,49,97],"messageId":0,"id":0,"duplicate":false}
+                    JSONObject object = new JSONObject(msg);   //msg를 바로 사용하려고 하면 동작 안함 // object : {"retained":true,"qos":0,"payload":[26,16,50,52,101,49,50,52,102,102,102,101,102,55,57,51,49,97],"messageId":0,"id":0,"duplicate":false}
                     //System.out.println(new String(msg.getPayload()));       // msg에서 payload만 빼와서 byte[]로 만드는건가?
                     object.put("topic", topic);
 
                     if (topic.contains("application")) {
                         JSONObject payload = new JSONObject(new String(msg.getPayload()));
-                        //System.out.println(payload);
-                        if (payload.get("object") != null && payload.get("deviceInfo") != null) {
+                        System.out.println(payload.getJSONObject("deviceInfo").getJSONObject("tags").getString("branch").equals("gyeongnam"));
+                        if (payload.get("object") != null && payload.get("deviceInfo") != null && payload.getJSONObject("deviceInfo").getJSONObject("tags") != null ) {
                             object.put("payload", payload);
                             output(new JsonMessage(object));
                         }

@@ -13,14 +13,18 @@ public class TopicNode extends InputOutputNode {
     }
 
     void makeSendTopic(JSONObject object) {
-        String msgSensor = (String) object.get("sensor");
+        String sensor = (String) object.get("sensor");
         String deviceId = (String) object.get("deviceId");
         String place = (String) object.get("place");
-        System.out.println(msgSensor);
-        System.out.println(deviceId);
-        System.out.println(place);
 
-        topic = "data/d/" + deviceId + "/e/p/" + place +"/temperature/#";
+        topic = "data/d/" + deviceId + "/e/p/" + place +"/"+ sensor +"/#";
+        object.put("topic", topic);
+        
+        sendNode(object);
+    }
+
+    void sendNode(JSONObject object) {
+        output(new JsonMessage(object));
     }
 
     @Override
