@@ -1,29 +1,35 @@
 package com.nhnacademy.aiot.gateway.Node;
 
+import java.util.UUID;
+import org.json.JSONObject;
+
+import com.nhnacademy.aiot.gateway.Exception.AlreadyExistsException;
+
+
 public abstract class ActiveNode extends Node implements Runnable {
+    public static final long DEFAULT_INTERVAL = 1;
     Thread thread;
-    boolean running;
-    long interval = 1000;
+
+    long interval = DEFAULT_INTERVAL;
 
     ActiveNode() {
         super();
-        thread = new Thread(this, getId());
-        running = false;
+    }
+
+    ActiveNode(JSONObject json) {
+        super(json);
+
+        if (json.has("interval")) {
+            interval = (long) json.get("interval");
+        }
     }
 
     ActiveNode(String name) {
-        this();
-        setName(name);
+        super(name);
     }
 
-    @Override
-    public String getName() {
-        return thread.getName();
-    }
-
-    @Override
-    public void setName(String name) {
-        thread.setName(name);
+    ActiveNode(String name, UUID id) {
+        super(name, id);
     }
 
     public long getInterval() {
@@ -34,37 +40,41 @@ public abstract class ActiveNode extends Node implements Runnable {
         this.interval = interval;
     }
 
-    public void start() {
+    public synchronized void start() {
+        if (thread != null) {
+            throw new AlreadyExistsException();
+        }
+
+        thread = new Thread(this, getName());
         thread.start();
     }
 
-    public void stop() {
-        running = false;
-        thread.interrupt();
+    public synchronized void stop() {
+        if (thread != null) {
+            thread.interrupt();
+        }
     }
 
-    void preprocess() {
-        //
+    public synchronized boolean isAlive() {
+        return (thread != null) && thread.isAlive();
     }
 
-    void process() {
-        //
-    }
+    void preprocess() {}
 
-    void postprocess() {
-        //
+    void process() {}
+
+    synchronized void postprocess() {
+        thread = null;
     }
 
     @Override
     public void run() {
         preprocess();
 
-        running = true;
-
         long startTime = System.currentTimeMillis();
         long previousTime = startTime;
 
-        while (running) {
+        while (isAlive()) {
             long currentTime = System.currentTimeMillis();
             long elapsedTime = currentTime - previousTime;
 
@@ -73,13 +83,23 @@ public abstract class ActiveNode extends Node implements Runnable {
                     process();
                     Thread.sleep(interval - elapsedTime);
                 } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
+                    stop();
                 }
             }
 
-            previousTime = startTime + (System.currentTimeMillis() - startTime) / interval * interval;
+            previousTime =
+                    startTime + (System.currentTimeMillis() - startTime) / interval * interval;
         }
 
         postprocess();
-    } 
+    }
+
+    @Override
+    public JSONObject getJson() {
+        JSONObject object = super.getJson();
+
+        object.put("interval", interval);
+
+        return object;
+    }
 }

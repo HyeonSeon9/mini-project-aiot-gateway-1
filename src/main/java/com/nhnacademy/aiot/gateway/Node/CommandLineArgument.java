@@ -37,6 +37,7 @@ public class CommandLineArgument {
     }
 
     public static void main(String[] args) {
+
         CommandLineArgument commandLineArgument = new CommandLineArgument();
         Options options = new Options();
 
