@@ -50,7 +50,7 @@ public class SplitNode extends InputOutputNode {
                 sensors = new ArrayList<>(List.of(commandLine.getOptionValue("s").split(",")));
             }
         } catch (ParseException e) {
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp("test", commandOptions);
         }
