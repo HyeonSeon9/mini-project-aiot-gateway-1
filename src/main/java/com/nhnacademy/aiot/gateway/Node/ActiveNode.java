@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.gateway;
+package com.nhnacademy.aiot.gateway.Node;
 
 public abstract class ActiveNode extends Node implements Runnable {
     Thread thread;

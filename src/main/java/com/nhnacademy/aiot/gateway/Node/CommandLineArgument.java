@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.gateway;
+package com.nhnacademy.aiot.gateway.Node;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -12,6 +12,7 @@ public class CommandLineArgument {
         if (appName != null) {
             // 프로그램 옵션으로 Application Name을 줄 수 있으며 
             // application name이 주어질 경우 해당 메시지만 수신하도록 한다.
+
         }
 
     }

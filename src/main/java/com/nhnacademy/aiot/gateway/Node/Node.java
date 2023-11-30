@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.gateway;
+package com.nhnacademy.aiot.gateway.Node;
 
 import lombok.extern.slf4j.Slf4j;
 
