@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "SettingNode",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.gateway.SettingNode",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
       "name": "JsonTest",
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.JsonTest",
