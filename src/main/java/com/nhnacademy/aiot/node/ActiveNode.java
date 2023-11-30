@@ -1,12 +1,12 @@
+
 package com.nhnacademy.aiot.node;
 
 import java.util.UUID;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.exception.AlreadyStartedException;
 
-
 public abstract class ActiveNode extends Node implements Runnable {
-    public static final long DEFAULT_INTERVAL = 1;
+    public static final long DEFAULT_INTERVAL = 10;
     Thread thread;
 
     long interval = DEFAULT_INTERVAL;
@@ -78,12 +78,11 @@ public abstract class ActiveNode extends Node implements Runnable {
             long elapsedTime = currentTime - previousTime;
 
             if (elapsedTime < interval) {
-                try {
-                    process();
-                    Thread.sleep(interval - elapsedTime);
-                } catch (InterruptedException e) {
-                    stop();
-                }
+
+                process();
+
+                stop();
+
             }
 
             previousTime =

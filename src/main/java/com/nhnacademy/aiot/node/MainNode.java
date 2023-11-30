@@ -1,14 +1,11 @@
-package com.nhnacademy.aiot.gateway;
+package com.nhnacademy.aiot.node;
 
-import com.nhnacademy.aiot.node.MqttInNode;
-import com.nhnacademy.aiot.node.MqttOutNode;
-import com.nhnacademy.aiot.node.SettingTopic;
-import com.nhnacademy.aiot.node.SplitNode;
-import com.nhnacademy.aiot.node.TransKorea;
 import com.nhnacademy.aiot.wire.BufferedWire;
 import com.nhnacademy.aiot.wire.Wire;
 
-public class Test {
+public class MainNode {
+
+
     public static void main(String[] args) {
         MqttInNode mqin = new MqttInNode();
         SplitNode split = new SplitNode("splitNode");
@@ -37,5 +34,6 @@ public class Test {
         topic.start();
         korea.start();
         mqttOut.start();
+
     }
 }

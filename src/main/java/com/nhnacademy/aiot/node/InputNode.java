@@ -1,5 +1,6 @@
 package com.nhnacademy.aiot.node;
 
+import java.rmi.AlreadyBoundException;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.exception.AlreadyExistsException;
 import com.nhnacademy.aiot.exception.InvalidArgumentException;
@@ -7,7 +8,8 @@ import com.nhnacademy.aiot.exception.OutOfBoundsException;
 import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.wire.Wire;
 
-public abstract class InputNode extends ActiveNode {
+
+public class InputNode extends ActiveNode {
     Wire[] outputWires;
 
     InputNode(JSONObject json) {
@@ -60,7 +62,6 @@ public abstract class InputNode extends ActiveNode {
     }
 
     void output(Message message) {
-        log.trace("Message Out");
         for (Wire wire : outputWires) {
             if (wire != null) {
                 wire.put(message);

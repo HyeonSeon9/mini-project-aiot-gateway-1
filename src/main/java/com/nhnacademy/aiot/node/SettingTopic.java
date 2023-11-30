@@ -1,30 +1,33 @@
 package com.nhnacademy.aiot.node;
 
+import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.json.JSONObject;
-import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
+import com.nhnacademy.aiot.message.JsonMessage;
 
-public class ReduceTopicNode extends InputOutputNode {
+
+
+public class SettingTopic extends InputOutputNode {
+
     private String topic;
 
-    ReduceTopicNode(String name) {
-        super(1, 1);
-        // TODO Auto-generated constructor stub
+    public SettingTopic(String name) {
+        super(name, 1, 1);
     }
 
-
     public String makeTopic(JSONObject jsonObject) {
-        String devEui = jsonObject.getString("devEui");
+        String deviceId = jsonObject.getString("deviceEui");
         String place = jsonObject.getString("place");
         String sensor = jsonObject.getString("sensor");
-        return "data/d" + devEui + "/p/" + place + "/e/" + sensor;
 
+        return "data/d/" + deviceId + "/p/" + place + "/e/" + sensor;
     }
 
     @Override
     void preprocess() {
 
     }
+
 
     @Override
     void process() {
@@ -33,12 +36,9 @@ public class ReduceTopicNode extends InputOutputNode {
             JSONObject jsonObject = ((JsonMessage) message).getPayload();
 
             topic = makeTopic(jsonObject);
-
             jsonObject.put("topic", topic);
             output(new JsonMessage(jsonObject));
         }
     }
-
-
 
 }

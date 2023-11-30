@@ -5,7 +5,7 @@ import com.nhnacademy.aiot.exception.InvalidArgumentException;
 import com.nhnacademy.aiot.exception.OutOfBoundsException;
 import com.nhnacademy.aiot.wire.Wire;
 
-public abstract class OutputNode extends ActiveNode {
+public class OutputNode extends ActiveNode {
     Wire[] inputWires;
 
     OutputNode(String name, int count) {

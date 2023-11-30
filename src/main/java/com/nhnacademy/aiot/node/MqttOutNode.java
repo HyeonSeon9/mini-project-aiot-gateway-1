@@ -5,30 +5,36 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.internal.wire.MqttConnect;
 import org.json.JSONObject;
-import com.nhnacademy.aiot.message.JsonMessage;
+
+import com.github.f4b6a3.uuid.UuidCreator;
 import com.nhnacademy.aiot.message.Message;
+import com.nhnacademy.aiot.message.JsonMessage;
+
 
 public class MqttOutNode extends OutputNode {
     private IMqttClient local = null;
     private MqttConnectOptions options;
 
-    MqttOutNode(int count) {
-        super(count);
-    }
-
     public MqttOutNode() {
         super(1);
+    }
+
+    MqttOutNode(int count) {
+        super(count);
     }
 
     public MqttOutNode(String name, int count) {
         super(name, count);
     }
 
+    MqttOutNode(String name) {
+        super(name, 1);
+    }
+
     public void connectLocalHost() {
         try {
-            local = new MqttClient("tpc://localhost", super.getId().toString());
+            local = new MqttClient("tcp://localhost:1883", UuidCreator.getTimeBased().toString());
             options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
@@ -36,12 +42,11 @@ public class MqttOutNode extends OutputNode {
             options.setKeepAliveInterval(1000);
             options.setWill("test/will", "Disconnected".getBytes(), 2, false);
             local.connect(options);
-
         } catch (MqttException e) {
 
         }
-
     }
+
 
     @Override
     void preprocess() {
@@ -51,7 +56,8 @@ public class MqttOutNode extends OutputNode {
     @Override
     void process() {
 
-        if ((getInputWire(0) != null) && (getInputWire(0).hasMessage())) {
+        if (((getInputWire(0) != null) && (getInputWire(0).hasMessage()))) {
+
             try {
                 Message message = getInputWire(0).get();
                 JSONObject jsonObject = ((JsonMessage) message).getPayload();
@@ -66,11 +72,10 @@ public class MqttOutNode extends OutputNode {
                 System.out.println(mqttMessage);
                 local.publish(topic, mqttMessage);
             } catch (MqttException e) {
-
             }
         }
     }
 
-
-
+    @Override
+    synchronized void postprocess() {}
 }
