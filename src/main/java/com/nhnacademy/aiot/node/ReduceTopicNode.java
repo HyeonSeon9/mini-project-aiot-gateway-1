@@ -31,8 +31,6 @@ public class ReduceTopicNode extends InputOutputNode {
 
     // data/d/24e124136d 151547/p/창고/e/temperature:msg.payload:
 
-    @Override
-    void preprocess() {}
 
     @Override
     void process() {
@@ -41,15 +39,11 @@ public class ReduceTopicNode extends InputOutputNode {
             Message message = getInputWire(0).get();
             JSONObject jsonObject = ((JsonMessage) message).getPayload();
 
-            topic = makeTopic(jsonObject);
+            this.topic = makeTopic(jsonObject);
 
             jsonObject.put("topic", topic);
             output(new JsonMessage(jsonObject));
         }
     }
-
-    @Override
-    synchronized void postprocess() {}
-
 
 }

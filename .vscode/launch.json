@@ -11,7 +11,7 @@
       "mainClass": "com.nhnacademy.aiot.gateway.SimpleNodeRed",
       "projectName": "mini-project-aiot-gateway1",
       "args": [
-        // "-c",
+        "-c",
         "--an",
         "application/+/device/+/event/up",
         "-s",

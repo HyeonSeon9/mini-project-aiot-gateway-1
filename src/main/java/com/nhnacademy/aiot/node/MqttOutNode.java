@@ -62,9 +62,4 @@ public class MqttOutNode extends OutputNode {
         }
     }
 
-    @Override
-    synchronized void postprocess() {}
-
-
-
 }

@@ -18,9 +18,6 @@ public class PlaceTranslatorNode extends InputOutputNode {
     }
 
     @Override
-    void preprocess() {}
-
-    @Override
     void process() {
         if (((getInputWire(0) != null) && (getInputWire(0).hasMessage()))) {
             Message message = getInputWire(0).get();
