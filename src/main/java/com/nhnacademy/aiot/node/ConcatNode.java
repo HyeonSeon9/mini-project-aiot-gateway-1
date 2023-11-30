@@ -1,6 +1,5 @@
 package com.nhnacademy.aiot.node;
 
-import org.apache.logging.log4j.core.config.json.JsonConfiguration;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
@@ -25,11 +24,6 @@ public class ConcatNode extends InputOutputNode {
 
     void sendNode(JSONObject object) {
         output(new JsonMessage(object));
-    }
-
-    @Override
-    void preprocess() {
-        
     }
 
     @Override

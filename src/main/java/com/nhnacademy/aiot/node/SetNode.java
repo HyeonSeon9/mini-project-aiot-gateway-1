@@ -10,6 +10,7 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.message.JsonMessage;
@@ -39,16 +40,18 @@ public class SetNode extends InputOutputNode {
         CommandLine commandLine;
         try {
             commandLine = parser.parse(options, args);
-            
+
             if (commandLine.hasOption("an")) {
                 an = commandLine.getOptionValue("an");  // application/+/device/+/event/up
             }
             if (commandLine.hasOption("s")) {
                 sensors = new ArrayList<>(List.of(commandLine.getOptionValue("s").split(",")));
             }
-        } catch (Exception e) {
-            // TODO: handle exception
+        } catch (ParseException e) {
+            log.info("{} : setOptions()메서드 {} 발생", getClass().getSimpleName(), e.getClass());
+            e.printStackTrace();
         }
+        
     }
 
     void setPayload (JSONObject payload) {
@@ -83,10 +86,9 @@ public class SetNode extends InputOutputNode {
         if ((getInputWire(0) != null) && (getInputWire(0).hasMessage())) {
             Message message = getInputWire(0).get();
             JSONObject object = ((JsonMessage) message).getPayload();   //JsonMessage의 getPayload()
-            if (message instanceof JsonMessage) {
-                if(MqttTopic.isMatched(an, object.getString("topic"))) {
+            if (message instanceof JsonMessage && (MqttTopic.isMatched(an, object.getString("topic")))) {
                     setPayload(object.getJSONObject("payload"));
-                }
+                
             }
         }
     }

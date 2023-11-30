@@ -6,8 +6,6 @@ import com.nhnacademy.aiot.message.Message;
 
 public class TopicNode extends InputOutputNode {
 
-    private String topic;
-
     public TopicNode(String name, int inCount, int outCount) {
         super(name, inCount, outCount);
     }
@@ -17,7 +15,7 @@ public class TopicNode extends InputOutputNode {
         String deviceId = (String) object.get("deviceId");
         String place = (String) object.get("place");
 
-        topic = "data/d/" + deviceId + "/e/p/" + place +"/"+ sensor +"/";
+        String topic = "data/d/" + deviceId + "/e/p/" + place +"/"+ sensor +"/";
         object.put("topic", topic);
         
         sendNode(object);
@@ -25,10 +23,6 @@ public class TopicNode extends InputOutputNode {
 
     void sendNode(JSONObject object) {
         output(new JsonMessage(object));
-    }
-
-    @Override
-    void preprocess() {
     }
 
     @Override
