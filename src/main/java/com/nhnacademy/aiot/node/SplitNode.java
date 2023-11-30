@@ -2,14 +2,7 @@ package com.nhnacademy.aiot.node;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
 import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.message.JsonMessage;
@@ -17,42 +10,18 @@ import com.nhnacademy.aiot.message.Message;
 
 public class SplitNode extends InputOutputNode {
     private String aplicationName = "#";
-    private Options commandOptions;
     private ArrayList<String> sensors;
-    private String[] args;
 
-    public SplitNode() {
-        super(1, 1);
+    public SplitNode(String name, int count) {
+        super(name, count, count);
     }
 
-    public SplitNode(String name) {
-        super(name, 1, 1);
+    public void setAplicationName(String aplicationName) {
+        this.aplicationName = aplicationName;
     }
 
-    public void setCommand(String[] args) {
-        this.args = args;
-    }
-
-    public void setOptions() {
-        commandOptions = new Options();
-        commandOptions.addOption(null, "an", true, "application name이 주어질 경우 해당 메시지만 수신하도록 한다.");
-        commandOptions.addOption("s", null, true, "Test");
-        CommandLineParser parser = new DefaultParser();
-        CommandLine commandLine;
-        try {
-            commandLine = parser.parse(commandOptions, args);
-
-            if (commandLine.hasOption("an")) {
-                this.aplicationName = commandLine.getOptionValue("an");
-            }
-            if (commandLine.hasOption("s")) {
-                sensors = new ArrayList<>(List.of(commandLine.getOptionValue("s").split(",")));
-            }
-        } catch (ParseException e) {
-            System.err.println(e.getMessage());
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("test", commandOptions);
-        }
+    public void setSensors(ArrayList<String> sensors) {
+        this.sensors = sensors;
     }
 
     void splitSensor(JSONObject jsonObject) {
@@ -84,11 +53,6 @@ public class SplitNode extends InputOutputNode {
 
     void sendNode(JSONObject jsonObject) {
         output(new JsonMessage(jsonObject));
-    }
-
-    @Override
-    void preprocess() {
-        setOptions();
     }
 
     @Override

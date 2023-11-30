@@ -7,21 +7,26 @@ import com.nhnacademy.aiot.message.Message;
 public class ReduceTopicNode extends InputOutputNode {
     private String topic;
 
-    public ReduceTopicNode() {
-        super(1, 1);
-    }
-
-    public ReduceTopicNode(String name) {
-        super(name, 1, 1);
+    public ReduceTopicNode(String name, int count) {
+        super(name, count, count);
     }
 
 
     public String makeTopic(JSONObject jsonObject) {
+        StringBuilder stringBuilder = new StringBuilder();
         String devEui = jsonObject.getString("deviceEui");
         String place = jsonObject.getString("place");
         String sensor = jsonObject.getString("sensor");
 
-        return "data/d/" + devEui + "/p/" + place + "/e/" + sensor;
+        stringBuilder.append("data/d/");
+        stringBuilder.append(devEui);
+        stringBuilder.append("/p/");
+        stringBuilder.append(place);
+        stringBuilder.append("/e/");
+        stringBuilder.append(sensor);
+
+
+        return stringBuilder.toString();
     }
 
     // data/d/24e124136d 151547/p/창고/e/temperature:msg.payload:

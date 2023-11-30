@@ -6,6 +6,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "SimpleNodeRed",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.gateway.SimpleNodeRed",
+      "projectName": "mini-project-aiot-gateway1",
+      "args": [
+        // "-c",
+        "--an",
+        "application/+/device/+/event/up",
+        "-s",
+        "temperature"
+      ]
+    },
+    {
+      "type": "java",
       "name": "SettingNode",
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.SettingNode",
@@ -37,7 +51,13 @@
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.Test",
       "projectName": "mini-project-aiot-gateway1",
-      "args": ["--an", "application/+/device/+/event/up", "-s", "temperature"]
+      "args": [
+        "-c",
+        "--an",
+        "application/+/device/+/event/up",
+        "-s",
+        "temperature"
+      ]
     }
   ]
 }

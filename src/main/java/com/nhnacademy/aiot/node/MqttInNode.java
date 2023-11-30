@@ -11,17 +11,8 @@ public class MqttInNode extends InputNode {
     private IMqttClient server = null;
     private MqttConnectOptions options;
 
-
-    public MqttInNode() {
-        this(1);
-    }
-
-    public MqttInNode(String name) {
-        super(name);
-    }
-
-    public MqttInNode(int count) {
-        super(count);
+    public MqttInNode(String name, int count) {
+        super(name, count);
     }
 
 
@@ -67,11 +58,9 @@ public class MqttInNode extends InputNode {
     @Override
     void process() {
         if (!server.isConnected()) {
+            connectServer();
             serverSubscribe();
         }
     }
-
-    @Override
-    void postprocess() {}
 
 }

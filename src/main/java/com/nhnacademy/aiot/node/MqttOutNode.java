@@ -14,18 +14,6 @@ public class MqttOutNode extends OutputNode {
     private IMqttClient local = null;
     private MqttConnectOptions options;
 
-    public MqttOutNode() {
-        super(1);
-    }
-
-    public MqttOutNode(int count) {
-        super(count);
-    }
-
-    public MqttOutNode(String name) {
-        this(name, 1);
-    }
-
     public MqttOutNode(String name, int count) {
         super(name, count);
     }

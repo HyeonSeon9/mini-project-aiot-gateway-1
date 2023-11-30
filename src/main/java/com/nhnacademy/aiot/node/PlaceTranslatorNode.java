@@ -1,7 +1,6 @@
 package com.nhnacademy.aiot.node;
 
 import java.util.HashMap;
-import java.util.Map;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
@@ -10,20 +9,16 @@ public class PlaceTranslatorNode extends InputOutputNode {
     HashMap<String, String> placeInfo;
     private String place;
 
-    public PlaceTranslatorNode() {
-        super(1, 1);
-    }
-
-    public PlaceTranslatorNode(String name) {
+    public PlaceTranslatorNode(String name, int count) {
         super(name, 1, 1);
     }
 
-    @Override
-    void preprocess() {
-        placeInfo = new HashMap<>(Map.of("class_a", "강의실 A", "class_b", "강의실 B", "server_room",
-                "서버실", "lobby", "로비", "office", "사무실", "storage", "창고", "meeting_room", "미팅룸",
-                "pair_room", "페어룸", "냉장고", "냉장고"));
+    public void setPlaceInfo(HashMap<String, String> placeInfo) {
+        this.placeInfo = placeInfo;
     }
+
+    @Override
+    void preprocess() {}
 
     @Override
     void process() {

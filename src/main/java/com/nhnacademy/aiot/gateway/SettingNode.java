@@ -8,23 +8,32 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import com.nhnacademy.aiot.node.ActiveNode;
+import com.nhnacademy.aiot.node.PlaceTranslatorNode;
 import com.nhnacademy.aiot.node.SplitNode;
 import com.nhnacademy.aiot.wire.BufferedWire;
 import com.nhnacademy.aiot.wire.Wire;
 
 public class SettingNode {
-    protected final static String settingPath =
+    protected static String settingPath =
             "src/main/java/com/nhnacademy/aiot/setting/nodeSetting.json";
-    protected final static String path = "com.nhnacademy.aiot.node.";
+    protected static String path = "com.nhnacademy.aiot.node.";
+
     private HashMap<String, ActiveNode> nodeList;
     private HashMap<String, List<String>> wireMap;
+
     private ArrayList<String> splitOption;
     private Object object;
+
+    private String aplicationName = "#";
+    private ArrayList<String> sensors;
+
+    private boolean commandLine;
 
     public SettingNode() {
         this.nodeList = new HashMap<>();
@@ -36,6 +45,22 @@ public class SettingNode {
         }
     }
 
+    public void commandLineOn() {
+        this.commandLine = true;
+    }
+
+    public boolean isCommandLine() {
+        return this.commandLine;
+    }
+
+    public void setAplicationName(String aplicationName) {
+        this.aplicationName = aplicationName;
+    }
+
+    public void setSensors(ArrayList<String> sensors) {
+        this.sensors = sensors;
+    }
+
     public void makeFlow() {
 
         try {
@@ -44,8 +69,8 @@ public class SettingNode {
                 String nodeType = (String) ((JSONObject) node).get("type");
                 String nodeId = (String) ((JSONObject) node).get("id");
                 Class<?> nodeClass = Class.forName(path + nodeType);
-                Constructor<?> nodeConstructor = nodeClass.getConstructor(String.class);
-                Object newObj = nodeConstructor.newInstance(nodeId);
+                Constructor<?> nodeConstructor = nodeClass.getConstructor(String.class, int.class);
+                Object newObj = nodeConstructor.newInstance(nodeId, 1);
                 nodeList.put(nodeId, (ActiveNode) newObj);
                 JSONArray wireInfo = (JSONArray) ((JSONObject) node).get("wire");
                 if (!wireInfo.isEmpty()) {
@@ -90,22 +115,34 @@ public class SettingNode {
     public void nodeStart() {
         for (ActiveNode node : nodeList.values()) {
             if (node instanceof SplitNode) {
-                ((SplitNode) node).setCommand(getArgs());
+                splitNodeSetup(((SplitNode) node));
+            } else if (node instanceof PlaceTranslatorNode) {
+                ((PlaceTranslatorNode) node).setPlaceInfo(new HashMap<>(Map.of("class_a", "강의실 A",
+                        "class_b", "강의실 B", "server_room", "서버실", "lobby", "로비", "office", "사무실",
+                        "storage", "창고", "meeting_room", "미팅룸", "pair_room", "페어룸", "냉장고", "냉장고")));
             }
             node.start();
         }
     }
 
-    private String[] getArgs() {
+    public void splitNodeSetup(SplitNode node) {
+        if (isCommandLine()) {
+            node.setAplicationName(aplicationName);
+            node.setSensors(sensors);
+            return;
+        }
+        setSplitOption(node);
+    }
+
+    private void setSplitOption(SplitNode node) {
         JSONArray flowJson = ((JSONArray) object);
         for (Object setting : (JSONArray) flowJson.get(1)) {
-            String anValue = (String) ((JSONObject) setting).get("--an");
-            splitOption.add("--an");
-            splitOption.add(anValue);
-            String sensor = (String) ((JSONObject) setting).get("-s");
-            splitOption.add("-s");
-            splitOption.add(sensor);
+            this.aplicationName = (String) ((JSONObject) setting).get("--an");
+
+            this.sensors = new ArrayList<>(
+                    List.of(((String) ((JSONObject) setting).get("-s")).split(",")));
+            node.setAplicationName(aplicationName);
+            node.setSensors(sensors);
         }
-        return splitOption.toArray(String[]::new);
     }
 }

@@ -41,7 +41,7 @@
   [
     {
       "--an": "application/+/device/+/event/up",
-      "-s": "temperature"
+      "-s": "temperature,humidity"
     }
   ]
 ]
