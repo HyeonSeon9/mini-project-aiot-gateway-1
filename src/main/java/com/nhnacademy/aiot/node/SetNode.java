@@ -41,7 +41,7 @@ public class SetNode extends InputOutputNode {
             commandLine = parser.parse(options, args);
             
             if (commandLine.hasOption("an")) {
-                an = commandLine.getOptionValue("an");  //application/+/device/+/event/up
+                an = commandLine.getOptionValue("an");  // application/+/device/+/event/up
             }
             if (commandLine.hasOption("s")) {
                 sensors = new ArrayList<>(List.of(commandLine.getOptionValue("s").split(",")));

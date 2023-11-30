@@ -49,8 +49,7 @@ public class MqttInNode extends InputNode {
 
                     if (topic.contains("application")) {
                         JSONObject payload = new JSONObject(new String(msg.getPayload()));
-                        System.out.println(payload.getJSONObject("deviceInfo").getJSONObject("tags").getString("branch").equals("gyeongnam"));
-                        if (payload.get("object") != null && payload.get("deviceInfo") != null && payload.getJSONObject("deviceInfo").getJSONObject("tags") != null ) {
+                        if (!payload.getJSONObject("deviceInfo").getString("tenantName").equals("외부 시연") && !payload.getJSONObject("deviceInfo").getString("tenantName").equals("NHN Academy 광주")) {
                             object.put("payload", payload);
                             output(new JsonMessage(object));
                         }

@@ -17,7 +17,7 @@ public class TopicNode extends InputOutputNode {
         String deviceId = (String) object.get("deviceId");
         String place = (String) object.get("place");
 
-        topic = "data/d/" + deviceId + "/e/p/" + place +"/"+ sensor +"/#";
+        topic = "data/d/" + deviceId + "/e/p/" + place +"/"+ sensor +"/";
         object.put("topic", topic);
         
         sendNode(object);

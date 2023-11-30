@@ -10,6 +10,7 @@ import com.nhnacademy.aiot.wire.BufferedWire;
 import com.nhnacademy.aiot.wire.Wire;
 
 public class Test {
+    
     public static void main(String[] args) {
         MqttInNode mqttIn = new MqttInNode();
         //TerminalOutNode out = new TerminalOutNode();
