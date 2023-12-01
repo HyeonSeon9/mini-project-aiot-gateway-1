@@ -7,7 +7,6 @@ import com.nhnacademy.aiot.message.Message;
 
 public class PlaceTranslatorNode extends InputOutputNode {
     HashMap<String, String> placeInfo;
-    private String place;
 
     public PlaceTranslatorNode(String name, int count) {
         super(name, 1, 1);

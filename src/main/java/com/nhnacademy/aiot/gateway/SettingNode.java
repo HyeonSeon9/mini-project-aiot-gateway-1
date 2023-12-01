@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -26,19 +31,16 @@ public class SettingNode {
 
     private HashMap<String, ActiveNode> nodeList;
     private HashMap<String, List<String>> wireMap;
-
-    private ArrayList<String> splitOption;
     private Object object;
 
     private String aplicationName = "#";
     private ArrayList<String> sensors;
 
-    private boolean commandLine;
+    private boolean checkcommand;
 
     public SettingNode() {
         this.nodeList = new HashMap<>();
         this.wireMap = new HashMap<>();
-        this.splitOption = new ArrayList<>();
         try {
             this.object = new JSONParser().parse(new FileReader(settingPath));
         } catch (IOException | ParseException e) {
@@ -46,11 +48,11 @@ public class SettingNode {
     }
 
     public void commandLineOn() {
-        this.commandLine = true;
+        this.checkcommand = true;
     }
 
     public boolean isCommandLine() {
-        return this.commandLine;
+        return this.checkcommand;
     }
 
     public void setAplicationName(String aplicationName) {
@@ -145,4 +147,33 @@ public class SettingNode {
             node.setSensors(sensors);
         }
     }
+
+    public void checkCommandLine(String[] args) {
+        Options commandOptions = new Options();
+        commandOptions.addOption("c", null, false, "Test");
+        commandOptions.addOption(null, "an", true, "application name이 주어질 경우 해당 메시지만 수신하도록 한다.");
+        commandOptions.addOption("s", null, true, "Test");
+        CommandLineParser parser = new DefaultParser();
+        CommandLine commandLine;
+
+        try {
+            commandLine = parser.parse(commandOptions, args);
+
+            if (commandLine.hasOption("c")) {
+                commandLineOn();
+            }
+            if (commandLine.hasOption("an")) {
+                setAplicationName(commandLine.getOptionValue("an"));
+            }
+            if (commandLine.hasOption("s")) {
+                setSensors(new ArrayList<>(List.of(commandLine.getOptionValue("s").split(","))));
+            }
+        } catch (org.apache.commons.cli.ParseException e) {
+            System.err.println(e.getMessage());
+            HelpFormatter formatter = new HelpFormatter();
+            formatter.printHelp("test", commandOptions);
+        }
+
+    }
+
 }
