@@ -78,6 +78,7 @@ public class SettingNode {
                 Constructor<?> nodeConstructor = nodeClass.getConstructor(String.class, int.class);
                 Object newObj = nodeConstructor.newInstance(nodeId, 1);
                 nodeList.put(nodeId, (ActiveNode) newObj);
+
                 JSONArray wireInfo = (JSONArray) ((JSONObject) node).get("wire");
                 if (!wireInfo.isEmpty()) {
                     List<String> wireOutList = new ArrayList<>();
