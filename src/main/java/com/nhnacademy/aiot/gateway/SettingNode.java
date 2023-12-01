@@ -37,7 +37,7 @@ public class SettingNode {
     private Object object;
 
     private String aplicationName = "#";
-    private ArrayList<String> sensors;
+    private List<String> sensors;
 
     private boolean checkcommand;
 
@@ -47,6 +47,7 @@ public class SettingNode {
         try {
             this.object = new JSONParser().parse(new FileReader(settingPath));
         } catch (IOException | ParseException e) {
+
         }
     }
 
@@ -62,7 +63,7 @@ public class SettingNode {
         this.aplicationName = aplicationName;
     }
 
-    public void setSensors(ArrayList<String> sensors) {
+    public void setSensors(List<String> sensors) {
         this.sensors = sensors;
     }
 
@@ -79,14 +80,15 @@ public class SettingNode {
                 nodeList.put(nodeId, (ActiveNode) newObj);
                 JSONArray wireInfo = (JSONArray) ((JSONObject) node).get("wire");
                 if (!wireInfo.isEmpty()) {
-                    List<String> WireOutList = new ArrayList<>();
+                    List<String> wireOutList = new ArrayList<>();
                     for (Object w : wireInfo) {
-                        ((JSONObject) w).forEach((key, value) -> WireOutList.add((String) value));
+                        Iterable<?> iter = ((JSONObject) w).values();
+                        iter.forEach(value -> wireOutList.add((String) value));
 
                     }
-                    wireMap.put(nodeId, WireOutList);
-
+                    wireMap.put(nodeId, wireOutList);
                 }
+
             }
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException
                 | IllegalAccessException | InvocationTargetException e) {
@@ -105,7 +107,6 @@ public class SettingNode {
                             int.class, Wire.class);
                     Method connectInputWire = outputNode.getClass().getMethod("connectInputWire",
                             int.class, Wire.class);
-
                     connectOutputWire.invoke(inputNode, 0, wire);
                     connectInputWire.invoke(outputNode, 0, wire);
 
@@ -113,7 +114,7 @@ public class SettingNode {
             }
         } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
-
+            log.error("error-", e);
         }
     }
 
