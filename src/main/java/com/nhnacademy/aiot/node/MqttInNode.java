@@ -11,13 +11,8 @@ public class MqttInNode extends InputNode {
     private IMqttClient server = null;
     private MqttConnectOptions options;
 
-
-    public MqttInNode() {
-        this(1);
-    }
-
-    public MqttInNode(int count) {
-        super(count);
+    public MqttInNode(String name, int count) {
+        super(name, count);
     }
 
 
@@ -33,17 +28,11 @@ public class MqttInNode extends InputNode {
             options.setWill("test/will", "Disconnected".getBytes(), 2, false);
             server.connect(options);
         } catch (MqttException e) {
-
+            log.error("error-", e);
         }
     }
 
-    @Override
-    void preprocess() {
-        connectServer();
-    }
-
-    @Override
-    void process() {
+    public void serverSubscribe() {
         try {
             server.subscribe("#", (topic, msg) -> {
                 JSONObject jsonObject = new JSONObject(msg);
@@ -57,10 +46,22 @@ public class MqttInNode extends InputNode {
                 }
             });
         } catch (MqttException e) {
+            log.error("error-", e);
         }
     }
 
     @Override
-    void postprocess() {}
+    void preprocess() {
+        connectServer();
+        serverSubscribe();
+    }
+
+    @Override
+    void process() {
+        if (!server.isConnected()) {
+            connectServer();
+            serverSubscribe();
+        }
+    }
 
 }

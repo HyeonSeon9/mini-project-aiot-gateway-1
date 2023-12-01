@@ -6,21 +6,13 @@ import com.nhnacademy.aiot.exception.AlreadyStartedException;
 
 
 public abstract class ActiveNode extends Node implements Runnable {
-    public static final long DEFAULT_INTERVAL = 10;
+    public static final long DEFAULT_INTERVAL = 1;
     Thread thread;
 
     long interval = DEFAULT_INTERVAL;
 
     ActiveNode() {
         super();
-    }
-
-    ActiveNode(JSONObject json) {
-        super(json);
-
-        if (json.has("interval")) {
-            interval = (long) json.get("interval");
-        }
     }
 
     ActiveNode(String name) {
@@ -76,12 +68,11 @@ public abstract class ActiveNode extends Node implements Runnable {
         while (isAlive()) {
             long currentTime = System.currentTimeMillis();
             long elapsedTime = currentTime - previousTime;
-
             if (elapsedTime < interval) {
                 try {
                     process();
-                    Thread.sleep(interval - elapsedTime);
-                } catch (InterruptedException e) {
+                    // Thread.sleep(interval - elapsedTime);
+                } catch (Exception e) {
                     stop();
                 }
             }

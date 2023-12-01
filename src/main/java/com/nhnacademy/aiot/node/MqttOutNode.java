@@ -14,15 +14,7 @@ public class MqttOutNode extends OutputNode {
     private IMqttClient local = null;
     private MqttConnectOptions options;
 
-    public MqttOutNode() {
-        super(1);
-    }
-
-    MqttOutNode(int count) {
-        super(count);
-    }
-
-    MqttOutNode(String name, int count) {
+    public MqttOutNode(String name, int count) {
         super(name, count);
     }
 
@@ -37,7 +29,7 @@ public class MqttOutNode extends OutputNode {
             options.setWill("test/will", "Disconnected".getBytes(), 2, false);
             local.connect(options);
         } catch (MqttException e) {
-
+            log.error("error-", e);
         }
     }
 
@@ -66,13 +58,9 @@ public class MqttOutNode extends OutputNode {
                 System.out.println(mqttMessage);
                 local.publish(topic, mqttMessage);
             } catch (MqttException e) {
+                log.error("error-", e);
             }
         }
     }
-
-    @Override
-    synchronized void postprocess() {}
-
-
 
 }
