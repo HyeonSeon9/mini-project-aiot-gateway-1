@@ -1,5 +1,5 @@
-package com.nhnacademy.aiot.gateway.Exception;
+package com.nhnacademy.aiot.exception;
 
 public class InvalidArgumentException extends RuntimeException {
-    
+
 }

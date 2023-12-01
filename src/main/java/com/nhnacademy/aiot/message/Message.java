@@ -1,6 +1,6 @@
-package com.nhnacademy.aiot.gateway.Message;
+package com.nhnacademy.aiot.message;
 
-public class Message {
+public abstract class Message {
     static int count;
     final String id;
     long creationTime;

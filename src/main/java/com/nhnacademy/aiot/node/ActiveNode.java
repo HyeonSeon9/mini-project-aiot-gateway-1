@@ -1,9 +1,8 @@
-package com.nhnacademy.aiot.gateway.Node;
+package com.nhnacademy.aiot.node;
 
 import java.util.UUID;
 import org.json.JSONObject;
-
-import com.nhnacademy.aiot.gateway.Exception.AlreadyExistsException;
+import com.nhnacademy.aiot.exception.AlreadyStartedException;
 
 
 public abstract class ActiveNode extends Node implements Runnable {
@@ -14,14 +13,6 @@ public abstract class ActiveNode extends Node implements Runnable {
 
     ActiveNode() {
         super();
-    }
-
-    ActiveNode(JSONObject json) {
-        super(json);
-
-        if (json.has("interval")) {
-            interval = (long) json.get("interval");
-        }
     }
 
     ActiveNode(String name) {
@@ -42,7 +33,7 @@ public abstract class ActiveNode extends Node implements Runnable {
 
     public synchronized void start() {
         if (thread != null) {
-            throw new AlreadyExistsException();
+            throw new AlreadyStartedException();
         }
 
         thread = new Thread(this, getName());
@@ -77,12 +68,11 @@ public abstract class ActiveNode extends Node implements Runnable {
         while (isAlive()) {
             long currentTime = System.currentTimeMillis();
             long elapsedTime = currentTime - previousTime;
-
             if (elapsedTime < interval) {
                 try {
                     process();
-                    Thread.sleep(interval - elapsedTime);
-                } catch (InterruptedException e) {
+                    // Thread.sleep(interval - elapsedTime);
+                } catch (Exception e) {
                     stop();
                 }
             }

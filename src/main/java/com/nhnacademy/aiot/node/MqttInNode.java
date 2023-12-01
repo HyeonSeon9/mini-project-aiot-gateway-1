@@ -1,32 +1,26 @@
-package com.nhnacademy.aiot.gateway.Node;
+package com.nhnacademy.aiot.node;
 
 import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttSecurityException;
 import org.json.JSONObject;
-
-import com.nhnacademy.aiot.gateway.Message.JsonMessage;
+import com.nhnacademy.aiot.message.JsonMessage;
 
 public class MqttInNode extends InputNode {
-    private IMqttClient server;
+    private IMqttClient server = null;
     private MqttConnectOptions options;
 
-
-    public MqttInNode() {
-        //this(1);
+    public MqttInNode(String name, int count) {
+        super(name, count);
     }
 
-    public MqttInNode(String name) {
-        super(name);
-    }
+
 
     public void connectServer() {
-        IMqttClient server;
         try {
             server = new MqttClient("tcp://ems.nhnacademy.com", super.getId().toString());
-            MqttConnectOptions options = new MqttConnectOptions();
+            options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
             options.setConnectionTimeout(10);
@@ -34,7 +28,7 @@ public class MqttInNode extends InputNode {
             options.setWill("test/will", "Disconnected".getBytes(), 2, false);
             server.connect(options);
         } catch (MqttException e) {
-            e.printStackTrace();
+            log.error("error-", e);
         }
     }
 
@@ -44,15 +38,15 @@ public class MqttInNode extends InputNode {
                 JSONObject jsonObject = new JSONObject(msg);
                 jsonObject.put("topic", topic);
                 if (topic.contains("application")) {
-                    JSONObject jsonPayload = new JSONObject(new String(msg.getPayload()));
-                    jsonObject.put("payload", jsonPayload);
+                    JSONObject jsonPayLoad = new JSONObject(new String(msg.getPayload()));
+                    jsonObject.put("payload", jsonPayLoad);
                     output(new JsonMessage(jsonObject));
                 } else {
                     output(new JsonMessage(jsonObject));
                 }
             });
         } catch (MqttException e) {
-            e.printStackTrace();
+            log.error("error-", e);
         }
     }
 
@@ -65,12 +59,9 @@ public class MqttInNode extends InputNode {
     @Override
     void process() {
         if (!server.isConnected()) {
+            connectServer();
             serverSubscribe();
         }
     }
 
-    @Override
-    void postprocess() {
-        
-    }
 }

@@ -1,12 +1,12 @@
-package com.nhnacademy.aiot.gateway.Wire;
+package com.nhnacademy.aiot.wire;
 
-import com.nhnacademy.aiot.gateway.Message.Message;
+import com.nhnacademy.aiot.message.Message;
 
 public interface Wire {
+
     public void put(Message message);
 
     public boolean hasMessage();
 
     public Message get();
 }
-

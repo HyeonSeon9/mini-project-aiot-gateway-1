@@ -1,20 +1,19 @@
-package com.nhnacademy.aiot.gateway.Node;
+package com.nhnacademy.aiot.node;
 
-import com.nhnacademy.aiot.gateway.Exception.AlreadyExistsException;
-import com.nhnacademy.aiot.gateway.Exception.InvalidArgumentException;
-import com.nhnacademy.aiot.gateway.Exception.OutOfBoundsException;
-import com.nhnacademy.aiot.gateway.Wire.Wire;
+import com.nhnacademy.aiot.exception.AlreadyExistsException;
+import com.nhnacademy.aiot.exception.InvalidArgumentException;
+import com.nhnacademy.aiot.exception.OutOfBoundsException;
+import com.nhnacademy.aiot.wire.Wire;
 
 public abstract class OutputNode extends ActiveNode {
     Wire[] inputWires;
 
     OutputNode(String name) {
-        super(name);
+        this(name, 1);
     }
 
     OutputNode(String name, int count) {
         super(name);
-
         if (count <= 0) {
             throw new InvalidArgumentException();
         }
@@ -24,15 +23,12 @@ public abstract class OutputNode extends ActiveNode {
 
     OutputNode(int count) {
         super();
-
         if (count <= 0) {
             throw new InvalidArgumentException();
         }
 
         inputWires = new Wire[count];
     }
-
-    //
 
     public void connectInputWire(int index, Wire wire) {
         if (inputWires.length <= index) {
@@ -54,6 +50,7 @@ public abstract class OutputNode extends ActiveNode {
         if (index < 0 || inputWires.length <= index) {
             throw new OutOfBoundsException();
         }
+
         return inputWires[index];
     }
 }

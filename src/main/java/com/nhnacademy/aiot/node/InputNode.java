@@ -1,22 +1,16 @@
-package com.nhnacademy.aiot.gateway.Node;
+package com.nhnacademy.aiot.node;
 
-import org.json.JSONObject;
-
-import com.nhnacademy.aiot.gateway.Exception.AlreadyExistsException;
-import com.nhnacademy.aiot.gateway.Exception.InvalidArgumentException;
-import com.nhnacademy.aiot.gateway.Exception.OutOfBoundsException;
-import com.nhnacademy.aiot.gateway.Message.Message;
-import com.nhnacademy.aiot.gateway.Wire.Wire;
+import com.nhnacademy.aiot.exception.AlreadyExistsException;
+import com.nhnacademy.aiot.exception.InvalidArgumentException;
+import com.nhnacademy.aiot.exception.OutOfBoundsException;
+import com.nhnacademy.aiot.message.Message;
+import com.nhnacademy.aiot.wire.Wire;
 
 public abstract class InputNode extends ActiveNode {
     Wire[] outputWires;
 
-    InputNode(JSONObject json) {
-        super(json);
-    }
-
     InputNode(String name) {
-        super(name);
+        this(name, 1);
     }
 
     InputNode(String name, int count) {
@@ -38,8 +32,6 @@ public abstract class InputNode extends ActiveNode {
 
         outputWires = new Wire[count];
     }
-
-    ///
 
     public void connectOutputWire(int index, Wire wire) {
         if (outputWires.length <= index) {

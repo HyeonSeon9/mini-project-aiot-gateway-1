@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.gateway.Message;
+package com.nhnacademy.aiot.message;
 
 import org.json.JSONObject;
 
@@ -12,4 +12,5 @@ public class JsonMessage extends Message {
     public JSONObject getPayload() {
         return this.payload;
     }
+
 }
