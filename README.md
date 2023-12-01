@@ -6,17 +6,17 @@
 # 클래스 역할
 
 ## Exception
-### AlreadyExistsExcetion
+### AlreadyExistsException
   - 
  
 ### AlreadyStartedException
   -
   
 ### InvalidArgumentException
-  -
+  - 
   
 ### OutOfBoundsException
-  -
+  - 
   
 ## gateway
 ### SettingNode.java
@@ -36,7 +36,9 @@
   
 ## node
 ### MqttInNode.java (InputNode)
-  -
+  - ems 서버에서 모든 토픽("#")을 받아오는 역할을 하는 클래스
+  - connectServer() 메서드에서 ems 서버와 연결한다.
+  - serverSubscribe() 메서드에서 새로운 JSONObject를 생성한 후 "#" 필터로 받아 온 topic과 payload를 추가한다.
   
 ### SplitNode.java (InOutputNode)
   -
