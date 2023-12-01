@@ -15,11 +15,15 @@ public class SettingTopic extends InputOutputNode {
     }
 
     public String makeTopic(JSONObject jsonObject) {
+        String stringTopic = "topic";
         String deviceId = jsonObject.getString("deviceEui");
         String place = jsonObject.getString("place");
         String sensor = jsonObject.getString("sensor");
+        String topic = "data/d/" + deviceId + "/p/" + place + "/e/" + sensor;
+        JSONObject json = new JSONObject();
+        json.put(stringTopic, topic);
 
-        return "data/d/" + deviceId + "/p/" + place + "/e/" + sensor;
+        return json.getString(stringTopic);
     }
 
 

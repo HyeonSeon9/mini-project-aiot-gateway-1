@@ -1,11 +1,6 @@
 package com.nhnacademy.aiot.gateway;
 
-import java.util.UUID;
-import org.eclipse.paho.client.mqttv3.IMqttClient;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.json.JSONObject;
+
 import com.nhnacademy.aiot.node.MqttInNode;
 import com.nhnacademy.aiot.node.MqttOutNode;
 import com.nhnacademy.aiot.node.SettingTopic;
