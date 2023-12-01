@@ -1,7 +1,7 @@
 ### mini-project-aiot-gateway-1
 
 # 클래스 구조도
-![클래스 구조도](/home/nhnacademy/IoT/mini-project-aiot-gateway-1/img/ClassDiagram.png)
+![클래스 구조도](img/ClassDiagram.png)
 
 # 클래스 역할
 
