@@ -12,7 +12,6 @@ import com.nhnacademy.aiot.message.Message;
 public class MqttOutNode extends OutputNode {
 
     private IMqttClient local = null;
-    private MqttConnectOptions options;
 
     public MqttOutNode(String name, int count) {
         super(name, count);
@@ -20,8 +19,8 @@ public class MqttOutNode extends OutputNode {
 
     public void connectLocalHost() {
         try {
-            local = new MqttClient("tcp://localhost", super.getId().toString());
-            options = new MqttConnectOptions();
+            local = new MqttClient("tcp://localhost", super.getId().toString(), null);
+            MqttConnectOptions options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
             options.setConnectionTimeout(10);

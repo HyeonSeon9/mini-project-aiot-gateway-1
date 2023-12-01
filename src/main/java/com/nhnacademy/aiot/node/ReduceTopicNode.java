@@ -5,7 +5,6 @@ import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
 
 public class ReduceTopicNode extends InputOutputNode {
-    private String topic;
 
     public ReduceTopicNode(String name, int count) {
         super(name, count, count);
@@ -39,7 +38,7 @@ public class ReduceTopicNode extends InputOutputNode {
             Message message = getInputWire(0).get();
             JSONObject jsonObject = ((JsonMessage) message).getPayload();
 
-            this.topic = makeTopic(jsonObject);
+            String topic = makeTopic(jsonObject);
 
             jsonObject.put("topic", topic);
             output(new JsonMessage(jsonObject));

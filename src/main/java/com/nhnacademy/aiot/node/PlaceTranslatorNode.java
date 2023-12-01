@@ -1,18 +1,18 @@
 package com.nhnacademy.aiot.node;
 
-import java.util.HashMap;
+import java.util.Map;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
 
 public class PlaceTranslatorNode extends InputOutputNode {
-    HashMap<String, String> placeInfo;
+    Map<String, String> placeInfo;
 
     public PlaceTranslatorNode(String name, int count) {
-        super(name, 1, 1);
+        super(name, count, count);
     }
 
-    public void setPlaceInfo(HashMap<String, String> placeInfo) {
+    public void setPlaceInfo(Map<String, String> placeInfo) {
         this.placeInfo = placeInfo;
     }
 

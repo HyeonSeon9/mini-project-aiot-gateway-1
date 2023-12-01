@@ -9,7 +9,6 @@ import com.nhnacademy.aiot.message.JsonMessage;
 
 public class MqttInNode extends InputNode {
     private IMqttClient server = null;
-    private MqttConnectOptions options;
 
     public MqttInNode(String name, int count) {
         super(name, count);
@@ -19,8 +18,8 @@ public class MqttInNode extends InputNode {
 
     public void connectServer() {
         try {
-            server = new MqttClient("tcp://ems.nhnacademy.com", super.getId().toString());
-            options = new MqttConnectOptions();
+            server = new MqttClient("tcp://ems.nhnacademy.com", super.getId().toString(), null);
+            MqttConnectOptions options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
             options.setConnectionTimeout(10);
