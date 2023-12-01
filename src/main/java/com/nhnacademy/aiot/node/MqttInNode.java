@@ -28,7 +28,7 @@ public class MqttInNode extends InputNode {
             options.setWill("test/will", "Disconnected".getBytes(), 2, false);
             server.connect(options);
         } catch (MqttException e) {
-
+            log.error("error-", e);
         }
     }
 
@@ -46,6 +46,7 @@ public class MqttInNode extends InputNode {
                 }
             });
         } catch (MqttException e) {
+            log.error("error-", e);
         }
     }
 

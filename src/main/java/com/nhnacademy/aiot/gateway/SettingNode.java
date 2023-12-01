@@ -23,7 +23,10 @@ import com.nhnacademy.aiot.node.PlaceTranslatorNode;
 import com.nhnacademy.aiot.node.SplitNode;
 import com.nhnacademy.aiot.wire.BufferedWire;
 import com.nhnacademy.aiot.wire.Wire;
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 public class SettingNode {
     protected static String settingPath =
             "src/main/java/com/nhnacademy/aiot/setting/nodeSetting.json";
@@ -87,7 +90,7 @@ public class SettingNode {
             }
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException
                 | IllegalAccessException | InvocationTargetException e) {
-
+            log.error("error-", e);
         }
     }
 
@@ -150,9 +153,9 @@ public class SettingNode {
 
     public void checkCommandLine(String[] args) {
         Options commandOptions = new Options();
-        commandOptions.addOption("c", null, false, "Test");
+        commandOptions.addOption("c", null, false, "이 옵션이 주어질 경우 commandLine으로 세팅한다");
         commandOptions.addOption(null, "an", true, "application name이 주어질 경우 해당 메시지만 수신하도록 한다.");
-        commandOptions.addOption("s", null, true, "Test");
+        commandOptions.addOption("s", null, true, "해당하는 센서만 사용 ,로 구분한다");
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine;
 
@@ -171,7 +174,7 @@ public class SettingNode {
         } catch (org.apache.commons.cli.ParseException e) {
             System.err.println(e.getMessage());
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("test", commandOptions);
+            formatter.printHelp("Help", commandOptions);
         }
 
     }

@@ -25,8 +25,10 @@ public class SplitNode extends InputOutputNode {
     }
 
     void splitSensor(JSONObject jsonObject) {
-        if (jsonObject.getJSONObject("payload").getJSONObject("deviceInfo").getString("tenantName")
-                .equals("NHN Academy 경남")) {
+        JSONObject deviceInfo = jsonObject.getJSONObject("payload").getJSONObject("deviceInfo");
+
+        if (deviceInfo.has("tenantName")
+                && deviceInfo.getString("tenantName").equals("NHN Academy 경남")) {
             Set<String> sensorSet =
                     jsonObject.getJSONObject("payload").getJSONObject("object").keySet();
             for (String s : sensorSet) {

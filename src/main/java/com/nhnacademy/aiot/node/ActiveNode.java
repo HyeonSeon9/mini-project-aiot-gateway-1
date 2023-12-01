@@ -15,14 +15,6 @@ public abstract class ActiveNode extends Node implements Runnable {
         super();
     }
 
-    ActiveNode(JSONObject json) {
-        super(json);
-
-        if (json.has("interval")) {
-            interval = (long) json.get("interval");
-        }
-    }
-
     ActiveNode(String name) {
         super(name);
     }
