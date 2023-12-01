@@ -1,28 +1,24 @@
 package com.nhnacademy.aiot.gateway.node;
 
-import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.gateway.message.JsonMessage;
 import com.nhnacademy.aiot.gateway.message.Message;
 
 public class PlaceTranslatorNode extends InputOutputNode {
-    HashMap<String, String> placeInfo;
+    Map<String, String> placeInfo;
 
-    public PlaceTranslatorNode(String name) {
-        super(name, 1, 1);
+    public PlaceTranslatorNode(String name, int count) {
+        super(name, count, count);
     }
 
-    @Override
-    void preprocess() {
-        placeInfo = new HashMap<>(Map.of("class_a", "강의실 A", "class_b", "강의실 B", "server_room",
-                "서버실", "lobby", "로비", "office", "사무실", "storage", "창고", "meeting_room", "미팅룸",
-                "pair_room", "페어룸", "냉장고", "냉장고"));
+    public void setPlaceInfo(Map<String, String> placeInfo) {
+        this.placeInfo = placeInfo;
     }
 
     @Override
     void process() {
-        if ((getInputWire(0) != null) && getInputWire(0).hasMessage()) {
+        if ((getInputWire(0) != null) && (getInputWire(0).hasMessage())) {
             Message message = getInputWire(0).get();
             JSONObject jsonObject = ((JsonMessage)message).getPayload();
             jsonObject.put("place", placeInfo.get(jsonObject.get("place")));

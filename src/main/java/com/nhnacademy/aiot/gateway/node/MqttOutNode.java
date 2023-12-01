@@ -12,14 +12,6 @@ import com.nhnacademy.aiot.gateway.message.Message;
 public class MqttOutNode extends OutputNode {
     private IMqttClient local = null;
     
-    public MqttOutNode() {
-        this(1);
-    }
-    
-    MqttOutNode(int count) {
-        super(count);
-    }
-
     MqttOutNode(String name, int count) {
         super(name, count);
     }

@@ -10,9 +10,12 @@ import com.nhnacademy.aiot.gateway.message.Message;
 public abstract class InputNode extends ActiveNode {
     Wire[] outputWires;
 
+    InputNode(String name) {
+        this(name, 1);
+    }
+
     InputNode(JSONObject json) {
         super(json);
-
     }
 
     InputNode(String name, int count) {

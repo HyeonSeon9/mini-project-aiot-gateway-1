@@ -5,7 +5,6 @@ import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import ch.qos.logback.classic.encoder.JsonEncoder;
 
 public class Test {
     // data/d/24e124136d151547/p/창고/e/humidity 
