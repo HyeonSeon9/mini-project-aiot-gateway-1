@@ -1,8 +1,8 @@
 package com.nhnacademy.aiot.node;
 
 import java.util.UUID;
-import org.json.JSONObject;
 import com.github.f4b6a3.uuid.UuidCreator;
+import org.json.JSONObject;
 
 public abstract class Node {
     UUID id;

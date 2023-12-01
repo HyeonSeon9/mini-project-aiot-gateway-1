@@ -15,6 +15,9 @@ public class TransKorea extends InputOutputNode {
         super(name, 1, 1);
     }
 
+    public TransKorea(String name, int count) {
+        super(name, count, 1);
+    }
 
     public void transKorea() {
         places = new HashMap<>(Map.of("class_a", "강의실 A", "class_b", "강의실 B", "server_room", "서버실",

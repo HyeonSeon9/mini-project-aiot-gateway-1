@@ -29,6 +29,10 @@ public class SplitNode extends InputOutputNode {
         super(name, 1, 1);
     }
 
+    public SplitNode(String name, int count) {
+        super(name, count, 1);
+    }
+
     public void setCommand(String[] args) {
         this.args = args;
     }

@@ -1,8 +1,8 @@
 package com.nhnacademy.aiot.node;
 
-import org.json.JSONObject;
 import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.message.JsonMessage;
+import org.json.JSONObject;
 
 
 
@@ -12,6 +12,10 @@ public class SettingTopic extends InputOutputNode {
 
     public SettingTopic(String name) {
         super(name, 1, 1);
+    }
+
+    public SettingTopic(String name, int count) {
+        super(name, count, 1);
     }
 
     public String makeTopic(JSONObject jsonObject) {

@@ -36,7 +36,8 @@ public class MqttOutNode extends OutputNode {
     public void connectLocalHost() {
         MqttConnectOptions options;
         try {
-            local = new MqttClient("tcp://localhost:1883", UuidCreator.getTimeBased().toString());
+            local = new MqttClient("tcp://localhost:1883", UuidCreator.getTimeBased().toString(),
+                    null);
             options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);

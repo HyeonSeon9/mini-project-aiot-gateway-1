@@ -2,8 +2,9 @@
 package com.nhnacademy.aiot.node;
 
 import java.util.UUID;
-import org.json.JSONObject;
+
 import com.nhnacademy.aiot.exception.AlreadyStartedException;
+import org.json.JSONObject;
 
 public abstract class ActiveNode extends Node implements Runnable {
     public static final long DEFAULT_INTERVAL = 10;

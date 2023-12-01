@@ -1,11 +1,11 @@
 package com.nhnacademy.aiot.node;
 
-import org.json.JSONObject;
 import com.nhnacademy.aiot.exception.AlreadyExistsException;
 import com.nhnacademy.aiot.exception.InvalidArgumentException;
 import com.nhnacademy.aiot.exception.OutOfBoundsException;
 import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.wire.Wire;
+import org.json.JSONObject;
 
 
 public class InputNode extends ActiveNode {
@@ -13,7 +13,6 @@ public class InputNode extends ActiveNode {
 
     InputNode(JSONObject json) {
         super(json);
-
     }
 
     InputNode(String name, int count) {

@@ -4,9 +4,9 @@ import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.json.JSONObject;
 import com.nhnacademy.aiot.message.JsonMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 
 @Slf4j
 public class MqttInNode extends InputNode {
@@ -22,12 +22,16 @@ public class MqttInNode extends InputNode {
         super(count);
     }
 
+    public MqttInNode(String name, int count) {
+        super(name, count);
+    }
+
 
 
     public void connectServer() {
         MqttConnectOptions options;
         try {
-            server = new MqttClient("tcp://ems.nhnacademy.com", super.getId().toString());
+            server = new MqttClient("tcp://ems.nhnacademy.com", super.getId().toString(), null);
             options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
@@ -35,6 +39,8 @@ public class MqttInNode extends InputNode {
             options.setKeepAliveInterval(1000);
             options.setWill("test/will", "Disconnected".getBytes(), 2, false);
             server.connect(options);
+
+            // server.disconnect();
         } catch (MqttException e) {
             log.error(e.toString());
         }
