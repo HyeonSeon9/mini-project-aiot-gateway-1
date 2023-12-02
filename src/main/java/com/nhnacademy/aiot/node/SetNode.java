@@ -4,12 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
 import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.message.JsonMessage;
@@ -17,10 +11,8 @@ import com.nhnacademy.aiot.message.Message;
 
 public class SetNode extends InputOutputNode {
 
-    private String[] args;
-    private String an;
     private String applicationName;
-    private ArrayList<String> sensors;
+    private List<String> sensors;
 
     public SetNode(String name, int count) {
         super(name, count,count);
@@ -34,16 +26,14 @@ public class SetNode extends InputOutputNode {
         this.applicationName = applicationName;
     }
 
-    void setOptions() {
-        
+    public void SetSensors(List<String> sensors) {
+        this.sensors = sensors;
     }
 
     void setPayload (JSONObject payload) {
                 //branch, place, deviceId, time, value
 
         Set<String> sensorKeySet = payload.getJSONObject("object").keySet();
-
-        sensors = new ArrayList<>(List.of("temperature", "humidity"));              //지우기
 
         for (String key : sensorKeySet) {
             if (sensors.contains(key)) {
@@ -60,11 +50,6 @@ public class SetNode extends InputOutputNode {
                 output(new JsonMessage(newMsg));
             }
         }
-    }
-
-    @Override
-    void preprocess() {
-        setOptions();
     }
 
     @Override

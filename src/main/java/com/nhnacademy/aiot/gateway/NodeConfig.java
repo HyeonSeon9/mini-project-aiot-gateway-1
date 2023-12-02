@@ -22,6 +22,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import com.nhnacademy.aiot.node.ActiveNode;
 import com.nhnacademy.aiot.node.InputOutputNode;
+import com.nhnacademy.aiot.node.SetNode;
 import com.nhnacademy.aiot.wire.BufferedWire;
 import com.nhnacademy.aiot.wire.Wire;
 import lombok.extern.slf4j.Slf4j;
@@ -36,12 +37,14 @@ public class NodeConfig {
     private Map<String, Method> methodMap;                   // wireConnect할 때 사용할 map
 
     private String applicationName = "#";
-    private ArrayList<String> sensors;
+    private List<String> sensors;
 
     private static final String PATH = "com.nhnacademy.aiot.node.";
     private static final String SETTING_PATH = "/home/nhnacademy/Homeworks/mini-project-aiot-gateway-1/src/main/java/com/nhnacademy/aiot/config/setting.json";
 
     private static int methodFlag = 1;
+
+    private JSONObject jsonParsObj;
 
     public NodeConfig() {
         classJsonObjects = new ArrayList<>();
@@ -52,6 +55,7 @@ public class NodeConfig {
 
     // node.json에서 node들의 이름 가져와서 classNameList에 저장하기
     public void getClassName() {
+
         JSONParser parser;
 
         // JSON 파일 읽기
@@ -60,10 +64,10 @@ public class NodeConfig {
             parser = new JSONParser(); // Json 데이터 파싱 위한 객체, JSON문자열 또는 파일을 파싱하여 java로 변환
 
             Object obj = parser.parse(reader); // parser를 사용해 'reader'에서 읽은 JSON파일을 파싱하고, 그 결과를 저장
-            JSONObject jsObj = (JSONObject) obj;
+            jsonParsObj = (JSONObject) obj;
 
             JSONArray array = new JSONArray();
-            array = (JSONArray) jsObj.get("node");
+            array = (JSONArray) jsonParsObj.get("node");
 
             for (int i = 0; i < array.size(); i++) {
                 classJsonObjects.add((JSONObject) array.get(i));
@@ -83,6 +87,7 @@ public class NodeConfig {
 
     // 각 노드에 관련된 wire들의 데이터를 Map에 저장 < node_id : < 출구 번호 : 연결할 노드의 id 리스트 > >
     public void makeWireMap(String nodeId, JSONObject jsonObject) {
+
         JSONArray wireArray = (JSONArray) jsonObject.get("wires");     
         JSONArray innerArray = new JSONArray();                 // 2차 배열로 감싸여 있어서 한 껍대기 벗긴 json배열 담기 위한 변수
                 
@@ -194,24 +199,31 @@ public class NodeConfig {
 
     // commandLine 확인하는 메서드
     void getSettingFromCommandLine(String[] args) {
+
         Options options = new Options();
+        options.addOption(Option.builder("c").desc("c옵션이 있는 경우 CommandLine에서 우선적으로 정보를 가져온다.").build());
         options.addOption(null, "an", true, "application name이 주어질 경우 해당 메시지만 수신하고록 한다.");
-        options.addOption(Option.builder("s").hasArg().argName("sensors").desc("장치에 있는 sensor").build());
+        options.addOption(Option.builder("s").hasArg().argName("sensors").desc("장치에 있는 sensor 목록들이다.").build());
 
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine;
+
         try {
             commandLine = parser.parse(options, args);
+
             if (commandLine.hasOption("c")) {       // c옵션이 있으면 commandLine 우선
                 if (commandLine.hasOption("an")) {
                     applicationName = commandLine.getOptionValue("an");  // application/+/device/+/event/up
+                    System.out.println(applicationName);
                 }
                 if (commandLine.hasOption("s")) {
                     sensors = new ArrayList<>(List.of(commandLine.getOptionValue("s").split(",")));
+                    System.out.println(sensors);
                 }
             } else {
                 getSettingFromSettingJson();
             }
+
         } catch (org.apache.commons.cli.ParseException e) {
             log.info("{} : setOptions()메서드 {} 발생", getClass().getSimpleName(), e.getClass());
             e.printStackTrace();
@@ -220,12 +232,28 @@ public class NodeConfig {
 
     void getSettingFromSettingJson() {
 
+        JSONObject commandObj = (JSONObject) jsonParsObj.get("command");
+
+        for(Object key : commandObj.keySet()) {
+            if(key.toString().equals("-s")) {
+                List<String> sensorList = new ArrayList<>(List.of(commandObj.get(key).toString().split(",")));
+                sensors = sensorList;
+            }
+            if(key.toString().equals("--an")) {
+                applicationName = (String) commandObj.get(key);
+            }
+        }
     }
 
     // node start하는 메서드
     void nodeStart() {
         for(ActiveNode node : nodeMap.values()) {
-           node.start();
+            if(node.getClass().isAssignableFrom(SetNode.class)) {
+                SetNode setnode = (SetNode) node;
+                setnode.SetApplicationName(applicationName);
+                setnode.SetSensors(sensors);
+            }
+            node.start();
         }
     }
 }

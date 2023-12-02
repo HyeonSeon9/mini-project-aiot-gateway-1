@@ -7,7 +7,7 @@ public class Config {
         config.getClassName();
         config.makeInstance();
         config.connectWire();
-        //set commandLine setting
+        config.getSettingFromCommandLine(args);
         config.nodeStart();
     }
 }
