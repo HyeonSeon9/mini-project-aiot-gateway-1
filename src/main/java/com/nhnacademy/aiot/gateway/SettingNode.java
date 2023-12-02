@@ -33,7 +33,8 @@ public class SettingNode {
     protected static String path = "com.nhnacademy.aiot.node.";
 
     private HashMap<String, ActiveNode> nodeList;
-    private HashMap<String, List<String>> wireMap;
+    private HashMap<String, Map<Integer, List<String>>> wireMap;
+    private Map<Integer, List<String>> wireput;
     private Object object;
 
     private String aplicationName = "#";
@@ -76,18 +77,24 @@ public class SettingNode {
                 String nodeId = (String) ((JSONObject) node).get("id");
                 Class<?> nodeClass = Class.forName(path + nodeType);
                 Constructor<?> nodeConstructor = nodeClass.getConstructor(String.class, int.class);
-                Object newObj = nodeConstructor.newInstance(nodeId, 1);
-                nodeList.put(nodeId, (ActiveNode) newObj);
 
                 JSONArray wireInfo = (JSONArray) ((JSONObject) node).get("wire");
+                int wireSize = wireInfo.size();
+                Object newObj = nodeConstructor.newInstance(nodeId, wireSize < 1 ? 1 : wireSize);
+                nodeList.put(nodeId, (ActiveNode) newObj);
+                int wirePort = 0;
                 if (!wireInfo.isEmpty()) {
-                    List<String> wireOutList = new ArrayList<>();
+                    wireput = new HashMap<>();
                     for (Object w : wireInfo) {
-                        Iterable<?> iter = ((JSONObject) w).values();
-                        iter.forEach(value -> wireOutList.add((String) value));
-
+                        List<String> wireOutList = new ArrayList<>();
+                        wirePort++;
+                        JSONArray wireArray = (JSONArray) w;
+                        for (Object connectWire : wireArray) {
+                            wireOutList.add((String) connectWire);
+                        }
+                        wireput.put(wirePort, wireOutList);
                     }
-                    wireMap.put(nodeId, wireOutList);
+                    wireMap.put(nodeId, wireput);
                 }
 
             }
@@ -100,16 +107,20 @@ public class SettingNode {
     public void connectWire() {
         try {
             for (String input : wireMap.keySet()) {
-                for (String w : wireMap.get(input)) {
-                    Wire wire = new BufferedWire();
-                    ActiveNode inputNode = nodeList.get(input);
-                    ActiveNode outputNode = nodeList.get(w);
-                    Method connectOutputWire = inputNode.getClass().getMethod("connectOutputWire",
-                            int.class, Wire.class);
-                    Method connectInputWire = outputNode.getClass().getMethod("connectInputWire",
-                            int.class, Wire.class);
-                    connectOutputWire.invoke(inputNode, 0, wire);
-                    connectInputWire.invoke(outputNode, 0, wire);
+                Map<Integer, List<String>> getWireMap = wireMap.get(input);
+                for (int portNumber : getWireMap.keySet()) {
+                    for (String connectNodeName : getWireMap.get(portNumber)) {
+                        Wire wire = new BufferedWire();
+                        ActiveNode inputNode = nodeList.get(input);
+                        ActiveNode outputNode = nodeList.get(connectNodeName);
+                        Method connectOutputWire = inputNode.getClass()
+                                .getMethod("connectOutputWire", int.class, Wire.class);
+                        Method connectInputWire = outputNode.getClass()
+                                .getMethod("connectInputWire", int.class, Wire.class);
+                        connectOutputWire.invoke(inputNode, 0, wire);
+                        connectInputWire.invoke(outputNode, 0, wire);
+                    }
+
 
                 }
             }
