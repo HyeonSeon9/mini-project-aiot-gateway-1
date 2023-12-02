@@ -11,11 +11,11 @@ import com.nhnacademy.aiot.wire.Wire;
 public class Test {
 
     public static void main(String[] args) {
-        MqttInNode mqttIn = new MqttInNode();
-        SetNode set = new SetNode("set", 1,1, args);
+        MqttInNode mqttIn = new MqttInNode("mqttIn", 1);
+        SetNode set = new SetNode("set", 1);
         TopicNode topic = new TopicNode("topic",1,1);
         ConcatNode concat = new ConcatNode("concat", 1, 1);
-        MqttOutNode mqttOut = new MqttOutNode("mqttOut");
+        MqttOutNode mqttOut = new MqttOutNode("mqttOut", 1);
 
         Wire wire1 = new BufferedWire();
         Wire wire2 = new BufferedWire();

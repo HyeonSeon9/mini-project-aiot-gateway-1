@@ -7,7 +7,11 @@ import com.nhnacademy.aiot.message.Message;
 public class ConcatNode extends InputOutputNode {
     
     public ConcatNode(String name) {
-        super(name, 1, 1);
+        this(name, 1, 1);
+    }
+
+    public ConcatNode(String name, int count) {
+        super(name, count, count);
     }
 
     public ConcatNode(String name, int inputcount, int outputcount) {

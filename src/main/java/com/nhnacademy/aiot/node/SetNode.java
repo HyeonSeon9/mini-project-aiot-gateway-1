@@ -2,7 +2,6 @@ package com.nhnacademy.aiot.node;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import org.apache.commons.cli.CommandLine;
@@ -20,11 +19,11 @@ public class SetNode extends InputOutputNode {
 
     private String[] args;
     private String an;
+    private String applicationName;
     private ArrayList<String> sensors;
 
-    public SetNode(String name, int inCount, int outCount, String[] args) {
-        super(name, 1,1);
-        this.args = args;
+    public SetNode(String name, int count) {
+        super(name, count,count);
     }
 
     public SetNode(int count1, int count2) {
@@ -51,7 +50,6 @@ public class SetNode extends InputOutputNode {
             log.info("{} : setOptions()메서드 {} 발생", getClass().getSimpleName(), e.getClass());
             e.printStackTrace();
         }
-        
     }
 
     void setPayload (JSONObject payload) {

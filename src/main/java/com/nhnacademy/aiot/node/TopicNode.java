@@ -6,6 +6,14 @@ import com.nhnacademy.aiot.message.Message;
 
 public class TopicNode extends InputOutputNode {
 
+    public TopicNode(String name) {
+        this(name, 1);
+    }
+
+    public TopicNode(String name, int count) {
+        super(name, count, count);
+    }
+
     public TopicNode(String name, int inCount, int outCount) {
         super(name, inCount, outCount);
     }
