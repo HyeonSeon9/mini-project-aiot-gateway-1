@@ -30,33 +30,21 @@ public class SetNode extends InputOutputNode {
         super(count1, count2);
     }
 
+    public void SetApplicationName(String applicationName) {
+        this.applicationName = applicationName;
+    }
+
     void setOptions() {
-        Options options = new Options();
-        options.addOption(null, "an", true, "application name이 주어질 경우 해당 메시지만 수신하고록 한다.");
-        options.addOption(Option.builder("s").hasArg().argName("sensors").desc("장치에 있는 sensor").build());
-
-        CommandLineParser parser = new DefaultParser();
-        CommandLine commandLine;
-        try {
-            commandLine = parser.parse(options, args);
-
-            if (commandLine.hasOption("an")) {
-                an = commandLine.getOptionValue("an");  // application/+/device/+/event/up
-            }
-            if (commandLine.hasOption("s")) {
-                sensors = new ArrayList<>(List.of(commandLine.getOptionValue("s").split(",")));
-            }
-        } catch (ParseException e) {
-            log.info("{} : setOptions()메서드 {} 발생", getClass().getSimpleName(), e.getClass());
-            e.printStackTrace();
-        }
+        
     }
 
     void setPayload (JSONObject payload) {
                 //branch, place, deviceId, time, value
 
         Set<String> sensorKeySet = payload.getJSONObject("object").keySet();
-        
+
+        sensors = new ArrayList<>(List.of("temperature", "humidity"));              //지우기
+
         for (String key : sensorKeySet) {
             if (sensors.contains(key)) {
                 JSONObject newMsg = new JSONObject();       //for문 바깥에 하면 왜 안됨? 덮어씌우기가 안되나?
@@ -84,9 +72,9 @@ public class SetNode extends InputOutputNode {
         if ((getInputWire(0) != null) && (getInputWire(0).hasMessage())) {
             Message message = getInputWire(0).get();
             JSONObject object = ((JsonMessage) message).getPayload();   //JsonMessage의 getPayload()
-            if (message instanceof JsonMessage && (MqttTopic.isMatched(an, object.getString("topic")))) {
+            
+            if (message instanceof JsonMessage && (MqttTopic.isMatched(applicationName, object.getString("topic")))) {
                     setPayload(object.getJSONObject("payload"));
-                
             }
         }
     }

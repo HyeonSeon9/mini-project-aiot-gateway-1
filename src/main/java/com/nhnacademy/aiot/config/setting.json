@@ -6,8 +6,7 @@
             "name" : "MqttInNode",
             "wires": [
                 [
-                    "coU4TbNQU0",
-                    "aa"
+                    "coU4TbNQU0"
                 ]
             ]
         },
@@ -18,9 +17,6 @@
             "wires" : [
                 [
                     "3D2z7CAzdK"
-                ],
-                [
-                    "vv"
                 ]
             ]
         },

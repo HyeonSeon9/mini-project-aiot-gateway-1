@@ -43,7 +43,7 @@ public class MqttInNode extends InputNode {
                 JSONObject object = new JSONObject(msg);                    // msg를 바로 사용하려고 하면 동작 안함 // object : {"retained":true,"qos":0,"payload":[26,16,50,52,101,49,50,52,102,102,102,101,102,55,57,51,49,97],"messageId":0,"id":0,"duplicate":false}
                 // System.out.println(new String(msg.getPayload())); // msg에서 payload만 빼와서 byte[]로 만드는건가?
                 object.put("topic", topic);
-
+                System.out.println("mqttin");
                 if (topic.contains("application")) {
                     JSONObject payload = new JSONObject(new String(msg.getPayload()));
                     if (!payload.getJSONObject("deviceInfo").getString("tenantName").equals("외부 시연") && !payload.getJSONObject("deviceInfo").getString("tenantName").equals("NHN Academy 광주")) {

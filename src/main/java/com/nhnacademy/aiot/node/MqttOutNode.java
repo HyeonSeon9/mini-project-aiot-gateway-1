@@ -63,7 +63,7 @@ public class MqttOutNode extends OutputNode {
                 msg.setQos(2);
                 msg.setRetained(true);
                 toTelegraf.publish(topic, msg);
-                
+                System.out.println("mpttout");
             } catch (JSONException | MqttException e) {
                 log.info("{} : process()메서드 {} 발생", getClass().getSimpleName(), e.getClass());
             e.printStackTrace();
