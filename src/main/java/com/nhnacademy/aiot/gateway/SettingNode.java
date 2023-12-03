@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -18,18 +19,18 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
 import com.nhnacademy.aiot.node.ActiveNode;
 import com.nhnacademy.aiot.node.PlaceTranslatorNode;
 import com.nhnacademy.aiot.node.SplitNode;
 import com.nhnacademy.aiot.wire.BufferedWire;
 import com.nhnacademy.aiot.wire.Wire;
-import lombok.extern.slf4j.Slf4j;
 
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class SettingNode {
-    protected static String settingPath =
-            "src/main/java/com/nhnacademy/aiot/setting/nodeSetting.json";
+    protected static String settingPath = "src/main/java/com/nhnacademy/aiot/setting/nodeSetting.json";
     protected static String path = "com.nhnacademy.aiot.node.";
     private HashMap<String, ActiveNode> nodeList;
     private HashMap<String, Map<Integer, List<String>>> wireMap;
@@ -118,9 +119,11 @@ public class SettingNode {
                         Method connectInputWire = outputNode.getClass()
                                 .getMethod("connectInputWire", int.class, Wire.class);
                         connectOutputWire.invoke(inputNode, portNumber, wire);
-                        connectInputWire.invoke(outputNode, portNumber, wire);
+                        connectInputWire.invoke(outputNode, 0, wire);
+                        System.out
+                                .println(input + " " + inputNode.getClass().getSimpleName() + " : " + portNumber + " : "
+                                        + connectNodeName + " " + outputNode.getClass().getSimpleName());
                     }
-
 
                 }
             }

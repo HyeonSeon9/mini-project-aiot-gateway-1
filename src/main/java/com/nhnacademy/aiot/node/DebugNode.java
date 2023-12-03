@@ -1,37 +1,27 @@
 package com.nhnacademy.aiot.node;
 
+import org.json.JSONObject;
+
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class DebugNode extends OutputNode {
-    public DebugNode() {
-        super(1);
-    }
 
-    public DebugNode(String name) {
-        super(name, 1);
+    public DebugNode(String name, int count) {
+        super(name, count);
     }
-
-    public DebugNode(int count) {
-        super(count);
-    }
-
-    @Override
-    void preprocess() {}
 
     @Override
     void process() {
-        for (int i = 0; i < getInputWireCount(); i++) {
-            if (getInputWire(i).hasMessage()) {
-                log.trace("Message : {}", i);
+        if (((getInputWire(0) != null) && (getInputWire(0).hasMessage()))) {
 
-                Message message = getInputWire(i).get();
+            Message message = getInputWire(0).get();
+            JSONObject jsonObject = ((JsonMessage) message).getPayload();
+            log.info("out-{}", jsonObject);
 
-                if (message instanceof JsonMessage) {
-                    System.out.println(((JsonMessage) message).getPayload());
-                }
-
-            }
         }
     }
 }

@@ -38,7 +38,6 @@ public abstract class OutputNode extends ActiveNode {
         if (inputWires[index] != null) {
             throw new AlreadyExistsException();
         }
-
         inputWires[index] = wire;
     }
 

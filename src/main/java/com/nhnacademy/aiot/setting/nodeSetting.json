@@ -8,7 +8,7 @@
     {
       "id": "4d03156b6783f24e",
       "type": "SplitNode",
-      "wire": [["08c7f86736322e0d"]]
+      "wire": [["08c7f86736322e0d", "debug1"]]
     },
     {
       "id": "08c7f86736322e0d",
@@ -23,6 +23,11 @@
     {
       "id": "04a19ccc997258f2",
       "type": "MqttOutNode",
+      "wire": []
+    },
+    {
+      "id": "debug1",
+      "type": "DebugNode",
       "wire": []
     }
   ],

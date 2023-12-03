@@ -1,7 +1,9 @@
 package com.nhnacademy.aiot.node;
 
 import java.util.Map;
+
 import org.json.JSONObject;
+
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
 
@@ -9,7 +11,7 @@ public class PlaceTranslatorNode extends InputOutputNode {
     Map<String, String> placeInfo;
 
     public PlaceTranslatorNode(String name, int count) {
-        super(name, count, count);
+        super(name, 1, count);
     }
 
     public void setPlaceInfo(Map<String, String> placeInfo) {
