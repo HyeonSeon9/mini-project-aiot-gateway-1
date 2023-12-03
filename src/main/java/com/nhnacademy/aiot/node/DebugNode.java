@@ -3,23 +3,21 @@ package com.nhnacademy.aiot.node;
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
 
-public class TerminalOutNode extends OutputNode {
-    public TerminalOutNode() {
+public class DebugNode extends OutputNode {
+    public DebugNode() {
         super(1);
     }
 
-    public TerminalOutNode(String name) {
+    public DebugNode(String name) {
         super(name, 1);
     }
 
-    public TerminalOutNode(int count) {
+    public DebugNode(int count) {
         super(count);
     }
 
     @Override
-    void preprocess() {
-        setInterval(1);
-    }
+    void preprocess() {}
 
     @Override
     void process() {
