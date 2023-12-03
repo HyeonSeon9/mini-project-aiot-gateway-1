@@ -80,16 +80,18 @@
     - OutputWire에 JSONMessage로 만들어 넣어준다.
   
 ### ReduceTopicNode.java (InOutputNode)
-  -
+  - topic을 재구성하는 클래스
+  - 재구성한 topic을 JSONObject에 추가한 후 JSONMessage를 OutputWire에 넣어준다.
+  
+  - makeTopic(JSONObject) 메서드
+    - JSONObject에서 값을 추출해 topic을 재구성해준다.
   
 ### PlaceTranslatorNode.java (InOutputNode)
-  -
-  
-### ReduceTopicNode.java (InOutputNode)
-  -
+  - place 값을 한글로 바꾸는 메서드
+  - JSONObject값 중 key가 "place"의 value와 setting과정에서 받은 placeInfo Map의 key 중 일치하는 value로 변경한다. 
   
 ### MqttOutNode.java (OutputNode)
-  -
+  - local의 브로커에 지금까지 재구성한 topic과 MqttMessage를 publish해준다.
   
 ## setting
 ### nodeSetting.json
