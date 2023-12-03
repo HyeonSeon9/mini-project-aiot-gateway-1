@@ -31,7 +31,6 @@ public class SettingNode {
     protected static String settingPath =
             "src/main/java/com/nhnacademy/aiot/setting/nodeSetting.json";
     protected static String path = "com.nhnacademy.aiot.node.";
-
     private HashMap<String, ActiveNode> nodeList;
     private HashMap<String, Map<Integer, List<String>>> wireMap;
     private Map<Integer, List<String>> wireput;
@@ -45,6 +44,7 @@ public class SettingNode {
     public SettingNode() {
         this.nodeList = new HashMap<>();
         this.wireMap = new HashMap<>();
+        this.wireput = new HashMap<>();
         try {
             this.object = new JSONParser().parse(new FileReader(settingPath));
         } catch (IOException | ParseException e) {
@@ -87,12 +87,12 @@ public class SettingNode {
                     wireput = new HashMap<>();
                     for (Object w : wireInfo) {
                         List<String> wireOutList = new ArrayList<>();
-                        wirePort++;
                         JSONArray wireArray = (JSONArray) w;
                         for (Object connectWire : wireArray) {
                             wireOutList.add((String) connectWire);
                         }
                         wireput.put(wirePort, wireOutList);
+                        wirePort++;
                     }
                     wireMap.put(nodeId, wireput);
                 }
@@ -117,8 +117,8 @@ public class SettingNode {
                                 .getMethod("connectOutputWire", int.class, Wire.class);
                         Method connectInputWire = outputNode.getClass()
                                 .getMethod("connectInputWire", int.class, Wire.class);
-                        connectOutputWire.invoke(inputNode, 0, wire);
-                        connectInputWire.invoke(outputNode, 0, wire);
+                        connectOutputWire.invoke(inputNode, portNumber, wire);
+                        connectInputWire.invoke(outputNode, portNumber, wire);
                     }
 
 
