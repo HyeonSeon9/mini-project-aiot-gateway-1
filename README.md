@@ -1,4 +1,10 @@
 ### mini-project-aiot-gateway-1
+#팀원
+양현성
+윤인섭
+이동민
+김지윤
+허시영
 
 # 클래스 구조도
 ![클래스 구조도](img/ClassDiagram.png)
