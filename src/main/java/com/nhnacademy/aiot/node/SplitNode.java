@@ -3,13 +3,13 @@ package com.nhnacademy.aiot.node;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
 import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.json.JSONObject;
-
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class SplitNode extends InputOutputNode {
     private static final String PAYLOAD = "payload";
     private static final String DEVICE_INFO = "deviceInfo";
@@ -34,7 +34,8 @@ public class SplitNode extends InputOutputNode {
 
         if (deviceInfo.has(TENANT_NAME)
                 && deviceInfo.getString(TENANT_NAME).equals("NHN Academy 경남")) {
-            Set<String> sensorSet = jsonObject.getJSONObject(PAYLOAD).getJSONObject("object").keySet();
+            Set<String> sensorSet =
+                    jsonObject.getJSONObject(PAYLOAD).getJSONObject("object").keySet();
             for (String s : sensorSet) {
                 if (sensors.contains(s)) {
                     JSONObject newJson = new JSONObject();
@@ -60,6 +61,7 @@ public class SplitNode extends InputOutputNode {
     }
 
     void sendNode(JSONObject jsonObject) {
+        log.info(getClass().getSimpleName());
         output(new JsonMessage(jsonObject));
     }
 
