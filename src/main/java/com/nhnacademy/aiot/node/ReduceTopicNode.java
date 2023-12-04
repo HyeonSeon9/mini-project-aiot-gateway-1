@@ -40,8 +40,6 @@ public class ReduceTopicNode extends InputOutputNode {
             String topic = makeTopic(jsonObject);
 
             jsonObject.put("topic", topic);
-            jsonObject.put("prevNode", "Reduce");
-            log.info(getClass().getSimpleName());
             output(new JsonMessage(jsonObject));
         }
     }

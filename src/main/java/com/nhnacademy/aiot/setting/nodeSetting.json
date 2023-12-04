@@ -19,11 +19,16 @@
     {
       "id": "81adf53d292f5def",
       "type": "ReduceTopicNode",
-      "wire": [["04a19ccc997258f2"]]
+      "wire": [["04a19ccc997258f2"], ["debug"]]
     },
     {
       "id": "04a19ccc997258f2",
       "type": "MqttOutNode",
+      "wire": []
+    },
+    {
+      "id": "debug",
+      "type": "DebugNode",
       "wire": []
     }
   ],
