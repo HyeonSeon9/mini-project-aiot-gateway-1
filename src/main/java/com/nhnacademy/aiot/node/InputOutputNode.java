@@ -1,63 +1,45 @@
 package com.nhnacademy.aiot.node;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.nhnacademy.aiot.exception.OutOfBoundsException;
 import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.wire.Wire;
 
 public abstract class InputOutputNode extends ActiveNode {
     Wire[] inputWires;
-    List<ArrayList<Wire>> outputWires;
+    Wire[] outputWires;
 
     InputOutputNode(String name, int inCount, int outCount) {
         super(name);
 
         inputWires = new Wire[inCount];
-        outputWires = new ArrayList<>();
-        for (int i = 0; i < outCount; i++) {
-            ArrayList<Wire> wireList = new ArrayList<>();
-            outputWires.add(wireList);
-        }
+        outputWires = new Wire[outCount];
     }
 
     InputOutputNode(int inCount, int outCount) {
         super();
 
         inputWires = new Wire[inCount];
-        outputWires = new ArrayList<>();
-        for (int i = 0; i < outCount; i++) {
-            ArrayList<Wire> wireList = new ArrayList<>();
-            outputWires.add(wireList);
-        }
+        outputWires = new Wire[outCount];
     }
 
     public void connectOutputWire(int index, Wire wire) {
-        if (index < 0 || outputWires.size() <= index) {
+        if (index < 0 || outputWires.length <= index) {
             throw new OutOfBoundsException();
         }
-        outputWires.get(index).add(wire);
+
+        outputWires[index] = wire;
     }
 
     public int getOutputWireCount() {
-        return outputWires.size();
+        return outputWires.length;
     }
 
-    public List<Wire> getoutputWire(int port) {
-        if (port < 0 || outputWires.size() <= port) {
+    public Wire getOutputWire(int index) {
+        if (index < 0 || outputWires.length <= index) {
             throw new OutOfBoundsException();
         }
 
-        return outputWires.get(port);
-    }
-
-    public Wire getoutputWire(int port, int index) {
-        if (index < 0 || outputWires.size() <= index) {
-            throw new OutOfBoundsException();
-        }
-
-        return outputWires.get(port).get(index);
+        return outputWires[index];
     }
 
     public void connectInputWire(int index, Wire wire) {
@@ -81,9 +63,9 @@ public abstract class InputOutputNode extends ActiveNode {
     }
 
     void output(Message message) {
-        for (ArrayList<Wire> wireList : outputWires) {
-            for (Wire wire : wireList) {
-                wire.put(message);
+        for (Wire port : outputWires) {
+            if (port != null) {
+                port.put(message);
             }
         }
     }
