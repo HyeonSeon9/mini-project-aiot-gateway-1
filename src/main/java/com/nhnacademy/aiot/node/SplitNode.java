@@ -52,8 +52,6 @@ public class SplitNode extends InputOutputNode {
                             .getJSONObject(DEVICE_INFO).get(TENANT_NAME));
                     newJson.put("deviceEui", jsonObject.getJSONObject(PAYLOAD)
                             .getJSONObject(DEVICE_INFO).getString("devEui"));
-
-                    newJson.put("prevNode", "SplitNode");
                     sendNode(newJson);
                 }
             }
@@ -61,7 +59,6 @@ public class SplitNode extends InputOutputNode {
     }
 
     void sendNode(JSONObject jsonObject) {
-        log.info(getClass().getSimpleName());
         output(new JsonMessage(jsonObject));
     }
 

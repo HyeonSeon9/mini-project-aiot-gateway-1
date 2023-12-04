@@ -53,10 +53,6 @@ public class MqttOutNode extends OutputNode {
 
                 MqttMessage mqttMessage = new MqttMessage();
                 mqttMessage.setPayload(payload.toString().getBytes());
-                log.info(getClass().getSimpleName());
-                System.out.println(topic);
-                System.out.println(jsonObject);
-                System.out.println(mqttMessage);
                 local.publish(topic, mqttMessage);
             } catch (MqttException e) {
                 log.error("error-", e);
