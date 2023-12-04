@@ -1,12 +1,12 @@
 package com.nhnacademy.aiot.node;
 
 import java.util.Map;
-
 import org.json.JSONObject;
-
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class PlaceTranslatorNode extends InputOutputNode {
     Map<String, String> placeInfo;
 
@@ -24,6 +24,7 @@ public class PlaceTranslatorNode extends InputOutputNode {
             Message message = getInputWire(0).get();
             JSONObject jsonObject = ((JsonMessage) message).getPayload();
             jsonObject.put("place", placeInfo.get(jsonObject.get("place")));
+            log.info(getClass().getSimpleName());
             output(new JsonMessage(jsonObject));
         }
     }

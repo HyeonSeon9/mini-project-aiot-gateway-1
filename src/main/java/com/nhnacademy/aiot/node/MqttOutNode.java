@@ -8,7 +8,9 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class MqttOutNode extends OutputNode {
 
     private IMqttClient local = null;
@@ -19,7 +21,7 @@ public class MqttOutNode extends OutputNode {
 
     public void connectLocalHost() {
         try {
-            local = new MqttClient("tcp://localhost", super.getId().toString(), null);
+            local = new MqttClient("tcp://192.168.71.95", super.getId().toString(), null);
             MqttConnectOptions options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
@@ -51,6 +53,7 @@ public class MqttOutNode extends OutputNode {
 
                 MqttMessage mqttMessage = new MqttMessage();
                 mqttMessage.setPayload(payload.toString().getBytes());
+                log.info(getClass().getSimpleName());
                 System.out.println(topic);
                 System.out.println(jsonObject);
                 System.out.println(mqttMessage);

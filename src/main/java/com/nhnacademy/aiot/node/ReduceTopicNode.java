@@ -1,10 +1,11 @@
 package com.nhnacademy.aiot.node;
 
 import org.json.JSONObject;
-
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ReduceTopicNode extends InputOutputNode {
 
     public ReduceTopicNode(String name, int count) {
@@ -40,6 +41,7 @@ public class ReduceTopicNode extends InputOutputNode {
 
             jsonObject.put("topic", topic);
             jsonObject.put("prevNode", "Reduce");
+            log.info(getClass().getSimpleName());
             output(new JsonMessage(jsonObject));
         }
     }
