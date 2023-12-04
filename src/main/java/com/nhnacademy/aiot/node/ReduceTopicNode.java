@@ -40,7 +40,7 @@ public class ReduceTopicNode extends InputOutputNode {
 
         if (((getInputWire(0) != null) && (getInputWire(0).hasMessage()))) {
             Message message = getInputWire(0).get();
-            JSONObject jsonObject = ((JsonMessage) message).getPayload();
+            JSONObject jsonObject = new JSONObject(((JsonMessage) message).getPayload().toString());
 
             String topic = makeTopic(jsonObject);
 
@@ -48,7 +48,7 @@ public class ReduceTopicNode extends InputOutputNode {
 
             jsonObject.put("prev", "Reduce");
             log.info("패킷전송");
-            output(new JsonMessage(jsonObject));
+            output(new JsonMessage(new JSONObject(jsonObject.toString())));
         }
     }
 

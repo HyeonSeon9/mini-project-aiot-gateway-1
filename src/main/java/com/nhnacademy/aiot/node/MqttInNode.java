@@ -41,9 +41,9 @@ public class MqttInNode extends InputNode {
                 if (topic.contains("application")) {
                     JSONObject jsonPayLoad = new JSONObject(new String(msg.getPayload()));
                     jsonObject.put("payload", jsonPayLoad);
-                    output(new JsonMessage(jsonObject));
+                    output(new JsonMessage(new JSONObject(jsonObject.toString())));
                 } else {
-                    output(new JsonMessage(jsonObject));
+                    output(new JsonMessage(new JSONObject(jsonObject.toString())));
                 }
             });
         } catch (MqttException e) {

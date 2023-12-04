@@ -8,12 +8,12 @@
     {
       "id": "split",
       "type": "SplitNode",
-      "wire": [["placeTrans"]]
+      "wire": [["placeTrans"], ["SplitDebug"]]
     },
     {
       "id": "placeTrans",
       "type": "PlaceTranslatorNode",
-      "wire": [["reduceTopic"]]
+      "wire": [["reduceTopic"], ["PlaceDebug"]]
     },
 
     {
@@ -24,6 +24,16 @@
     {
       "id": "mqttOut",
       "type": "MqttOutNode",
+      "wire": []
+    },
+    {
+      "id": "SplitDebug",
+      "type": "DebugNode",
+      "wire": []
+    },
+    {
+      "id": "PlaceDebug",
+      "type": "DebugNode",
       "wire": []
     }
   ],

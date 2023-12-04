@@ -19,10 +19,11 @@ public class DebugNode extends OutputNode {
 
     @Override
     void process() {
+
         while (getInputWire(0).hasMessage()) {
             Message message = getInputWire(0).get();
             JSONObject jsonObject = ((JsonMessage) message).getPayload();
-            System.out.println(jsonObject);
+            log.info("{}", jsonObject);
         }
     }
 }

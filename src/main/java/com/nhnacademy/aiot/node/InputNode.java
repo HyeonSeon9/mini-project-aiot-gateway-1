@@ -3,6 +3,7 @@ package com.nhnacademy.aiot.node;
 import com.nhnacademy.aiot.exception.AlreadyExistsException;
 import com.nhnacademy.aiot.exception.InvalidArgumentException;
 import com.nhnacademy.aiot.exception.OutOfBoundsException;
+import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.wire.Wire;
 
@@ -58,9 +59,11 @@ public abstract class InputNode extends ActiveNode {
     }
 
     void output(Message message) {
-        for (Wire wire : outputWires) {
-            if (wire != null) {
-                wire.put(message);
+        log.trace("Message Out");
+        for (Wire port : outputWires) {
+            Message putMessage = new JsonMessage(((JsonMessage) message).getPayload());
+            if (port != null) {
+                port.put(putMessage);
             }
         }
     }
