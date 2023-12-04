@@ -15,7 +15,7 @@
         "--an",
         "application/+/device/+/event/up",
         "-s",
-        "temperature"
+        "temperature,humidity,co2,leq"
       ]
     },
     {
@@ -56,7 +56,7 @@
         "--an",
         "application/+/device/+/event/up",
         "-s",
-        "temperature"
+        "temperature,humidity,co2,leq"
       ]
     }
   ]

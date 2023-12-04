@@ -19,11 +19,18 @@ public class PlaceTranslatorNode extends InputOutputNode {
     }
 
     @Override
+    void preprocess() {
+        log.info("Node Start");
+    }
+
+    @Override
     void process() {
         if (((getInputWire(0) != null) && (getInputWire(0).hasMessage()))) {
             Message message = getInputWire(0).get();
             JSONObject jsonObject = ((JsonMessage) message).getPayload();
             jsonObject.put("place", placeInfo.get(jsonObject.get("place")));
+            jsonObject.put("prev", "Place");
+            log.info("패킷전송");
             output(new JsonMessage(jsonObject));
         }
     }

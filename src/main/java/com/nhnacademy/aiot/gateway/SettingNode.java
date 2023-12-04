@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -19,22 +18,21 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import com.nhnacademy.aiot.node.ActiveNode;
 import com.nhnacademy.aiot.node.PlaceTranslatorNode;
 import com.nhnacademy.aiot.node.SplitNode;
 import com.nhnacademy.aiot.wire.BufferedWire;
 import com.nhnacademy.aiot.wire.Wire;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class SettingNode {
-    protected static String settingPath = "src/main/java/com/nhnacademy/aiot/setting/nodeSetting.json";
+    protected static String settingPath =
+            "src/main/java/com/nhnacademy/aiot/setting/nodeSetting.json";
     protected static String path = "com.nhnacademy.aiot.node.";
     private HashMap<String, ActiveNode> nodeList;
+    private HashMap<Integer, List<String>> wireput;
     private HashMap<String, Map<Integer, List<String>>> wireMap;
-    private Map<Integer, List<String>> wireput;
     private Object object;
 
     private String aplicationName = "#";
@@ -46,6 +44,7 @@ public class SettingNode {
         this.nodeList = new HashMap<>();
         this.wireMap = new HashMap<>();
         this.wireput = new HashMap<>();
+
         try {
             this.object = new JSONParser().parse(new FileReader(settingPath));
         } catch (IOException | ParseException e) {
@@ -98,12 +97,15 @@ public class SettingNode {
                     wireMap.put(nodeId, wireput);
                 }
 
+
             }
+
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException
                 | IllegalAccessException | InvocationTargetException e) {
             log.error("error-", e);
         }
     }
+
 
     public void connectWire() {
         try {
@@ -114,15 +116,16 @@ public class SettingNode {
                         Wire wire = new BufferedWire();
                         ActiveNode inputNode = nodeList.get(input);
                         ActiveNode outputNode = nodeList.get(connectNodeName);
+                        System.out.println(outputNode.getClass().getSimpleName());
                         Method connectOutputWire = inputNode.getClass()
                                 .getMethod("connectOutputWire", int.class, Wire.class);
                         Method connectInputWire = outputNode.getClass()
                                 .getMethod("connectInputWire", int.class, Wire.class);
                         connectOutputWire.invoke(inputNode, portNumber, wire);
                         connectInputWire.invoke(outputNode, 0, wire);
-                        System.out
-                                .println(input + " " + inputNode.getClass().getSimpleName() + " : " + portNumber + " : "
-                                        + connectNodeName + " " + outputNode.getClass().getSimpleName());
+
+                        System.out.println(inputNode.getClass().getSimpleName() + ">>>>"
+                                + portNumber + ">>>>" + outputNode.getClass().getSimpleName());
                     }
 
                 }

@@ -63,6 +63,7 @@ public abstract class InputOutputNode extends ActiveNode {
     }
 
     void output(Message message) {
+        log.trace("Message Out");
         for (Wire port : outputWires) {
             if (port != null) {
                 port.put(message);
@@ -70,3 +71,4 @@ public abstract class InputOutputNode extends ActiveNode {
         }
     }
 }
+

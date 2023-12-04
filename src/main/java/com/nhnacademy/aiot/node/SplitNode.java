@@ -29,7 +29,7 @@ public class SplitNode extends InputOutputNode {
         this.sensors = sensors;
     }
 
-    void splitSensor(JSONObject jsonObject) {
+    public void splitSensor(JSONObject jsonObject) {
         JSONObject deviceInfo = jsonObject.getJSONObject(PAYLOAD).getJSONObject(DEVICE_INFO);
 
         if (deviceInfo.has(TENANT_NAME)
@@ -52,14 +52,21 @@ public class SplitNode extends InputOutputNode {
                             .getJSONObject(DEVICE_INFO).get(TENANT_NAME));
                     newJson.put("deviceEui", jsonObject.getJSONObject(PAYLOAD)
                             .getJSONObject(DEVICE_INFO).getString("devEui"));
+                    newJson.put("prev", "Split");
                     sendNode(newJson);
                 }
             }
         }
     }
 
-    void sendNode(JSONObject jsonObject) {
+    public void sendNode(JSONObject jsonObject) {
+        log.info("패킷전송");
         output(new JsonMessage(jsonObject));
+    }
+
+    @Override
+    void preprocess() {
+        log.info("Node Start");
     }
 
     @Override
