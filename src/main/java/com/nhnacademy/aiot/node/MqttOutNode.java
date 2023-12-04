@@ -32,7 +32,6 @@ public class MqttOutNode extends OutputNode {
         }
     }
 
-
     @Override
     void preprocess() {
         connectLocalHost();
