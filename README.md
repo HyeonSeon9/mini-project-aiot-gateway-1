@@ -11,19 +11,6 @@
 
 # 클래스 역할
 
-## Exception
-### AlreadyExistsException
-  - 
- 
-### AlreadyStartedException
-  -
-  
-### InvalidArgumentException
-  - 
-  
-### OutOfBoundsException
-  - 
-  
 ## gateway
 ### SettingNode.java
   - checkCommendLine 메서드
