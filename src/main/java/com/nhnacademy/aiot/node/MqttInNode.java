@@ -12,16 +12,6 @@ import org.json.JSONObject;
 public class MqttInNode extends InputNode {
     private IMqttClient server = null;
 
-
-
-    public MqttInNode() {
-        this(1);
-    }
-
-    public MqttInNode(int count) {
-        super(count);
-    }
-
     public MqttInNode(String name, int count) {
         super(name, count);
     }
@@ -29,20 +19,17 @@ public class MqttInNode extends InputNode {
 
 
     public void connectServer() {
-        MqttConnectOptions options;
         try {
             server = new MqttClient("tcp://ems.nhnacademy.com", super.getId().toString(), null);
-            options = new MqttConnectOptions();
+            MqttConnectOptions options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
             options.setConnectionTimeout(10);
             options.setKeepAliveInterval(1000);
             options.setWill("test/will", "Disconnected".getBytes(), 2, false);
             server.connect(options);
-
-            // server.disconnect();
         } catch (MqttException e) {
-            log.error(e.toString());
+            log.error("error-", e);
         }
     }
 
@@ -60,7 +47,7 @@ public class MqttInNode extends InputNode {
                 }
             });
         } catch (MqttException e) {
-            log.warn(e.toString());
+            log.error("error-", e);
         }
     }
 
@@ -73,10 +60,9 @@ public class MqttInNode extends InputNode {
     @Override
     void process() {
         if (!server.isConnected()) {
+            connectServer();
             serverSubscribe();
         }
     }
-
-
 
 }

@@ -8,6 +8,10 @@ import com.nhnacademy.aiot.wire.Wire;
 public class OutputNode extends ActiveNode {
     Wire[] inputWires;
 
+    OutputNode(String name) {
+        this(name, 1);
+    }
+
     OutputNode(String name, int count) {
         super(name);
         if (count <= 0) {
@@ -34,7 +38,6 @@ public class OutputNode extends ActiveNode {
         if (inputWires[index] != null) {
             throw new AlreadyExistsException();
         }
-
         inputWires[index] = wire;
     }
 

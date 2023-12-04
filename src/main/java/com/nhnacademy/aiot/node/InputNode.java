@@ -11,9 +11,12 @@ import org.json.JSONObject;
 public class InputNode extends ActiveNode {
     Wire[] outputWires;
 
-    InputNode(JSONObject json) {
-        super(json);
+        Inp
+
+    tNode(String name) {
+        this(name, 1);
     }
+
 
     InputNode(String name, int count) {
         super(name);

@@ -1,9 +1,31 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  // IntelliSense를 사용하여 가능한 특성에 대해 알아보세요.
+  // 기존 특성에 대한 설명을 보려면 가리킵니다.
+  // 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
   "version": "0.2.0",
   "configurations": [
+    {
+      "type": "java",
+      "name": "SimpleNodeRed",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.gateway.SimpleNodeRed",
+      "projectName": "mini-project-aiot-gateway1",
+      "args": ["-c", "--an", "application/+/device/+/event/up", "-s", "temperature"]
+    },
+    {
+      "type": "java",
+      "name": "SettingNode",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.gateway.SettingNode",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
+      "name": "JsonTest",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.gateway.JsonTest",
+      "projectName": "mini-project-aiot-gateway1"
+    },
     {
       "type": "java",
       "name": "Current File",
@@ -15,8 +37,7 @@
       "name": "Main",
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.Main",
-      "projectName": "mini-project-aiot-gateway1",
-      "args": ["--an", "application/+/device/+/event/up", "-s", "temperature,humidity"]
+      "projectName": "mini-project-aiot-gateway1"
     },
     {
       "type": "java",
@@ -24,7 +45,7 @@
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.Test",
       "projectName": "mini-project-aiot-gateway1",
-      "args": ["--an", "application/+/device/+/event/up", "-s", "temperature,humidity"]
+      "args": ["-c", "--an", "application/+/device/+/event/up", "-s", "temperature"]
     }
   ]
 }

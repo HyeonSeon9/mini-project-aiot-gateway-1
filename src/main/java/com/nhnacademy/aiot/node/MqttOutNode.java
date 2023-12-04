@@ -6,39 +6,23 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONObject;
-
-import com.github.f4b6a3.uuid.UuidCreator;
+import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
 import lombok.extern.slf4j.Slf4j;
-import com.nhnacademy.aiot.message.JsonMessage;
 
 @Slf4j
 public class MqttOutNode extends OutputNode {
+
     private IMqttClient local = null;
-
-
-    public MqttOutNode() {
-        super(1);
-    }
-
-    MqttOutNode(int count) {
-        super(count);
-    }
 
     public MqttOutNode(String name, int count) {
         super(name, count);
     }
 
-    MqttOutNode(String name) {
-        super(name, 1);
-    }
-
     public void connectLocalHost() {
-        MqttConnectOptions options;
         try {
-            local = new MqttClient("tcp://localhost:1883", UuidCreator.getTimeBased().toString(),
-                    null);
-            options = new MqttConnectOptions();
+            local = new MqttClient("tcp://192.168.71.95", super.getId().toString(), null);
+            MqttConnectOptions options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
             options.setConnectionTimeout(10);
@@ -46,11 +30,9 @@ public class MqttOutNode extends OutputNode {
             options.setWill("test/will", "Disconnected".getBytes(), 2, false);
             local.connect(options);
         } catch (MqttException e) {
-            log.error(e.toString());
-
+            log.error("error-", e);
         }
     }
-
 
     @Override
     void preprocess() {
@@ -71,15 +53,11 @@ public class MqttOutNode extends OutputNode {
 
                 MqttMessage mqttMessage = new MqttMessage();
                 mqttMessage.setPayload(payload.toString().getBytes());
-                log.info(topic);
-                log.info(jsonObject.toString());
-                log.info(mqttMessage.toString());
                 local.publish(topic, mqttMessage);
             } catch (MqttException e) {
-                log.error(e.toString());
+                log.error("error-", e);
             }
         }
     }
-
 
 }

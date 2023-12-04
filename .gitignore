@@ -13,8 +13,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-.class
-.lck
+target/
+
 # External tool builders
 .externalToolBuilders/
 

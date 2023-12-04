@@ -16,14 +16,6 @@ public abstract class ActiveNode extends Node implements Runnable {
         super();
     }
 
-    ActiveNode(JSONObject json) {
-        super(json);
-
-        if (json.has("interval")) {
-            interval = (long) json.get("interval");
-        }
-    }
-
     ActiveNode(String name) {
         super(name);
     }
@@ -77,13 +69,12 @@ public abstract class ActiveNode extends Node implements Runnable {
         while (isAlive()) {
             long currentTime = System.currentTimeMillis();
             long elapsedTime = currentTime - previousTime;
-
             if (elapsedTime < interval) {
-
-                process();
-
-                stop();
-
+                try {
+                    process();
+                } catch (Exception e) {
+                    stop();
+                }
             }
 
             previousTime =
