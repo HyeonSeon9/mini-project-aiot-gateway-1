@@ -96,8 +96,6 @@ public class SettingNode {
                     }
                     wireMap.put(nodeId, wireput);
                 }
-
-
             }
 
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException
