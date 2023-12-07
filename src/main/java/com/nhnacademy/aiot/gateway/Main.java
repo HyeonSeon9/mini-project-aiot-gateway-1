@@ -11,32 +11,31 @@ import com.nhnacademy.aiot.wire.Wire;
 
 public class Main {
     public static void main(String[] args) {
-        MqttInNode mqin = new MqttInNode();
-        SplitNode split = new SplitNode("splitNode");
-        SettingTopic topic = new SettingTopic("topic");
-        TransKorea korea = new TransKorea("korea");
-        MqttOutNode mqttOut = new MqttOutNode("mqttOut", 1);
-        Wire wire1 = new BufferedWire();
-        Wire wire2 = new BufferedWire();
-        Wire wire3 = new BufferedWire();
-        Wire wire4 = new BufferedWire();
+        // MqttInNode mqin = new MqttInNode();
+        // SplitNode split = new SplitNode("splitNode");
+        // SettingTopic topic = new SettingTopic("topic");
+        // TransKorea korea = new TransKorea("korea");
+        // MqttOutNode mqttOut = new MqttOutNode("mqttOut", 1);
+        // Wire wire1 = new BufferedWire();
+        // Wire wire2 = new BufferedWire();
+        // Wire wire3 = new BufferedWire();
+        // Wire wire4 = new BufferedWire();
 
-        split.setCommand(args);
+        // split.setCommand(args);
 
-        mqin.connectOutputWire(0, wire1);
-        split.connectInputWire(0, wire1);
-        split.connectOutputWire(0, wire2);
-        topic.connectInputWire(0, wire2);
-        topic.connectOutputWire(0, wire3);
-        korea.connectInputWire(0, wire3);
-        korea.connectOutputWire(0, wire4);
-        mqttOut.connectInputWire(0, wire4);
+        // mqin.connectOutputWire(0, wire1);
+        // split.connectInputWire(0, wire1);
+        // split.connectOutputWire(0, wire2);
+        // topic.connectInputWire(0, wire2);
+        // topic.connectOutputWire(0, wire3);
+        // korea.connectInputWire(0, wire3);
+        // korea.connectOutputWire(0, wire4);
+        // mqttOut.connectInputWire(0, wire4);
 
-
-        mqin.start();
-        split.start();
-        topic.start();
-        korea.start();
-        mqttOut.start();
+        // mqin.start();
+        // split.start();
+        // topic.start();
+        // korea.start();
+        // mqttOut.start();
     }
 }

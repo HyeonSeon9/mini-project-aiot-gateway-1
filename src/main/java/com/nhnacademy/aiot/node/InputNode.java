@@ -5,18 +5,15 @@ import com.nhnacademy.aiot.exception.InvalidArgumentException;
 import com.nhnacademy.aiot.exception.OutOfBoundsException;
 import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.wire.Wire;
-import org.json.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 
-
-public class InputNode extends ActiveNode {
+@Slf4j
+public abstract class InputNode extends ActiveNode {
     Wire[] outputWires;
 
-        Inp
-
-    tNode(String name) {
+    InputNode(String name) {
         this(name, 1);
     }
-
 
     InputNode(String name, int count) {
         super(name);
@@ -63,6 +60,7 @@ public class InputNode extends ActiveNode {
     }
 
     void output(Message message) {
+        log.trace("Message Out");
         for (Wire wire : outputWires) {
             if (wire != null) {
                 wire.put(message);

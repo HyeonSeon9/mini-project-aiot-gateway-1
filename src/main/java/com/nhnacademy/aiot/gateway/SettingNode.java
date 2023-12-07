@@ -22,9 +22,9 @@ import org.json.simple.parser.ParseException;
 
 import com.nhnacademy.aiot.node.ActiveNode;
 import com.nhnacademy.aiot.node.PlaceTranslatorNode;
-import com.nhnacademy.aiot.node.SplitNode;
 import com.nhnacademy.aiot.wire.BufferedWire;
 import com.nhnacademy.aiot.wire.Wire;
+import com.nhnacademy.aiot.node.*;
 
 import lombok.extern.slf4j.Slf4j;
 

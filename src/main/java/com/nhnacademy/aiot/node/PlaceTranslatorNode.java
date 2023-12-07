@@ -6,6 +6,7 @@ import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
 import lombok.extern.slf4j.Slf4j;
 
+
 @Slf4j
 public class PlaceTranslatorNode extends InputOutputNode {
     Map<String, String> placeInfo;
