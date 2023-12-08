@@ -6,7 +6,9 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.message.JsonMessage;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class MqttInNode extends InputNode {
     private IMqttClient server = null;
 
@@ -39,9 +41,9 @@ public class MqttInNode extends InputNode {
                 if (topic.contains("application")) {
                     JSONObject jsonPayLoad = new JSONObject(new String(msg.getPayload()));
                     jsonObject.put("payload", jsonPayLoad);
-                    output(new JsonMessage(jsonObject));
+                    output(new JsonMessage(new JSONObject(jsonObject.toString())));
                 } else {
-                    output(new JsonMessage(jsonObject));
+                    output(new JsonMessage(new JSONObject(jsonObject.toString())));
                 }
             });
         } catch (MqttException e) {
@@ -51,6 +53,7 @@ public class MqttInNode extends InputNode {
 
     @Override
     void preprocess() {
+        log.info("Node Start");
         connectServer();
         serverSubscribe();
     }

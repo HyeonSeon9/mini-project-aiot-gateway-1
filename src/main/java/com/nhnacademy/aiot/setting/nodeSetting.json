@@ -1,33 +1,38 @@
 [
   [
     {
-      "id": "22219ef19962ff50",
+      "id": "mqttIn",
       "type": "MqttInNode",
-      "wire": [["4d03156b6783f24e"]]
+      "wire": [["split"]]
     },
     {
-      "id": "4d03156b6783f24e",
+      "id": "split",
       "type": "SplitNode",
-      "wire": [["08c7f86736322e0d"]]
+      "wire": [["placeTrans"], ["SplitDebug"]]
     },
     {
-      "id": "08c7f86736322e0d",
+      "id": "placeTrans",
       "type": "PlaceTranslatorNode",
-      "wire": [["81adf53d292f5def"]]
+      "wire": [["reduceTopic"], ["PlaceDebug"]]
     },
 
     {
-      "id": "81adf53d292f5def",
+      "id": "reduceTopic",
       "type": "ReduceTopicNode",
-      "wire": [["04a19ccc997258f2"], ["debug"]]
+      "wire": [["mqttOut"]]
     },
     {
-      "id": "04a19ccc997258f2",
+      "id": "mqttOut",
       "type": "MqttOutNode",
       "wire": []
     },
     {
-      "id": "debug",
+      "id": "SplitDebug",
+      "type": "DebugNode",
+      "wire": []
+    },
+    {
+      "id": "PlaceDebug",
       "type": "DebugNode",
       "wire": []
     }

@@ -31,16 +31,24 @@ public class ReduceTopicNode extends InputOutputNode {
     // data/d/24e124136d 151547/p/창고/e/temperature:msg.payload:
 
     @Override
+    void preprocess() {
+        log.info("Node Start");
+    }
+
+    @Override
     void process() {
 
         if (((getInputWire(0) != null) && (getInputWire(0).hasMessage()))) {
             Message message = getInputWire(0).get();
-            JSONObject jsonObject = ((JsonMessage) message).getPayload();
+            JSONObject jsonObject = new JSONObject(((JsonMessage) message).getPayload().toString());
 
             String topic = makeTopic(jsonObject);
 
             jsonObject.put("topic", topic);
-            output(new JsonMessage(jsonObject));
+
+            jsonObject.put("prev", "Reduce");
+            log.info("패킷전송");
+            output(new JsonMessage(new JSONObject(jsonObject.toString())));
         }
     }
 

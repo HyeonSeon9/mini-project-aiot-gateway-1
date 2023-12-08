@@ -29,7 +29,7 @@ public class SplitNode extends InputOutputNode {
         this.sensors = sensors;
     }
 
-    void splitSensor(JSONObject jsonObject) {
+    public void splitSensor(JSONObject jsonObject) {
         JSONObject deviceInfo = jsonObject.getJSONObject(PAYLOAD).getJSONObject(DEVICE_INFO);
 
         if (deviceInfo.has(TENANT_NAME)
@@ -52,21 +52,28 @@ public class SplitNode extends InputOutputNode {
                             .getJSONObject(DEVICE_INFO).get(TENANT_NAME));
                     newJson.put("deviceEui", jsonObject.getJSONObject(PAYLOAD)
                             .getJSONObject(DEVICE_INFO).getString("devEui"));
+                    newJson.put("prev", "Split");
                     sendNode(newJson);
                 }
             }
         }
     }
 
-    void sendNode(JSONObject jsonObject) {
-        output(new JsonMessage(jsonObject));
+    public void sendNode(JSONObject jsonObject) {
+        log.info("패킷전송");
+        output(new JsonMessage(new JSONObject(jsonObject.toString())));
+    }
+
+    @Override
+    void preprocess() {
+        log.info("Node Start");
     }
 
     @Override
     void process() {
         if (((getInputWire(0) != null) && (getInputWire(0).hasMessage()))) {
             Message message = getInputWire(0).get();
-            JSONObject jsonObject = ((JsonMessage) message).getPayload();
+            JSONObject jsonObject = new JSONObject(((JsonMessage) message).getPayload().toString());
             if (MqttTopic.isMatched(aplicationName, jsonObject.get("topic").toString())) {
                 splitSensor(jsonObject);
             }

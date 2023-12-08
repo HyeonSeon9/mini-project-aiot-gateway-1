@@ -1,10 +1,8 @@
 package com.nhnacademy.aiot.node;
 
 import org.json.JSONObject;
-
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -15,13 +13,17 @@ public class DebugNode extends OutputNode {
     }
 
     @Override
-    void process() {
-        if (((getInputWire(0) != null) && (getInputWire(0).hasMessage()))) {
+    void preprocess() {
+        log.info("Node Start");
+    }
 
+    @Override
+    void process() {
+
+        while (getInputWire(0).hasMessage()) {
             Message message = getInputWire(0).get();
             JSONObject jsonObject = ((JsonMessage) message).getPayload();
-            log.info("out-{}", jsonObject);
-
+            log.info("{}", jsonObject);
         }
     }
 }

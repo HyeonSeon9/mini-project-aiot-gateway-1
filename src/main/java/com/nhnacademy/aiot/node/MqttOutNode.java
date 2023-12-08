@@ -21,7 +21,7 @@ public class MqttOutNode extends OutputNode {
 
     public void connectLocalHost() {
         try {
-            local = new MqttClient("tcp://192.168.71.95", super.getId().toString(), null);
+            local = new MqttClient("tcp://localhost", super.getId().toString(), null);
             MqttConnectOptions options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
@@ -36,6 +36,7 @@ public class MqttOutNode extends OutputNode {
 
     @Override
     void preprocess() {
+        log.info("Node Start");
         connectLocalHost();
     }
 
@@ -53,6 +54,9 @@ public class MqttOutNode extends OutputNode {
 
                 MqttMessage mqttMessage = new MqttMessage();
                 mqttMessage.setPayload(payload.toString().getBytes());
+
+                // System.out.println(topic);
+                // System.out.println(mqttMessage);
                 local.publish(topic, mqttMessage);
             } catch (MqttException e) {
                 log.error("error-", e);

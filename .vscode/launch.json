@@ -6,6 +6,55 @@
   "configurations": [
     {
       "type": "java",
+      "name": "TcpSocket",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.modbus.server.TcpSocket",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
+      "name": "test",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.modbus.server.test",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
+      "name": "Client",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.modbus.client.Client",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
+      "name": "ModbusServer",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.modbus.server.ModbusServer",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
+      "name": "test",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.gateway.test",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
+      "name": "ModbusServer",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.gateway.ModbusServer",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
+      "name": "TcpSocket",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.gateway.TcpSocket",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
       "name": "SimpleNodeRed",
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.SimpleNodeRed",
@@ -15,7 +64,7 @@
         "--an",
         "application/+/device/+/event/up",
         "-s",
-        "temperature"
+        "temperature,humidity,co2,leq"
       ]
     },
     {
@@ -56,7 +105,7 @@
         "--an",
         "application/+/device/+/event/up",
         "-s",
-        "temperature"
+        "temperature,humidity,co2,leq"
       ]
     }
   ]
