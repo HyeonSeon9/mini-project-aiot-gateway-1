@@ -53,7 +53,6 @@ public class HandlerServer implements Runnable {
 
                     switch (functionCode) {
                         case 3:
-
                             if (address + quantity < holdingRegisters.length) {
                                 System.out.println(
                                         "Address : " + address + ", Quantity: " + quantity);
@@ -87,7 +86,6 @@ public class HandlerServer implements Runnable {
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
-        } finally {
         }
     }
 

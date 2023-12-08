@@ -23,7 +23,7 @@ public class Client {
         return ((first << 8) & 0xFF00 | second & 0x00FF);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         try (Socket socket = new Socket(HOST, PORT);
                 BufferedInputStream inputStream = new BufferedInputStream(socket.getInputStream());
                 BufferedOutputStream outputStream =
@@ -43,6 +43,8 @@ public class Client {
             if (receivedLength > 0) {
                 System.out.println(Arrays.toString(addByte(inputByte)));
             }
+        } catch (IOException e) {
+            System.err.println(e.getMessage() + " | 연결에 실패하였습니다.");
         }
     }
 }
