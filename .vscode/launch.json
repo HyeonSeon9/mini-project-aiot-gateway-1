@@ -6,20 +6,6 @@
   "configurations": [
     {
       "type": "java",
-      "name": "TcpSocket",
-      "request": "launch",
-      "mainClass": "com.nhnacademy.aiot.modbus.server.TcpSocket",
-      "projectName": "mini-project-aiot-gateway1"
-    },
-    {
-      "type": "java",
-      "name": "test",
-      "request": "launch",
-      "mainClass": "com.nhnacademy.aiot.modbus.server.test",
-      "projectName": "mini-project-aiot-gateway1"
-    },
-    {
-      "type": "java",
       "name": "Client",
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.modbus.client.Client",
@@ -36,77 +22,8 @@
       "type": "java",
       "name": "test",
       "request": "launch",
-      "mainClass": "com.nhnacademy.aiot.gateway.test",
+      "mainClass": "com.nhnacademy.aiot.modbus.server.test",
       "projectName": "mini-project-aiot-gateway1"
-    },
-    {
-      "type": "java",
-      "name": "ModbusServer",
-      "request": "launch",
-      "mainClass": "com.nhnacademy.aiot.gateway.ModbusServer",
-      "projectName": "mini-project-aiot-gateway1"
-    },
-    {
-      "type": "java",
-      "name": "TcpSocket",
-      "request": "launch",
-      "mainClass": "com.nhnacademy.aiot.gateway.TcpSocket",
-      "projectName": "mini-project-aiot-gateway1"
-    },
-    {
-      "type": "java",
-      "name": "SimpleNodeRed",
-      "request": "launch",
-      "mainClass": "com.nhnacademy.aiot.gateway.SimpleNodeRed",
-      "projectName": "mini-project-aiot-gateway1",
-      "args": [
-        "-c",
-        "--an",
-        "application/+/device/+/event/up",
-        "-s",
-        "temperature,humidity,co2,leq"
-      ]
-    },
-    {
-      "type": "java",
-      "name": "SettingNode",
-      "request": "launch",
-      "mainClass": "com.nhnacademy.aiot.gateway.SettingNode",
-      "projectName": "mini-project-aiot-gateway1"
-    },
-    {
-      "type": "java",
-      "name": "JsonTest",
-      "request": "launch",
-      "mainClass": "com.nhnacademy.aiot.gateway.JsonTest",
-      "projectName": "mini-project-aiot-gateway1"
-    },
-    {
-      "type": "java",
-      "name": "Current File",
-      "request": "launch",
-      "mainClass": "${file}"
-    },
-    {
-      "type": "java",
-      "name": "Main",
-      "request": "launch",
-      "mainClass": "com.nhnacademy.aiot.gateway.Main",
-      "projectName": "mini-project-aiot-gateway1"
-    },
-    {
-      "type": "java",
-      "name": "Test",
-      "request": "launch",
-      "mainClass": "com.nhnacademy.aiot.gateway.Test",
-      "projectName": "mini-project-aiot-gateway1",
-      "args": [
-        "-c",
-        "--an",
-        "application/+/device/+/event/up",
-        "-s",
-        "temperature,humidity,co2,leq"
-      ]
     }
   ]
 }

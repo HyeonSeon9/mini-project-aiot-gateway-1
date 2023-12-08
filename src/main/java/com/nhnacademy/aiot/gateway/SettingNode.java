@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -27,8 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class SettingNode {
-    protected static String settingPath =
-            "src/main/java/com/nhnacademy/aiot/setting/nodeSetting.json";
+    // protected static String settingPath =
+    // "src/main/java/com/nhnacademy/aiot/setting/nodeSetting.json";
+    protected static String settingPath = "src/main/java/com/nhnacademy/aiot/setting/test.json";
     protected static String path = "com.nhnacademy.aiot.node.";
     private HashMap<String, ActiveNode> nodeList;
     private HashMap<Integer, List<String>> wireput;
@@ -77,13 +79,16 @@ public class SettingNode {
                 String nodeId = (String) ((JSONObject) node).get("id");
                 Class<?> nodeClass = Class.forName(path + nodeType);
                 Constructor<?> nodeConstructor = nodeClass.getConstructor(String.class, int.class);
-
-                JSONArray wireInfo = (JSONArray) ((JSONObject) node).get("wire");
-                int wireSize = wireInfo.size();
+                JSONArray wireInfo = null;
+                int wireSize = 0;
+                if (Objects.nonNull(((JSONObject) node).get("wire"))) {
+                    wireInfo = (JSONArray) ((JSONObject) node).get("wire");
+                    wireSize = wireInfo.size();
+                }
                 Object newObj = nodeConstructor.newInstance(nodeId, wireSize < 1 ? 1 : wireSize);
                 nodeList.put(nodeId, (ActiveNode) newObj);
                 int wirePort = 0;
-                if (!wireInfo.isEmpty()) {
+                if (Objects.nonNull(wireInfo) && !wireInfo.isEmpty()) {
                     wireput = new HashMap<>();
                     for (Object w : wireInfo) {
                         List<String> wireOutList = new ArrayList<>();
@@ -197,3 +202,4 @@ public class SettingNode {
     }
 
 }
+

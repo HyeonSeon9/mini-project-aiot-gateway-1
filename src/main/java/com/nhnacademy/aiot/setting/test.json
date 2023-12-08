@@ -1,0 +1,12 @@
+[
+  [
+    {
+      "id": "modbusClient",
+      "type": "ModbusClientNode",
+      "clienttype": "tcp",
+      "tcpHost": "127.0.0.1",
+      "tcpPort": "502",
+      "unit_id": "1"
+    }
+  ]
+]

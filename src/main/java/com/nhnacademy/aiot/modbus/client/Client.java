@@ -29,7 +29,7 @@ public class Client {
                 BufferedOutputStream outputStream =
                         new BufferedOutputStream(socket.getOutputStream());) {
 
-            byte[] request = new byte[] {0, 1, 0, 0, 0, 6, 1, 6, 0, 0, 0, 10};
+            byte[] request = new byte[] {0, 1, 0, 0, 0, 6, 1, 3, 0, 0, 0, 10};
 
             outputStream.write(request);
             outputStream.flush();

@@ -1,0 +1,36 @@
+[
+  {
+    "id": "modbusRead",
+    "type": "ModbusReadNode",
+    "unitid": "",
+    "dataType": "HoldingRegister",
+    "quantity": "5",
+    "server": "f8a436f1033d5f53",
+    "wires": [[], []]
+  },
+  {
+    "id": "modbusServer",
+    "type": "ModbusServerNode",
+    "hostname": "0.0.0.0",
+    "serverPort": "502",
+    "holdingBufferSize": 10000,
+    "inputBufferSize": 10000,
+    "wires": [[], [], [], [], []]
+  },
+  {
+    "id": "modbusWrite",
+    "type": "ModbusWriteNode",
+    "dataType": "HoldingRegister",
+    "quantity": "1",
+    "server": "f8a436f1033d5f53",
+    "wires": [[], ["1ed795cd27553b47"]]
+  },
+  {
+    "id": "modbusClient",
+    "type": "ModbusClientNode",
+    "clienttype": "tcp",
+    "tcpHost": "127.0.0.1",
+    "tcpPort": "502",
+    "unit_id": "1"
+  }
+]

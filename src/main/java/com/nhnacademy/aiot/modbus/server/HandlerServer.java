@@ -15,10 +15,12 @@ public class HandlerServer implements Runnable {
     private static final int DEFAULT_LENGTH = 6;
 
     private int[] holdingRegisters;
+    private int[] inputRegisters;
 
-    public HandlerServer(Socket socket, int[] holdingRegisters) {
+    public HandlerServer(Socket socket, int[] holdingRegisters, int[] inputRegisters) {
         this.socket = socket;
         this.holdingRegisters = holdingRegisters;
+        this.inputRegisters = inputRegisters;
         this.thread = new Thread(this, this.getClass().getSimpleName());
     }
 
@@ -26,7 +28,7 @@ public class HandlerServer implements Runnable {
         return ((first << 8) & 0xFF00 | second & 0x00FF);
     }
 
-    void start() {
+    public void start() {
         thread.start();
     }
 
