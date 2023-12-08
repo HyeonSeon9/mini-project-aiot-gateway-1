@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.gateway;
+package com.nhnacademy.aiot.modbus.server;
 
 import java.io.IOException;
 
@@ -49,9 +49,18 @@ public class test {
         // }
         // System.out.println(Arrays.toString(buffer));
 
-        byte i = -56;
-        byte j = 0;
-        int k = ((i << 8) & 0xFF00 | j & 0x00FF);
-        System.out.println(k);
+        // byte i = -56;
+        // byte j = 0;
+        // int k = ((i << 8) & 0xFF00 | j & 0x00FF);
+        // System.out.println(k);
+
+        // int i = 51200;
+        // ByteBuffer bf = ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN);
+        // bf.putInt(i);
+        // System.out.println(Arrays.toString(bf.array()));
+        int number = 2122;
+        byte b1 = (byte) ((number >> 8) & 0xFF);
+        byte b2 = (byte) (number & 0xFF);
+        System.out.println(b1 + " : " + b2);
     }
 }

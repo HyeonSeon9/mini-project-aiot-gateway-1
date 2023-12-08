@@ -6,6 +6,34 @@
   "configurations": [
     {
       "type": "java",
+      "name": "TcpSocket",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.modbus.server.TcpSocket",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
+      "name": "test",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.modbus.server.test",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
+      "name": "Client",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.modbus.client.Client",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
+      "name": "ModbusServer",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.modbus.server.ModbusServer",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
       "name": "test",
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.test",

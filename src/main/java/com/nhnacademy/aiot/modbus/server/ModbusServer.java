@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.gateway;
+package com.nhnacademy.aiot.modbus.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
