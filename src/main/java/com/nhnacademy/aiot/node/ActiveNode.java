@@ -1,8 +1,8 @@
-package com.nhnacademy.aiot.gateway.node;
+package com.nhnacademy.aiot.node;
 
 import java.util.UUID;
 import org.json.simple.JSONObject;
-import com.nhnacademy.aiot.gateway.exception.AlreadyStartedException;
+import com.nhnacademy.aiot.exception.AlreadyStartedException;
 
 public abstract class ActiveNode extends Node implements Runnable {
     public static final long DEFAULT_INTERVAL = 1;

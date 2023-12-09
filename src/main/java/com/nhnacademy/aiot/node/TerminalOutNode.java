@@ -1,7 +1,7 @@
-package com.nhnacademy.aiot.gateway.node;
+package com.nhnacademy.aiot.node;
 
-import com.nhnacademy.aiot.gateway.message.JsonMessage;
-import com.nhnacademy.aiot.gateway.message.Message;
+import com.nhnacademy.aiot.message.JsonMessage;
+import com.nhnacademy.aiot.message.Message;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

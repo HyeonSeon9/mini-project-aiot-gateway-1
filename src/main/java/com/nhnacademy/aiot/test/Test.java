@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.gateway.test;
+package com.nhnacademy.aiot.test;
 
 import java.util.UUID;
 import org.eclipse.paho.client.mqttv3.IMqttClient;

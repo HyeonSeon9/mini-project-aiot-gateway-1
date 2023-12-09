@@ -1,6 +1,6 @@
-package com.nhnacademy.aiot.gateway.wire;
+package com.nhnacademy.aiot.wire;
 
-import com.nhnacademy.aiot.gateway.message.Message;
+import com.nhnacademy.aiot.message.Message;
 
 public interface Wire {
 

@@ -1,15 +1,15 @@
-package com.nhnacademy.aiot.gateway.node;
+package com.nhnacademy.aiot.node;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.json.JSONObject;
-import com.nhnacademy.aiot.gateway.exception.NoSuchDevInfoException;
-import com.nhnacademy.aiot.gateway.exception.NoSuchJsonObjectException;
-import com.nhnacademy.aiot.gateway.exception.NoSuchPayloadException;
-import com.nhnacademy.aiot.gateway.message.JsonMessage;
-import com.nhnacademy.aiot.gateway.message.Message;
+import com.nhnacademy.aiot.exception.NoSuchDevInfoException;
+import com.nhnacademy.aiot.exception.NoSuchJsonObjectException;
+import com.nhnacademy.aiot.exception.NoSuchPayloadException;
+import com.nhnacademy.aiot.message.JsonMessage;
+import com.nhnacademy.aiot.message.Message;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

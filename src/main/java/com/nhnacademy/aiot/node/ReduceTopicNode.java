@@ -1,8 +1,8 @@
-package com.nhnacademy.aiot.gateway.node;
+package com.nhnacademy.aiot.node;
 
 import org.json.JSONObject;
-import com.nhnacademy.aiot.gateway.message.JsonMessage;
-import com.nhnacademy.aiot.gateway.message.Message;
+import com.nhnacademy.aiot.message.JsonMessage;
+import com.nhnacademy.aiot.message.Message;
 
 public class ReduceTopicNode extends InputOutputNode {
 

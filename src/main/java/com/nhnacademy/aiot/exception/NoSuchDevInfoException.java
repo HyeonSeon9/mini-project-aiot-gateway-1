@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.gateway.exception;
+package com.nhnacademy.aiot.exception;
 
 public class NoSuchDevInfoException extends RuntimeException {
 

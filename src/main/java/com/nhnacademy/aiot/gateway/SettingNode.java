@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.gateway.gateway;
+package com.nhnacademy.aiot.gateway;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,11 +17,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import com.nhnacademy.aiot.gateway.node.ActiveNode;
-import com.nhnacademy.aiot.gateway.node.PlaceTranslatorNode;
-import com.nhnacademy.aiot.gateway.node.SplitNode;
-import com.nhnacademy.aiot.gateway.wire.BufferedWire;
-import com.nhnacademy.aiot.gateway.wire.Wire;
+import com.nhnacademy.aiot.node.ActiveNode;
+import com.nhnacademy.aiot.node.PlaceTranslatorNode;
+import com.nhnacademy.aiot.node.SplitNode;
+import com.nhnacademy.aiot.wire.BufferedWire;
+import com.nhnacademy.aiot.wire.Wire;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

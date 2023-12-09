@@ -1,11 +1,11 @@
-package com.nhnacademy.aiot.gateway.node;
+package com.nhnacademy.aiot.node;
 
 import org.json.simple.JSONObject;
-import com.nhnacademy.aiot.gateway.wire.Wire;
-import com.nhnacademy.aiot.gateway.exception.AlreadyExistsException;
-import com.nhnacademy.aiot.gateway.exception.InvalidArgumentException;
-import com.nhnacademy.aiot.gateway.exception.OutOfBoundsException;
-import com.nhnacademy.aiot.gateway.message.Message;
+import com.nhnacademy.aiot.wire.Wire;
+import com.nhnacademy.aiot.exception.AlreadyExistsException;
+import com.nhnacademy.aiot.exception.InvalidArgumentException;
+import com.nhnacademy.aiot.exception.OutOfBoundsException;
+import com.nhnacademy.aiot.message.Message;
 
 public abstract class InputNode extends ActiveNode {
     Wire[] outputWires;

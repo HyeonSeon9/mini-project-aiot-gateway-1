@@ -1,11 +1,11 @@
-package com.nhnacademy.aiot.gateway.node;
+package com.nhnacademy.aiot.node;
 
 import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONObject;
-import com.nhnacademy.aiot.gateway.message.JsonMessage;
+import com.nhnacademy.aiot.message.JsonMessage;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

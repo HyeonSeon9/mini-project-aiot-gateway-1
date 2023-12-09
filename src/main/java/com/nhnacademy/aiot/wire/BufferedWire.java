@@ -1,8 +1,8 @@
-package com.nhnacademy.aiot.gateway.wire;
+package com.nhnacademy.aiot.wire;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import com.nhnacademy.aiot.gateway.message.Message;
+import com.nhnacademy.aiot.message.Message;
 
 public class BufferedWire implements Wire {
     Queue<Message> messageQueue;

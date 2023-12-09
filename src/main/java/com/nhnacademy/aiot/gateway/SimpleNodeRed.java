@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.gateway.gateway;
+package com.nhnacademy.aiot.gateway;
 
 public class SimpleNodeRed {
     public static void main(String[] args) {

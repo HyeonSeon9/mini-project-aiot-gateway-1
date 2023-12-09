@@ -1,8 +1,8 @@
-package com.nhnacademy.aiot.gateway.node;
+package com.nhnacademy.aiot.node;
 
-import com.nhnacademy.aiot.gateway.exception.OutOfBoundsException;
-import com.nhnacademy.aiot.gateway.message.Message;
-import com.nhnacademy.aiot.gateway.wire.Wire;
+import com.nhnacademy.aiot.exception.OutOfBoundsException;
+import com.nhnacademy.aiot.message.Message;
+import com.nhnacademy.aiot.wire.Wire;
 
 public abstract class InputOutputNode extends ActiveNode {
     Wire[] inputWires;

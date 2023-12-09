@@ -1,4 +1,4 @@
-package com.nhnacademy.aiot.gateway.message;
+package com.nhnacademy.aiot.message;
 
 public abstract class Message {
     static int count;
