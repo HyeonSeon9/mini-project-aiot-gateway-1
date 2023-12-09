@@ -45,12 +45,7 @@ public class ModbusReadNode extends InputNode {
 
     @Override
     void process() {
-        try {
-            Thread.sleep(10000);
-            output(null);
-        } catch (InterruptedException e) {
 
-        }
     }
 
 }

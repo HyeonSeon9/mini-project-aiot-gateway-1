@@ -69,8 +69,8 @@ public abstract class ActiveNode extends Node implements Runnable {
             long currentTime = System.currentTimeMillis();
             long elapsedTime = currentTime - previousTime;
             if (elapsedTime < interval) {
+                process();
                 try {
-                    process();
                     thread.sleep(interval);
                 } catch (Exception e) {
                     stop();

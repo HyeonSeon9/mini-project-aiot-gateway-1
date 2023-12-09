@@ -1,8 +1,10 @@
 package com.nhnacademy.aiot.modbus.client;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class Client {
     private String host;
@@ -18,16 +20,22 @@ public class Client {
     }
 
 
-    public void send(byte[] request) throws IOException {
-
+    public byte[] sendAndReceive(byte[] request) {
+        byte[] inputByte = null;
         try (Socket socket = new Socket(host, port);
                 BufferedOutputStream outputStream =
-                        new BufferedOutputStream(socket.getOutputStream())) {
+                        new BufferedOutputStream(socket.getOutputStream());
+                BufferedInputStream inputStream =
+                        new BufferedInputStream(socket.getInputStream())) {
             outputStream.write(request);
             outputStream.flush();
+            byte[] inputBuffer = new byte[1024];
+            int receivedLength = inputStream.read(inputBuffer, 0, inputBuffer.length);
+            inputByte = Arrays.copyOfRange(inputBuffer, 0, receivedLength);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+        return inputByte;
     }
 
     public int getUnitId() {

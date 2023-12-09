@@ -7,7 +7,7 @@
       "dataType": "HoldingRegister",
       "quantity": "5",
       "server": "modbusClient",
-      "wires": [[], []]
+      "wire": [[], []]
     },
     {
       "id": "modbusServer",
@@ -16,7 +16,7 @@
       "serverPort": "11502",
       "holdingBufferSize": 10000,
       "inputBufferSize": 10000,
-      "wires": [[], [], [], [], []]
+      "wire": [[], [], [], [], []]
     },
     {
       "id": "modbusWrite",
@@ -24,7 +24,12 @@
       "dataType": "HoldingRegister",
       "quantity": "1",
       "server": "modbusClient",
-      "wires": [[], []]
+      "wire": [["WriteDebug"], []]
+    },
+    {
+      "id": "WriteDebug",
+      "type": "DebugNode",
+      "wire": []
     },
     {
       "id": "modbusClient",

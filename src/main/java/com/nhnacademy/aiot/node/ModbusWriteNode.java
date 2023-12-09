@@ -1,6 +1,6 @@
 package com.nhnacademy.aiot.node;
 
-import java.io.IOException;
+import com.nhnacademy.aiot.message.ByteMessage;
 import com.nhnacademy.aiot.modbus.client.Client;
 
 public class ModbusWriteNode extends InputOutputNode {
@@ -46,13 +46,10 @@ public class ModbusWriteNode extends InputOutputNode {
 
     @Override
     void process() {
-        try {
-            byte[] bufferOut = new byte[] {0, 1, 0, 0, 0, 6, 1, 6, 0, count++, 0, 5};
-            server.send(bufferOut);
-        } catch (IOException e) {
-
-        }
-
+        byte[] receive = null;
+        byte[] bufferOut = new byte[] {0, 1, 0, 0, 0, 6, 1, 6, 0, count++, 0, 5};
+        receive = server.sendAndReceive(bufferOut);
+        output(new ByteMessage(receive));
     }
 
 }
