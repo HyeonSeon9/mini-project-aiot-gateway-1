@@ -70,9 +70,8 @@ public abstract class ActiveNode extends Node implements Runnable {
             long elapsedTime = currentTime - previousTime;
             if (elapsedTime < interval) {
                 try {
-                    synchronized (this) {
-                        process();
-                    }
+                    process();
+                    thread.sleep(interval);
                 } catch (Exception e) {
                     stop();
                 }

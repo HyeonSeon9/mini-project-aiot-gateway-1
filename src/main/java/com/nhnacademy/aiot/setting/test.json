@@ -2,8 +2,9 @@
   [
     {
       "id": "modbusClient",
-      "type": "ModbusClientNode",
+      "type": "Client",
       "clienttype": "tcp",
+      "name": "localhost",
       "tcpHost": "127.0.0.1",
       "tcpPort": "502",
       "unit_id": "1"
