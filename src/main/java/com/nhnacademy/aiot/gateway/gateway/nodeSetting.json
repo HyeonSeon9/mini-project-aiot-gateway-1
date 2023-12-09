@@ -1,0 +1,35 @@
+[
+  [
+    {
+      "id": "22219ef19962ff50",
+      "type": "MqttInNode",
+      "wire": [["4d03156b6783f24e"]]
+    },
+    {
+      "id": "4d03156b6783f24e",
+      "type": "SplitNode",
+      "wire": [["08c7f86736322e0d"]]
+    },
+    {
+      "id": "08c7f86736322e0d",
+      "type": "PlaceTranslatorNode",
+      "wire": [["81adf53d292f5def"]]
+    },
+    {
+      "id": "81adf53d292f5def",
+      "type": "ReduceTopicNode",
+      "wire": [["04a19ccc997258f2"]]
+    },
+    {
+      "id": "04a19ccc997258f2",
+      "type": "MqttOutNode",
+      "wire": []
+    }
+  ],
+  [
+    {
+      "--an": "application/+/device/+/event/up",
+      "-s": "temperature,humidity"
+    }
+  ]
+]
