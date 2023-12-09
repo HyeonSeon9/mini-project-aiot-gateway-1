@@ -1,5 +1,8 @@
 package com.nhnacademy.aiot.modbus.server;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 public class SimpleMB {
     public static byte[] intToByte(int number) {
         byte b1 = (byte) ((number >> 8) & 0x00FF);
@@ -40,6 +43,46 @@ public class SimpleMB {
             frame[2 + i * 2] = inputByte[0];
             frame[2 + i * 2 + 1] = inputByte[1];
         }
+        return frame;
+    }
+
+    public static byte[] makeReadInputRegusterResponse(int address, int quantity, int[] inputRegisters) {
+
+        byte[] frame = new byte[1 + 1 + (quantity*2)];
+
+        // PDU의 Function Code
+        frame[0] = 0x04;
+
+        // byte count
+        frame[1] = (byte) (quantity * 2);
+
+        // 하위 비트 16비트를 8비트 두 개로 나눠서 저장
+        for (int i = 0; i < quantity; i++) {
+            frame[2 + (i * 2)] = (byte) ((inputRegisters[address] >> 8) & 0xFF);
+            frame[3 + (i * 2)] = (byte) ((inputRegisters[address++]) & 0xFF);
+        }
+
+        return frame;
+    }
+
+    public static byte[] makeWriteMultipleRegistersResponse(int address, int quantity) {
+        byte[] frame = new byte[1 + 2 + 2];
+
+        ByteBuffer b = ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN);
+
+        b.putInt(address);
+
+        frame[0] = 0x10; // 16
+        frame[1] = b.get(2);
+        frame[2] = b.get(3);
+
+        b.clear();
+
+        b.putInt(quantity);
+
+        frame[3] = b.get(2);
+        frame[4] = b.get(3);
+
         return frame;
     }
 

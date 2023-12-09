@@ -15,11 +15,22 @@ public class HandlerServer implements Runnable {
     private static final int DEFAULT_LENGTH = 6;
 
     private int[] holdingRegisters;
+    private int[] inputRegisters;
 
-    public HandlerServer(Socket socket, int[] holdingRegisters) {
+    public HandlerServer(Socket socket, int[] holdingRegisters, int[] inputRegisters) {
         this.socket = socket;
         this.holdingRegisters = holdingRegisters;
+        this.inputRegisters = inputRegisters;
         this.thread = new Thread(this, this.getClass().getSimpleName());
+
+        for (int i = 0; i < holdingRegisters.length; i++) {
+            holdingRegisters[i] = i;
+        }
+
+        for (int i = 0; i < inputRegisters.length; i++) {
+            inputRegisters[i] = 200;
+        }
+
     }
 
     public int readTwoByte(byte first, byte second) {
@@ -50,7 +61,7 @@ public class HandlerServer implements Runnable {
                     int functionCode = inputBuffer[7];
                     int address = readTwoByte(inputBuffer[8], inputBuffer[9]);
                     int quantity = readTwoByte(inputBuffer[10], inputBuffer[11]);
-
+                    System.out.println("+++++ "+quantity);
                     switch (functionCode) {
                         case 3:
                             if (address + quantity < holdingRegisters.length) {
@@ -67,10 +78,44 @@ public class HandlerServer implements Runnable {
                                 outputStream.flush();
                             }
                             break;
+                        
+                        case 4:
+                            if (address + quantity < holdingRegisters.length) {
+                                byte[] response = SimpleMB.makeReadInputRegusterResponse(address, quantity, inputRegisters);
+
+                                outputStream.write(SimpleMB.addMBAP(transactionId, inputBuffer[6], response));
+                                outputStream.flush();
+                            }
+                            break;
+                        
                         case 6:
                             holdingRegisters[address] = quantity;
+                            
                             outputStream.write(receivedRequest);
                             outputStream.flush();
+
+                            for (int i = 0; i < address + 3; i++) {
+                                System.out.println(holdingRegisters[i]);
+                            }
+
+                            break;
+                        
+                        case 16:
+                            if (address + quantity < holdingRegisters.length) {
+                                int idx = address;
+
+                                for (int i = 0; i < quantity; i++) {
+                                    holdingRegisters[idx++] = readTwoByte(inputBuffer[13 + (i * 2)], inputBuffer[14 + (i * 2)]);
+                                }
+
+                                for (int i = address - 1; i < address + quantity + 1; i++) {
+                                    System.out.println(holdingRegisters[i]);
+                                }
+
+                                byte[] response = SimpleMB.makeWriteMultipleRegistersResponse(address, quantity);
+
+                                outputStream.write(SimpleMB.addMBAP(transactionId, inputBuffer[6],response));
+                            }
                             break;
 
                         default:
@@ -89,5 +134,10 @@ public class HandlerServer implements Runnable {
         }
     }
 
+    public static void main(String[] args) {
+           HandlerServer a = new HandlerServer(null, null, null);
+           int b = a.readTwoByte((byte)1, (byte)1);
+           System.out.println(b);
+    }
 
 }
