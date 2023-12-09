@@ -81,7 +81,7 @@ public class HandlerServer implements Runnable {
                         
                         case 4:
                             if (address + quantity < holdingRegisters.length) {
-                                byte[] response = SimpleMB.makeReadInputRegusterResponse(address, quantity, inputRegisters);
+                                byte[] response = SimpleMB.makeReadInputRegisterResponse(address, quantity, inputRegisters);
 
                                 outputStream.write(SimpleMB.addMBAP(transactionId, inputBuffer[6], response));
                                 outputStream.flush();
@@ -93,10 +93,6 @@ public class HandlerServer implements Runnable {
                             
                             outputStream.write(receivedRequest);
                             outputStream.flush();
-
-                            for (int i = 0; i < address + 3; i++) {
-                                System.out.println(holdingRegisters[i]);
-                            }
 
                             break;
                         
@@ -119,6 +115,7 @@ public class HandlerServer implements Runnable {
                             break;
 
                         default:
+                            
                             break;
                     }
 

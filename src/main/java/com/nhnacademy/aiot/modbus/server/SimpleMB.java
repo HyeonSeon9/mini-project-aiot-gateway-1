@@ -11,17 +11,19 @@ public class SimpleMB {
         return new byte[] {b1, b2};
     }
 
+    // 3 Request
     public static byte[] makeReadHoldingRegistersRequest(int address, int quantity) {
         byte[] frame = new byte[5];
 
-        // PDU의 function code
+        // PDU function code
         frame[0] = 0x03;
 
-        // PDU의 data
+        // PDU Data Address
         byte[] addressByte = intToByte(address);
         frame[1] = addressByte[0];
         frame[2] = addressByte[1];
 
+        // PDU Data Quantity
         byte[] quantityByte = intToByte(quantity);
         frame[3] = quantityByte[0];
         frame[4] = quantityByte[1];
@@ -29,13 +31,14 @@ public class SimpleMB {
         return frame;
     }
 
+    // 3 Response
     public static byte[] makeReadHoldingRegistersResponse(int[] registers) {
         byte[] frame = new byte[1 + 1 + registers.length * 2];
 
-        // PDU의 Function Code
+        // PDU Function Code
         frame[0] = 0x03;
 
-        // Length
+        // PDU Byte
         frame[1] = (byte) (registers.length * 2);
 
         for (int i = 0; i < registers.length; i++) {
@@ -46,11 +49,32 @@ public class SimpleMB {
         return frame;
     }
 
-    public static byte[] makeReadInputRegusterResponse(int address, int quantity, int[] inputRegisters) {
+    // 4 Request
+    public static byte[] makeReadInputRegistersRequest(int address, int quantity) {
+        byte[] frame = new byte[5];
+
+        // PDU function code
+        frame[0] = 0x04;
+
+        // PDU Data Address
+        byte[] addressByte = intToByte(address);
+        frame[1] = addressByte[0];
+        frame[2] = addressByte[1];
+
+        // PDU Data Quantity
+        byte[] quantityByte = intToByte(quantity);
+        frame[3] = quantityByte[0];
+        frame[4] = quantityByte[1];
+
+        return frame;
+    }
+
+    // 4 Response
+    public static byte[] makeReadInputRegisterResponse(int address, int quantity, int[] inputRegisters) {
 
         byte[] frame = new byte[1 + 1 + (quantity*2)];
 
-        // PDU의 Function Code
+        // PDU Function Code
         frame[0] = 0x04;
 
         // byte count
@@ -65,6 +89,58 @@ public class SimpleMB {
         return frame;
     }
 
+    // 6 Request = 6 Response
+    public static byte[] makeWrieSingleRegisterRequest(int address, int quantity) {
+        byte[] frame = new byte[5];
+
+        // PDU Function Code
+        frame[0] = 0x06;
+        
+        // PDU Data Address
+        byte[] addressByte = intToByte(address);
+        frame[1] = addressByte[0];
+        frame[2] = addressByte[1];
+
+        // PDU Data Quantity
+        byte[] quantityByte = intToByte(quantity);
+        frame[3] = quantityByte[0];
+        frame[4] = quantityByte[1];
+
+        return frame;
+    }
+
+    // 16 Request
+    public static byte[] makeWriteMultipleRegistersRequest(int address, int quantity, int byteCount, int... value) {
+        byte[] frame = new byte[1 + 2 + 2 + 1 + byteCount];
+        int[] intArray = value;
+
+        // PDU Function Code
+        frame[0] = 0x10;
+
+        // PDU Data Address
+        byte[] addressByte = intToByte(address);
+        frame[1] = addressByte[0];
+        frame[2] = addressByte[1];
+
+        // PDU Data Quantity 1 ~ 123 (0000 0001 ~ 0111 1011)
+        byte[] quantityByte = intToByte(quantity);
+        frame[3] = quantityByte[0];
+        frame[4] = quantityByte[1];
+
+        // PDU Data byte count
+        frame[5] = (byte) (intArray.length * 2);
+
+        // PDU Data value
+        for (int i = 0; i < intArray.length; i++) {
+            byte[] valueByte = intToByte(intArray[i]);
+            frame[6 + ( i * 2 )] = valueByte[0];
+            frame[7 + ( i * 2 )] = valueByte[1];
+        }
+
+        return frame;
+    }
+
+    // 16 Response
     public static byte[] makeWriteMultipleRegistersResponse(int address, int quantity) {
         byte[] frame = new byte[1 + 2 + 2];
 

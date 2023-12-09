@@ -1,6 +1,7 @@
 package com.nhnacademy.aiot.modbus.server;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class test {
     public static void main(String[] args) throws IOException {
@@ -58,9 +59,18 @@ public class test {
         // ByteBuffer bf = ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN);
         // bf.putInt(i);
         // System.out.println(Arrays.toString(bf.array()));
-        int number = 2122;
-        byte b1 = (byte) ((number >> 8) & 0xFF);
-        byte b2 = (byte) (number & 0xFF);
-        System.out.println(b1 + " : " + b2);
+        // int number = 2122;
+        // byte b1 = (byte) ((number >> 8) & 0xFF);
+        // byte b2 = (byte) (number & 0xFF);
+        // System.out.println(b1 + " : " + b2);
+        
+        test(1,2,3,4,5,6,7);
+    }
+
+
+    public static void test(int a, int b, int... value) {
+        int[] c = value;
+        System.out.println(c[1]);
+        System.out.println(Arrays.toString(c));
     }
 }
