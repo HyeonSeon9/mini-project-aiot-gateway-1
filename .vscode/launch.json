@@ -6,6 +6,27 @@
   "configurations": [
     {
       "type": "java",
+      "name": "modbusServer",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.modbus.server.modbusServer",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
+      "name": "Client",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.modbus.client.Client",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
+      "name": "ModBusServerNode",
+      "request": "launch",
+      "mainClass": "com.nhnacademy.aiot.node.ModBusServerNode",
+      "projectName": "mini-project-aiot-gateway1"
+    },
+    {
+      "type": "java",
       "name": "SimpleNodeRed",
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.SimpleNodeRed",
