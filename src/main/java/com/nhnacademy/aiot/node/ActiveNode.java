@@ -80,7 +80,6 @@ public abstract class ActiveNode extends Node implements Runnable {
             previousTime =
                     startTime + (System.currentTimeMillis() - startTime) / interval * interval;
         }
-
         postprocess();
     }
 

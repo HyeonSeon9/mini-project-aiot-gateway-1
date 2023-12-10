@@ -32,10 +32,10 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class SettingNode {
-    // protected static String settingPath =
-    // "src/main/java/com/nhnacademy/aiot/setting/nodeSetting.json";
     protected static String settingPath =
-            "src/main/java/com/nhnacademy/aiot/setting/modbusSetting.json";
+            "src/main/java/com/nhnacademy/aiot/setting/nodeSetting.json";
+    // protected static String settingPath =
+    // "src/main/java/com/nhnacademy/aiot/setting/modbusSetting.json";
     protected static String path = "com.nhnacademy.aiot.node.";
     protected static String clientPath = "com.nhnacademy.aiot.modbus.client.";
     private HashMap<String, ActiveNode> nodeList;
@@ -109,14 +109,17 @@ public class SettingNode {
                 Method setDataType = newObj.getClass().getMethod("setDataType", String.class);
                 Method setQuantity = newObj.getClass().getMethod("setQuantity", int.class);
                 Method setServerName = newObj.getClass().getMethod("setServerName", String.class);
+                Method setAddress = newObj.getClass().getMethod("setAddress", int.class);
 
                 String dataType = (String) node.get("dataType");
                 int quantity = Integer.parseInt(node.get("quantity").toString());
                 String serverName = (String) node.get("server");
+                int address = Integer.parseInt(node.get("adr").toString());
 
                 setDataType.invoke(newObj, dataType);
                 setQuantity.invoke(newObj, quantity);
                 setServerName.invoke(newObj, serverName);
+                setAddress.invoke(newObj, address);
 
             } else if (newObj instanceof ModbusServerNode) {
                 Method setHoldingRegisters =
@@ -162,6 +165,7 @@ public class SettingNode {
 
     public void makeFlow() {
         JSONArray flowJson = ((JSONArray) object);
+        System.out.println((JSONArray) object);
         for (Object node : (JSONArray) flowJson.get(0)) {
             String nodeType = (String) ((JSONObject) node).get("type");
             if (nodeType.contains("Node")) {
@@ -171,8 +175,6 @@ public class SettingNode {
             }
         }
     }
-
-
 
     public void connectWire() {
         try {
@@ -217,10 +219,9 @@ public class SettingNode {
                 try {
                     Method setServer = node.getClass().getMethod("setServer", Client.class);
                     Method getServerName = node.getClass().getMethod("getServerName");
-                    Method setInterval = node.getClass().getMethod("setInterval", long.class);
                     String serverName = (String) getServerName.invoke(node);
                     setServer.invoke(node, clientMap.get(serverName));
-                    setInterval.invoke(node, 10000);
+
                 } catch (NoSuchMethodException | IllegalAccessException
                         | InvocationTargetException e) {
                     System.err.println(e.getMessage());

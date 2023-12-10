@@ -42,18 +42,7 @@ public class Client {
         return unitId;
     }
 
-    public static int[] addByte(byte[] inputByte) {
-        int byteCount = inputByte[8];
-        int[] result = new int[byteCount / 2];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = readTwoByte(inputByte[9 + i * 2], inputByte[9 + i * 2 + 1]);
-        }
-        return result;
-    }
 
-    public static int readTwoByte(byte first, byte second) {
-        return ((first << 8) & 0xFF00 | second & 0x00FF);
-    }
 
     // public static void main(String[] args) {
     // try (Socket socket = new Socket(host, port);

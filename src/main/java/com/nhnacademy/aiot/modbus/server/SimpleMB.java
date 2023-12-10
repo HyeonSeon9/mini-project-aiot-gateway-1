@@ -1,6 +1,7 @@
 package com.nhnacademy.aiot.modbus.server;
 
 public class SimpleMB {
+
     public static byte[] intToByte(int number) {
         byte b1 = (byte) ((number >> 8) & 0x00FF);
         byte b2 = (byte) (number & 0x00FF);
@@ -20,6 +21,24 @@ public class SimpleMB {
         frame[2] = addressByte[1];
 
         byte[] quantityByte = intToByte(quantity);
+        frame[3] = quantityByte[0];
+        frame[4] = quantityByte[1];
+
+        return frame;
+    }
+
+    public static byte[] makeWriteHoldingRegistersRequest(int address, int value) {
+        byte[] frame = new byte[5];
+
+        // PDU의 function code
+        frame[0] = 0x06;
+
+        // PDU의 data
+        byte[] addressByte = intToByte(address);
+        frame[1] = addressByte[0];
+        frame[2] = addressByte[1];
+
+        byte[] quantityByte = intToByte(value);
         frame[3] = quantityByte[0];
         frame[4] = quantityByte[1];
 
@@ -61,5 +80,18 @@ public class SimpleMB {
         System.arraycopy(pdu, 0, adu, 7, pdu.length);
 
         return adu;
+    }
+
+    public static int readTwoByte(byte first, byte second) {
+        return ((first << 8) & 0xFF00 | second & 0x00FF);
+    }
+
+    public static int[] addByte(byte[] inputByte) {
+        int byteCount = inputByte[8];
+        int[] result = new int[byteCount / 2];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = readTwoByte(inputByte[9 + i * 2], inputByte[9 + i * 2 + 1]);
+        }
+        return result;
     }
 }

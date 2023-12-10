@@ -43,7 +43,7 @@ public class HandlerServer implements Runnable {
             int receivedLength = inputStream.read(inputBuffer, 0, inputBuffer.length);
             if (receivedLength > 0) {
                 byte[] receivedRequest = Arrays.copyOfRange(inputBuffer, 0, receivedLength);
-                System.out.println(Arrays.toString(receivedRequest));
+                // System.out.println(Arrays.toString(receivedRequest));
 
                 if ((receivedLength > DEFAULT_LENGTH_HAS_UNIT_ID) && (DEFAULT_LENGTH
                         + readTwoByte(inputBuffer[4], inputBuffer[5])) == receivedLength) {

@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import com.nhnacademy.aiot.message.ByteMessage;
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
+import com.nhnacademy.aiot.modbus.server.SimpleMB;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -29,7 +30,11 @@ public class DebugNode extends OutputNode {
                 log.info("{}", jsonObject);
             } else {
                 byte[] byteObject = ((ByteMessage) message).getPayload();
-                log.info("{}", Arrays.toString(byteObject));
+                if (byteObject[7] == 3) {
+                    log.info("{}", Arrays.toString(SimpleMB.addByte(byteObject)));
+                } else {
+                    log.info("{}", Arrays.toString(byteObject));
+                }
             }
         }
     }

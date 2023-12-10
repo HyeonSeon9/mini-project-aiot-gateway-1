@@ -9,7 +9,14 @@
       "name": "SimpleNodeRed",
       "request": "launch",
       "mainClass": "com.nhnacademy.aiot.gateway.SimpleNodeRed",
-      "projectName": "mini-project-aiot-gateway1"
+      "projectName": "mini-project-aiot-gateway1",
+      "args": [
+        "-c",
+        "--an",
+        "application/+/device/+/event/up",
+        "-s",
+        "temperature,humidity,co2,leq"
+      ]
     },
     {
       "type": "java",

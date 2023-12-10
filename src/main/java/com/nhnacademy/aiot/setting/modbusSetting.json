@@ -5,9 +5,10 @@
       "type": "ModbusReadNode",
       "unitid": "",
       "dataType": "HoldingRegister",
+      "adr": "0",
       "quantity": "5",
       "server": "modbusClient",
-      "wire": [[], []]
+      "wire": [["ReadDebug"], []]
     },
     {
       "id": "modbusServer",
@@ -23,11 +24,17 @@
       "type": "ModbusWriteNode",
       "dataType": "HoldingRegister",
       "quantity": "1",
+      "adr": "1",
       "server": "modbusClient",
       "wire": [["WriteDebug"], []]
     },
     {
       "id": "WriteDebug",
+      "type": "DebugNode",
+      "wire": []
+    },
+    {
+      "id": "ReadDebug",
       "type": "DebugNode",
       "wire": []
     },

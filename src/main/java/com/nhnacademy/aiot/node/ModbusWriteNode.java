@@ -2,6 +2,7 @@ package com.nhnacademy.aiot.node;
 
 import com.nhnacademy.aiot.message.ByteMessage;
 import com.nhnacademy.aiot.modbus.client.Client;
+import com.nhnacademy.aiot.modbus.server.SimpleMB;
 
 public class ModbusWriteNode extends InputOutputNode {
     private String dataType;
@@ -9,10 +10,12 @@ public class ModbusWriteNode extends InputOutputNode {
     private String serverName;
     private int unitid;
     private Client server;
+    private int address;
     private static byte count = 0;
 
     public ModbusWriteNode(String name, int count) {
         super(name, 1, count);
+        setInterval(1000);
     }
 
     public String getServerName() {
@@ -39,6 +42,10 @@ public class ModbusWriteNode extends InputOutputNode {
         this.unitid = unitId;
     }
 
+    public void setAddress(int address) {
+        this.address = address;
+    }
+
     @Override
     void preprocess() {
 
@@ -46,9 +53,9 @@ public class ModbusWriteNode extends InputOutputNode {
 
     @Override
     void process() {
-        byte[] receive = null;
-        byte[] bufferOut = new byte[] {0, 1, 0, 0, 0, 6, 1, 6, 0, count++, 0, 5};
-        receive = server.sendAndReceive(bufferOut);
+        byte[] pdu = SimpleMB.makeWriteHoldingRegistersRequest(count, 5);
+        byte[] request = SimpleMB.addMBAP(count++, server.getUnitId(), pdu);
+        byte[] receive = server.sendAndReceive(request);
         output(new ByteMessage(receive));
     }
 
