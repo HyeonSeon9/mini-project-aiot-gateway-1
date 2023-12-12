@@ -8,11 +8,12 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONObject;
 import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class MqttOutNode extends OutputNode {
 
     private IMqttClient local = null;
-    private MqttConnectOptions options;
 
     public MqttOutNode(String name, int count) {
         super(name, count);
@@ -20,8 +21,8 @@ public class MqttOutNode extends OutputNode {
 
     public void connectLocalHost() {
         try {
-            local = new MqttClient("tcp://localhost", super.getId().toString());
-            options = new MqttConnectOptions();
+            local = new MqttClient("tcp://localhost", super.getId().toString(), null);
+            MqttConnectOptions options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
             options.setConnectionTimeout(10);
@@ -33,9 +34,9 @@ public class MqttOutNode extends OutputNode {
         }
     }
 
-
     @Override
     void preprocess() {
+        log.info("Node Start");
         connectLocalHost();
     }
 
@@ -53,9 +54,9 @@ public class MqttOutNode extends OutputNode {
 
                 MqttMessage mqttMessage = new MqttMessage();
                 mqttMessage.setPayload(payload.toString().getBytes());
-                System.out.println(topic);
-                System.out.println(jsonObject);
-                System.out.println(mqttMessage);
+
+                // System.out.println(topic);
+                // System.out.println(mqttMessage);
                 local.publish(topic, mqttMessage);
             } catch (MqttException e) {
                 log.error("error-", e);

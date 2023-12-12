@@ -1,6 +1,9 @@
 package com.nhnacademy.aiot.node;
 
+
 import com.nhnacademy.aiot.exception.OutOfBoundsException;
+import com.nhnacademy.aiot.message.ByteMessage;
+import com.nhnacademy.aiot.message.JsonMessage;
 import com.nhnacademy.aiot.message.Message;
 import com.nhnacademy.aiot.wire.Wire;
 
@@ -63,10 +66,18 @@ public abstract class InputOutputNode extends ActiveNode {
     }
 
     void output(Message message) {
+        log.trace("Message Out");
         for (Wire port : outputWires) {
+            Message putMessage = null;
+            if (message instanceof JsonMessage) {
+                putMessage = new JsonMessage(((JsonMessage) message).getPayload());
+            } else {
+                putMessage = new ByteMessage(((ByteMessage) message).getPayload());
+            }
             if (port != null) {
-                port.put(message);
+                port.put(putMessage);
             }
         }
     }
 }
+
