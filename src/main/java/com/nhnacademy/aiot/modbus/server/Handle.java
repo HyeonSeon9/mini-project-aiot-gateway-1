@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Handle implements Runnable {
-    private Thread thread;
+
 
     private Socket socket;
 
@@ -21,7 +21,7 @@ public class Handle implements Runnable {
         this.socket = socket;
         this.holdingRegister = holdingRegister;
         this.inputResgister = inputRegister;
-        thread = new Thread(this, this.getClass().getSimpleName());
+        Thread thread = new Thread(this, this.getClass().getSimpleName());
     }
 
     @Override
